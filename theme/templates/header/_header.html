@@ -1,0 +1,48 @@
+{% load branding i18n %}
+{% load url from future %}
+{% load context_selection %}
+
+<nav class="navbar">
+  <a class="uomt-page-header-logo" href="{% site_branding_link %}">
+    <img src="{{ STATIC_URL }}dashboard/img/logo.svg" alt="{% site_branding %}">
+  </a>
+
+  <ol class="uomt-page-local-history" id="uomt-page-local-history" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+    <li class="uomt-root" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+      <a href="{% site_branding_link %}" title="{% site_branding %}" itemprop="item"><span class="uomt-icon-home" data-icon="home" data-bound-iconhelper="cjhvnavb200013i5n2yyym47q">
+        <svg class="uomt-icon" role="img" focusable="false"><use xlink:href="#icon-home"></use></svg>
+      </span><span>Melbourne Research Cloud</span></a>
+      <meta content="1" itemprop="position" />
+    </li>
+    <li class="uomt-last" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+      <a href="/project" itemprop="item" title="Project">
+        <span itemprop="name">Project: {% show_overview %}</span>
+      </a>
+      <meta content="2" itemprop="position" />
+    </li>
+  </ol>
+
+  <ul class="uomt-page-header-tools">
+    {% include "header/_context_selection.html" %}
+    {% include "header/_user_menu.html" %}
+    <li class="dropdown">
+      <a href="https://unimelb.service-now.com/research" role="button" class="uomt-page-header-icon" target="_blank" title="Support">
+        <svg role="img" focusable="false"><use xlink:href="#icon-world"></use></svg> Support
+      </a>
+    </li>
+    <li class="dropdown">
+      <a href="#" role="button" class="uomt-page-header-icon" title="Search">
+        <svg role="img" focusable="false"><use xlink:href="#icon-search"></use></svg> Search
+      </a>
+    </li>
+    <li class="dropdown">
+      <a href="#" role="button" class="uomt-page-header-icon" title="Menu">
+        <svg role="img" focusable="false"><use xlink:href="#icon-menu"></use></svg> Menu
+      </a>
+    </li>
+    <li class="dropdown hide">
+      {% include "horizon/common/_region_selector.html" %}
+    </li>
+  </ul>
+</nav>
+<div id="sidebar-bg"></div>

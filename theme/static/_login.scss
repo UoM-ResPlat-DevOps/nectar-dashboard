@@ -1,0 +1,257 @@
+body#splash {
+
+  background-color: $uomt-col-navy;
+
+  form {
+    background-color: #fff;
+  }
+
+  div.login {
+    // Bootstrap overrides
+    background: transparent;
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 0;
+    padding-top: 0;
+    width: auto;
+    border: 0;
+    max-height: none;
+    border-radius: 0;
+    box-shadow: none;
+    background-clip: initial;
+
+    div.modal-header {
+      // Bootstrap overrides
+      padding: 0;
+      border-bottom: 0;
+      min-height: auto;
+    }
+
+    h1, p {
+      /* .uomcontent h1, .uomcontent h2, .uomcontent h3, .uomcontent h4,
+      .uomcontent h5, .uomcontent h6, .uomcontent li, .uomcontent p,
+      .uomcontent table */
+      margin: 0 auto;
+      width: 94%;
+      max-width: 43.75rem * $uomt-scale;
+      font-weight: 300;
+      padding: 0;
+
+      /* .uomcontent li, .uomcontent p */
+      letter-spacing: .0125rem;
+      padding-bottom: 1.5rem;
+    }
+    @media (min-width:$screen-sm) {
+      h1, p {
+        /* .uomcontent h1, .uomcontent h2, .uomcontent h3, .uomcontent h4,
+        .uomcontent h5, .uomcontent h6, .uomcontent li, .uomcontent p,
+        .uomcontent table */
+        width: 100%;
+      }
+    }
+
+    header {
+      /* .uomcontent [role=main]>header:first-child, .uomcontent [role=main] header */
+      padding-top: 1.5rem * $uomt-scale;
+      padding-bottom: 1.5rem * $uomt-scale;
+      background-color: #0c304a;
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      color: #fff;
+      overflow: hidden;
+      width: 100%;
+
+      /* article, aside, footer, header, nav, section */
+      display: block;
+
+      /* * */
+      box-sizing: border-box;
+
+      /* .uomcontent, .uomcontent .sans */
+      font-family: Roboto,Helvetica,Arial,sans-serif;
+
+      /* .uomcontent */
+      font-weight: 400;
+
+      /* body */
+      line-height: 1.5789;
+
+      h1 {
+        /* .uomcontent [role=main]>header:first-child h1, .uomcontent [role=main] header h1 */
+        font-size: 2.0625rem * $uomt-scale;
+        line-height: 3rem * $uomt-scale;
+        padding-bottom: 0;
+        max-width: 43.75rem * $uomt-scale;
+        font-weight: 100;
+        margin: 0 auto;
+        text-align: left;
+      }
+    }
+    @media (min-width:$screen-sm) {
+      header {
+        /* .uomcontent [role=main]>header:first-child, .uomcontent [role=main] header */
+        padding-top: 3rem * $uomt-scale;
+        padding-bottom: 3rem * $uomt-scale;
+
+        /* .uomcontent [role=main] */
+        font-weight: 300;
+
+        /* body */
+        line-height: 1.68;
+
+        h1 {
+          font-size: 2.8125rem * $uomt-scale;
+          line-height: 3.75rem * $uomt-scale;
+        }
+      }
+    }
+    @media (min-width: 1099px) {
+      header h1 {
+        font-size: 3.4375rem * $uomt-scale;
+        line-height: 3.75rem * $uomt-scale;
+      }
+    }
+
+    div.modal-body {
+      // Bootstrap overrides
+      overflow-y: initial;
+      max-height: none;
+      position: relative;
+      padding: 0;
+
+      /* .uomcontent [role=main] section */
+      padding-top: 3rem * $uomt-scale;
+      //padding-bottom: 3rem * $uomt-scale;
+
+      /* * */
+      box-sizing: border-box;
+
+      /* .uomcontent, .uomcontent .sans */
+      font-family: Roboto,Helvetica,Arial,sans-serif;
+
+      /* .uomcontent */
+      background-color: #fff;
+      font-weight: 400;
+
+      /* body */
+      line-height: 1.5789;
+    }
+    @media (min-width:$screen-sm) {
+      div.modal-body {
+        /* .uomcontent [role=main] .with-figure */
+        max-width: 43.75rem * $uomt-scale;
+        margin: 0 auto;
+
+        /* .uomcontent [role=main] */
+        font-weight: 300;
+
+        /* body */
+        line-height: 1.68;
+      }
+    }
+
+    div.fake_credentials {
+      display: none;
+    }
+
+    div.modal-footer {
+      // Bootstrap overrides
+      padding: 0;
+      border-bottom: none;
+      min-height: auto;
+      text-align: initial;
+      border-top: none;
+    }
+
+    .uomt-center {
+      /* .uomcontent [role=main] .center */
+      text-align: center;
+
+      /* .uomcontent .center */
+      padding: 0 0 3.75rem*$uomt-scale;
+      margin: 0 auto;
+
+      /* .uomcontent li, .uomcontent p */
+      letter-spacing: .0125rem * $uomt-scale;
+    }
+
+    .uomt-button-hero {
+      outline: 0;
+
+      /* .uomcontent .button-hero */
+      border-radius: 5px;
+      font-size: .8125rem * $uomt-scale;
+      letter-spacing: .0625rem * $uomt-scale;
+      margin: 1.25rem*$uomt-scale 0;
+      padding: .625rem * $uomt-scale;
+      border: 2px solid #000;
+      color: #000;
+      cursor: pointer;
+      display: inline-block;
+      font-style: normal;
+      font-weight: 700;
+      //outline-color: #000;
+      //outline-offset: 1px;
+      position: relative;
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .uomt-button-hero:active {
+      /* .uomcontent .button-hero:active */
+      opacity: .3;
+
+      /* .uomcontent a:active */
+      color: #000;
+    }
+    .uomt-button-hero:focus, .uomt-button-hero:hover {
+      /* .uomcontent .button-hero:focus, .uomcontent .button-hero:hover */
+      background-color: #006fdc;
+      color: #fff;
+      border-color: transparent;
+
+      /* .uomcontent a:focus, .uomcontent a:hover */
+      text-decoration: none;
+    }
+    .uomt-button-hero:after {
+      /* .uomcontent .button-hero:after*/
+      //font-size: 15px;
+      font-size: .9375rem * $uomt-scale;
+      //padding-left: 10px;
+      padding-left: .625rem * $uomt-scale;
+      content: "\2192";
+      line-height: 0;
+    }
+    @media (min-height: 700px) {
+      .uomt-button-hero {
+        /* .uomcontent .button-hero */
+        font-size: .9375rem * $uomt-scale;
+        margin: 1.25rem*$uomt-scale 0;
+        padding: 1.25rem * $uomt-scale;
+      }
+      .uomt-button-hero:after {
+        /* .uomcontent .button-hero:after */
+        //font-size: 26px;
+        font-size: 1.625rem * $uomt-scale;
+        //padding-left: 15px;
+        padding-left: .9375rem * $uomt-scale;
+      }
+    }
+
+    p#help_text {
+      display: none;
+      padding: 1em 0.5em;
+      margin: 0;
+    }
+  }
+
+  p.help-block {
+    display: none;
+  }
+}
+
+// .modal-dialog {
+//     width: 760px;
+// }

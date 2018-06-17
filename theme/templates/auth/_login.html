@@ -1,0 +1,91 @@
+{% extends "horizon/common/_modal_form.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load branding i18n %}
+
+{% block header %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="uomt-page-header-logo" href="{% site_branding_link %}">
+        <img class="" src="{{ STATIC_URL }}dashboard/img/logo.svg" alt="{% site_branding %}">
+      </a>
+      <ol class="uomt-page-local-history" id="uomt-page-local-history" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+        <li class="uomt-root" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+          <a href="#" title="{% site_branding %}" itemprop="item"><span class="uomt-icon-home" data-icon="home" data-bound-iconhelper="cjhvnavb200013i5n2yyym47q">
+            <svg class="uomt-icon" role="img" focusable="false"><use xlink:href="#icon-home"></use></svg>
+          </span><span>Melbourne Research Cloud</span></a>
+          <meta content="1" itemprop="position" />
+        </li>
+        <li class="uomt-last" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+          <a href="#" itemprop="item" title="Login">
+            <span itemprop="name">Login</span>
+          </a>
+          <meta content="2" itemprop="position" />
+        </li>
+      </ol>
+    </div>
+    <div>
+      <ul class="uomt-page-header-tools">
+        <li class="dropdown">
+          <a href="#" role="button" class="uomt-page-header-icon" title="Search">
+            <svg role="img" focusable="false"><use xlink:href="#icon-search"></use></svg> Search
+          </a>
+        </li>
+        <li class="dropdown">
+          <a href="#" role="button" class="uomt-page-header-icon" title="Menu">
+            <svg role="img" focusable="false"><use xlink:href="#icon-menu"></use></svg> Menu
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<header>
+  <h1>Research Cloud</h1>
+</header>
+{% endblock %}
+
+{% block modal_class %}login {% if hide %}modal{% endif %}{% endblock %}
+
+{% block form_action %}{{ HORIZON_CONFIG.rcshibboleth_url }}{% if redirect_field_name in request.GET %}%3F{{ redirect_field_name|urlencode }}%3D{{ request.GET.next|urlencode }}{% endif %}{% endblock %}
+{% block ng_controller %}hzLoginController{% endblock %}
+{% block autocomplete %}{{ HORIZON_CONFIG.password_autocomplete }}{% endblock %}
+
+{% block modal-body %}
+  {% comment %}
+    These fake fields are required to prevent Chrome v34+ from autofilling form.
+  {% endcomment %}
+  {% if HORIZON_CONFIG.password_autocomplete != "on" %}
+  <div class="fake_credentials" style="display: none">
+    <input type="text" name="fake_email" value="" />
+    <input type="password" name="fake_password" value="" />
+  </div>
+  {%endif%}
+  {% include "auth/_description.html" %}
+  <fieldset hz-login-finder>
+    {% if request.user.is_authenticated and 'next' in request.GET %}
+    <div class="form-group clearfix error">
+      <span class="help-block"><p>{% trans "You do not have permission to access the resource:" %}</p>
+        <p><b>{{ request.GET.next }}</b></p>
+        <p>{% url 'horizon:user_home' as home_url %}{% blocktrans %}Login as different user or go back to <a href="{{ home_url }}"> home page</a>{% endblocktrans %}</p>
+      </span>
+    </div>
+    {% endif  %}
+    {% if request.COOKIES.logout_reason %}
+    <div class="form-group clearfix error" id="logout_reason">
+      <span class="help-block alert alert-danger"><p>{{ request.COOKIES.logout_reason }}</p></span>
+    </div>
+    {% endif %}
+    {% if next %}<input type="hidden" name="{{ redirect_field_name }}" value="{{ next }}" />{% endif %}
+  </fieldset>
+{% endblock %}
+
+{% block modal-footer %}
+  <p class="uomt-center">
+    <button id="loginBtn" type="submit" class="uomt-button-hero">
+      <span>Log In via AAF</span>
+    </button>
+  </p>
+{% endblock %}

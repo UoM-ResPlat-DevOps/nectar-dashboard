@@ -1,0 +1,437 @@
+//## https://github.com/unimelb/unimelb-design-system/blob/aa5958f5fa6f34338fd6d8a600fa49cf87d5f0b1/assets/components/footer/index.css
+
+.uomt-clearfix:after, .uomt-clearfix:before {
+  content: "";
+  display: table;
+}
+.uomt-clearfix:after {
+  clear: both;
+}
+
+div#footer {
+  height: auto;
+}
+
+div#footer footer.uomt-cta,
+div#footer div.uomt-page-footer {
+
+  font-family: $uomt-ff-sans;
+  color: #fff;
+
+  * {
+    @include box-sizing(border-box);
+    margin: 0;
+    padding: 0;
+  }
+
+  svg {
+    @include uomt-svg;
+  }
+
+  ul {
+    list-style-position: outside;
+  }
+
+  li {
+    font-weight: $uomt-fw-light;
+    display: list-item;
+    list-style-type: none;
+  }
+
+  a:active, a:hover {
+    outline-width: 0;
+  }
+
+  // Quicklinks styling for both custom and main footer
+
+  ul.uomt-quicklinks {
+    clear: both;
+    max-width: 100%;
+    width: 100%;
+
+    @media screen and (min-width: $screen-sm) {
+      border-bottom: 1px solid $uomt-col-blue;
+      border-top: 1px solid $uomt-col-blue;
+    }
+  }
+  ul.uomt-quicklinks li {
+    line-height: 2.5rem * $uomt-scale;
+    clear: both;
+
+    @media screen and (min-width: $screen-sm) {
+      clear: none;
+      line-height: 1;
+    }
+  }
+  ul.uomt-quicklinks a {
+    border-radius: 3px;
+    padding: .9375rem * $uomt-scale;
+    color: #fff;
+    display: block;
+    text-decoration: none;
+    transition: background-color .2s,-webkit-transform .3s;
+    transition: background-color .2s,transform .3s;
+    transition: background-color .2s,transform .3s,-webkit-transform .3s;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    @media screen and (min-width: $screen-sm) {
+      margin: .625rem * $uomt-scale 15%;
+      text-align: center;
+      vertical-align: middle;
+
+      &:focus, &:hover {
+        background-color: $uomt-col-lighterblue;
+        text-decoration: none;
+        @include scale(1.2);
+      }
+    }
+  }
+  ul.uomt-quicklinks svg {
+    margin-bottom: .875rem * $uomt-scale;
+    margin-top: .625rem * $uomt-scale;
+
+    background-color: transparent;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 1.5rem * $uomt-scale;
+    margin-right: .625rem * $uomt-scale;
+    width: 1.5rem * $uomt-scale;
+    display: block;
+    float: left;
+
+    @media screen and (min-width: $screen-sm) {
+      float: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+div#footer footer.uomt-cta {
+  background-color: $uomt-col-blue;
+  border-bottom: 1px solid #597182;
+
+  ul.uomt-quicklinks {
+    margin: 0 auto;
+    display: table;
+    text-align: left;
+
+    @media screen and (min-width: $screen-sm) {
+      padding: 1.875rem*$uomt-scale 0;
+      text-align: center;
+    }
+  }
+
+  ul.uomt-quicklinks li {
+    max-width: $uomt-w-sml;
+    margin-right: auto;
+    letter-spacing: .0125rem * $uomt-scale;
+    width: 100%;
+
+    @media screen and (min-width: $screen-sm) {
+      display: inline-block;
+      float: none;
+      width: auto;
+    }
+  }
+
+  ul.uomt-quicklinks a {
+    font-size: .875rem * $uomt-scale;
+
+    @media screen and (min-width: $screen-sm) {
+      min-height: 6.625rem * $uomt-scale;
+    }
+  }
+}
+
+div#footer div.uomt-page-footer {
+  line-height: 1.5789;
+  font-size: 1.25rem * $uomt-scale;
+  background-color: $uomt-col-navy;
+  clear: left;
+
+  font-weight: $uomt-fw-regular;
+
+  footer {
+    max-width: $uomt-w-lge;
+    margin: 0 auto;
+    padding: .9375rem * $uomt-scale;
+    padding-bottom: 3.75rem * $uomt-scale;
+  }
+
+  // Logo
+
+  a.uomt-unimelb-lge {
+    margin: 1.875rem*$uomt-scale auto;
+    width: 16.875rem*$uomt-scale;
+    outline-color: #fff;
+    display: block;
+
+    img, svg {
+      display: block;
+      max-height: 100%;
+      width: 100%;
+    }
+  }
+
+  // People Links
+
+  ul.uomt-people-links {
+    max-width: $uomt-w-lge;
+    border-bottom: 1px solid $uomt-col-blue;
+    border-top: 1px solid $uomt-col-blue;
+    margin: 0 auto;
+    text-align: left;
+    width: 100%;
+
+    @media screen and (min-width: $screen-sm) {
+      border-bottom: 0;
+      text-align: center;
+    }
+  }
+  ul.uomt-people-links li {
+    display: inline-block;
+    list-style-type: none;
+    width: 100%;
+
+    @media screen and (min-width: $screen-sm) {
+      width: auto;
+    }
+  }
+  ul.uomt-people-links li a {
+    font-size: .625rem * $uomt-scale;
+    line-height: 1.5rem * $uomt-scale;
+    padding: 1.25rem*$uomt-scale .9375rem*$uomt-scale;
+    color: #fff;
+    display: block;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // Quicklinks
+
+  ul.uomt-quicklinks li {
+    width: 100%;
+
+    @media screen and (min-width: $screen-sm) {
+      float: left;
+      width: 16.666%;
+    }
+  }
+  ul.uomt-quicklinks a {
+    font-size: .6875rem * $uomt-scale;
+    line-height: 2.875rem * $uomt-scale;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    @media screen and (min-width: $screen-sm) {
+      min-height: 7.0625rem * $uomt-scale;
+      line-height: 1.6em;
+    }
+  }
+
+  // Indigenous acknowledgment
+
+  .uomt-ind-ack {
+    font-size: 1.125rem * $uomt-scale;
+    max-width: $uomt-w-lge;
+    padding: 2rem*$uomt-scale 0;
+    border-bottom: 1px solid $uomt-col-blue;
+    clear: both;
+    color: $uomt-col-lightblue;
+    font-family: $uomt-ff-serif;
+    font-style: italic;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  // Bottom of footer defaults
+
+  ul.uomt-page-footer-section {
+    height: 3.125rem * $uomt-scale;
+    line-height: 3.125rem * $uomt-scale;
+    border-bottom: 1px solid $uomt-col-blue;
+    clear: both;
+    float: left;
+    max-width: 100%;
+    width: 100%;
+  }
+  ul.uomt-page-footer-section li {
+    display: block;
+    float: left;
+  }
+  ul.uomt-page-footer-section a {
+    font-size: .9375rem * $uomt-scale;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // Nav
+
+  ul.uomt-page-footer-section.uomt-nav {
+    padding-bottom: .75rem * $uomt-scale;
+    padding-top: .5rem * $uomt-scale;
+    color: $uomt-col-lightblue !important;
+    height: auto;
+
+    @media screen and (min-width: $screen-sm) {
+      margin-bottom: .625rem * $uomt-scale;
+      margin-top: 1.25rem * $uomt-scale;
+      border: 0 none;
+      width: 70%;
+    }
+  }
+  ul.uomt-page-footer-section.uomt-nav li {
+    padding-bottom: .625rem * $uomt-scale;
+    padding-top: .625rem * $uomt-scale;
+    color: inherit;
+    line-height: 1.1;
+    margin-right: 6%;
+    text-align: right;
+    width: 44%;
+
+    &:first-child+li, &:first-child+li+li+li {
+      margin-left: 6%;
+      margin-right: 0;
+      text-align: left;
+    }
+
+    @media screen and (min-width: $screen-sm) {
+      padding-right: 1.875rem * $uomt-scale;
+      clear: none;
+      display: inline;
+      float: none;
+      margin-left: 0;
+      margin-right: 0;
+      padding-bottom: 0;
+      padding-top: 0;
+      width: auto;
+    }
+  }
+  ul.uomt-page-footer-section.uomt-nav a {
+    font-size: .875rem * $uomt-scale;
+    color: inherit;
+
+    &:focus, &:hover {
+      color: #fff !important;
+    }
+
+    @media screen and (min-width: $screen-sm) {
+      font-size: .9375rem * $uomt-scale;
+    }
+  }
+
+  // Social media buttons
+
+  ul.uomt-page-footer-section.uomt-social {
+    margin-bottom: 1.25rem * $uomt-scale;
+    padding-top: 1rem * $uomt-scale;
+    height: auto;
+
+    @media screen and (min-width: $screen-sm) {
+      margin-bottom: 3.75rem * $uomt-scale;
+      margin-top: 1.25rem * $uomt-scale;
+      padding-right: 1rem * $uomt-scale;
+      border: 0 none;
+      clear: none;
+      float: right;
+      text-align: right;
+      width: 30%;
+    }
+  }
+  ul.uomt-page-footer-section.uomt-social li {
+    margin-bottom: 1rem * $uomt-scale;
+    line-height: 1;
+    text-align: center;
+    width: 20%;
+
+    &.uomt-social-facebook {
+      margin-left: 20%;
+    }
+    &.uomt-social-linkedin {
+      margin-right: 20%;
+    }
+
+    @media screen and (min-width: $screen-sm) {
+      margin-left: 1.5rem * $uomt-scale;
+      display: inline;
+      float: none;
+      width: auto;
+
+      &.uomt-social-twitter {
+        width: auto;
+      }
+      &.uomt-social-facebook {
+        margin-left: 0;
+      }
+      &.uomt-social-linkedin {
+        margin-right: 0;
+      }
+    }
+  }
+  ul.uomt-page-footer-section.uomt-social a {
+    background-color: transparent;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    height: 2.25rem * $uomt-scale;
+    padding-bottom: 1rem * $uomt-scale;
+    width: 2.25rem * $uomt-scale;
+    display: inline-block;
+    //text-decoration: none;
+    overflow: hidden;
+    transition: all .2s linear;
+
+    border-radius: 3px;
+    padding-top: .375rem * $uomt-scale;
+    color: #fff;
+    vertical-align: top;
+
+    &:focus, &:hover {
+      background-color: $uomt-col-lighterblue;
+      @include scale(1.2);
+    }
+  }
+  ul.uomt-page-footer-section.uomt-social svg {
+    height: 1.5rem * $uomt-scale;
+    margin-bottom: .3125rem * $uomt-scale;
+    width: 1.5rem * $uomt-scale;
+  }
+
+  // Contact details
+
+  small {
+    font-size: .75rem * $uomt-scale;
+    line-height: 1.25rem * $uomt-scale;
+    clear: left;
+    color: $uomt-col-lightblue;
+    display: block;
+    text-align: center;
+
+    a {
+      color: inherit;
+
+      &:focus, &:hover {
+        color: #fff;
+      }
+    }
+
+    @media screen and (min-width: $screen-sm) {
+      text-align: left;
+    }
+  }
+}

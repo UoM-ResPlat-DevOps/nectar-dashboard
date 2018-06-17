@@ -1,0 +1,45 @@
+//== Global styles for Unimelb Template
+//
+//##
+
+html,
+body {
+   margin: 0;
+   padding: 0;
+   height: 100%;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+
+  // line-height for small screens (1.5789) already set by bootstrap
+  @media screen and (min-width: $screen-sm) {
+    line-height: 1.68;
+  }
+}
+
+#main_content {
+   min-height: 100%;
+   //position: relative;
+<!--[if IE 6]>
+   height: 100%;
+<![endif]-->
+   //margin-bottom: 60px;
+}
+
+div#content_body {
+  padding-left: $uomt-sidebar-width + 30px;
+  padding-right: 3rem;
+  padding-top: 2rem;
+  padding-bottom: 2em;
+
+  @media (min-width:$screen-sm) {
+    &.padding-fixed-nav {
+      padding-top: 2rem + $uomt-header-height-fixed;
+    }
+  }
+}
+
+// .dl-horizontal dt {
+//   font-weight: 600 !important;
+// }

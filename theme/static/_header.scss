@@ -1,0 +1,346 @@
+//
+// Styles - Unimelb Header
+// --------------------------------------------------
+
+//== Navbar size and position
+//
+//#
+
+div.topbar {
+  * {
+    box-sizing: border-box;
+    //margin: 0;
+    //padding: 0;
+  }
+}
+// Treated like `.uomcontent .page-header` & `.uomcontent .page-header header`
+nav.navbar {
+  background: #fff;
+  box-shadow: 0 6px 6px -3px rgba(0,0,0,.3);
+  width: 100%;
+  z-index: 4;
+  font-size: 1.25rem * $uomt-scale;
+  height: $uomt-header-height-small;
+  border: 0; // Bootstrap override
+}
+@media (min-width:$screen-sm) {
+  nav.navbar {
+    height: $uomt-header-height;
+  }
+  nav.navbar.fixed:not(.floating) {
+    position: fixed;
+    height: $uomt-header-height-fixed;
+    box-shadow: 0 3px 6px -3px rgba(0,0,0,.3);
+  }
+}
+
+//== UoM logo
+//
+//#
+
+a.uomt-page-header-logo {
+  height: 3.75rem * $uomt-scale;
+  width: 3.75rem * $uomt-scale;
+  background-color: $uomt-col-darkblue;
+  display: block;
+  left: 0;
+  padding: .5rem * $uomt-scale;
+  position: absolute;
+  top: 0;
+  transition: top .2s .3s;
+  z-index: 1; //or 5?
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+@media screen and (min-width: $screen-sm) {
+  a.uomt-page-header-logo {
+    margin-left: 2.5rem * $uomt-scale;
+    height: 8.75rem * $uomt-scale;
+    width: 8.75rem * $uomt-scale;
+    padding: 1.25rem * $uomt-scale;
+  }
+  .navbar.fixed:not(.floating) a.uomt-page-header-logo {
+    position: absolute;
+    top: -140px;
+    transition: top .2s;
+  }
+}
+
+//== Breadcrumbs
+//
+//# Templated for ID targetting which is cleaner
+
+// Styles for both .page-header-navigation and ol.page-local-history
+ol#uomt-page-local-history {
+  line-height: 5.625rem * $uomt-scale;
+  list-style-type: none;
+  color: $uomt-col-darkblue;
+  display: none;
+  margin: 0;
+  padding: 0 .9375rem*$uomt-scale 0 4.6875rem*$uomt-scale;
+  transition: padding-left .3s;
+
+  font-family: $uomt-ff-sans;
+}
+@media screen and (min-width: $screen-sm) {
+  ol#uomt-page-local-history {
+    height: $uomt-header-height;
+    padding-left: 12.8125rem * $uomt-scale;
+    margin-right: 16.25rem * $uomt-scale;
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .navbar.fixed:not(.floating) ol#uomt-page-local-history {
+    height: $uomt-header-height-fixed;
+    padding-left: .9375rem * $uomt-scale;
+    transition: padding-left .3s .1s,height .2s;
+    vertical-align: top;
+    line-height: 1;
+  }
+}
+ol#uomt-page-local-history li {
+  font-size: .9375rem * $uomt-scale;
+  padding-right: .625rem * $uomt-scale;
+  display: inline-block;
+  width: auto;
+  letter-spacing: .0125rem * $uomt-scale;
+
+  &:after {
+    padding-left: .625rem * $uomt-scale;
+    content: "/";
+    color: $uomt-col-darkblue;
+    display: inline-block;
+    font-weight: 300;
+    vertical-align: middle;
+  }
+  &:last-child:after {
+    display: none;
+  }
+}
+ol#uomt-page-local-history a {
+  color: $uomt-col-darkblue;
+  font-weight: 300;
+  display: inline;
+  vertical-align: middle;
+
+  &:active {
+    color: #000;
+  }
+  &:focus, &:hover {
+    color: $uomt-col-midblue;
+  }
+  &:hover {
+    text-decoration: underline;
+  }
+
+  & > span {
+    vertical-align: baseline;
+  }
+}
+ol#uomt-page-local-history span {
+  font-size: .9375rem * $uomt-scale;
+  height: auto;
+  line-height: 1;
+  padding: 0;
+  color: inherit;
+}
+ol#uomt-page-local-history [data-icon] {
+  margin-bottom: .25rem * $uomt-scale;
+  margin-right: .3125rem * $uomt-scale;
+  width: 1.25rem * $uomt-scale;
+  display: inline-block;
+  vertical-align: middle;
+  height: 1.25rem * $uomt-scale;
+
+  .uomt-icon {
+    height: 1.25rem * $uomt-scale;
+  }
+}
+@media screen and (min-width: $screen-sm) {
+  ol#uomt-page-local-history a,
+  ol#uomt-page-local-history span {
+    display: inline;
+  }
+
+  .navbar.fixed:not(.floating) ol#uomt-page-local-history {
+    a, span {
+      height: $uomt-header-height-fixed;
+      line-height: $uomt-header-height-fixed;
+      vertical-align: middle;
+    }
+    a>span:not([data-icon]), .context-overview, .context-overview span {
+      vertical-align: baseline;
+    }
+    a [data-icon], span [data-icon] {
+      height: 1.25rem * $uomt-scale;
+      margin-bottom: .25rem * $uomt-scale;
+      margin-right: .3125rem * $uomt-scale;
+      width: 1.25rem * $uomt-scale;
+      display: inline-block;
+      line-height: 1;
+      padding: 0;
+    }
+  }
+}
+ol#uomt-page-local-history svg {
+  @include uomt-svg;
+}
+
+// Clean up project name load
+#uomt-page-local-history {
+  .fa, .fa-list-alt {
+    display: none;
+  }
+}
+
+//== Buttons
+//
+//# Removed `nav navbar-nav navbar-right` classes from template as they
+//# conflict too much with Unimelb template styling.
+
+.uomt-page-header-tools {
+  height: $uomt-header-height-small;
+  // padding-left set instead of width as in Unimelb template, since we have
+  // more buttons
+  padding: 0 0 0 1.5625rem*$uomt-scale;
+
+  display: table-cell;
+  right: 0;
+  text-align: right;
+  top: 0;
+  vertical-align: top;
+  margin: 0;
+
+  background: #fff;
+  position: absolute;
+
+  list-style: none;
+}
+@media screen and (min-width: $screen-sm) {
+  .uomt-page-header-tools {
+    height: $uomt-header-height;
+  }
+  .navbar.fixed:not(.floating) .uomt-page-header-tools {
+    height: $uomt-header-height-fixed;
+  }
+}
+
+// li not styled in Unimelb template, keep to minimum
+.uomt-page-header-tools li {
+  float: left;
+
+  &.hide {
+    min-width: 0;
+    width: 0;
+  }
+}
+
+.uomt-page-header-tools .uomt-page-header-icon {
+  height: $uomt-header-height-small;
+
+  display: inline-block;
+
+  font-size: .5625rem * $uomt-scale;
+  padding: 0 .625rem*$uomt-scale;
+  // Used min-width rather than width here, since some of our custom buttons
+  // are wider
+  min-width: 2.5rem * $uomt-scale;
+  border-left: 1px solid #dbdbdb;
+  @include box-sizing(content-box);
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  transition: background-color .3s,color .3s,-webkit-transform .3s;
+  transition: background-color .3s,color .3s,transform .3s;
+  transition: background-color .3s,color .3s,transform .3s,-webkit-transform .3s;
+
+  color: $uomt-col-darkblue;
+  vertical-align: middle;
+  text-decoration: none;
+
+  &:hover, &:focus {
+    background-color: $uomt-col-darkblue;
+    color: #fff;
+    text-decoration: none;
+    outline: none;
+  }
+}
+@media screen and (min-width: $screen-sm) {
+  .uomt-page-header-tools .uomt-page-header-icon {
+    height: $uomt-header-height;
+    font-size: .625rem * $uomt-scale;
+    padding: 0 1.4375rem*$uomt-scale;
+  }
+  .navbar.fixed:not(.floating) .uomt-page-header-tools .uomt-page-header-icon {
+    height: $uomt-header-height-fixed;
+    border-left-color: $uomt-col-lightgray;
+    line-height: 1;
+    vertical-align: top;
+  }
+}
+
+.uomt-page-header-tools .uomt-page-header-icon svg {
+  @include uomt-svg;
+  height: 1.25rem * $uomt-scale;
+  width: 1.25rem * $uomt-scale;
+  display: block;
+  margin: .875rem*$uomt-scale auto .25rem*$uomt-scale;
+}
+@media screen and (min-width: $screen-sm) {
+  .uomt-page-header-tools .uomt-page-header-icon svg {
+    height: 1.5rem * $uomt-scale;
+    margin-bottom: .625rem * $uomt-scale;
+    margin-top: 1.625rem * $uomt-scale;
+    width: 1.5rem * $uomt-scale;
+  }
+  .navbar.fixed:not(.floating) .uomt-page-header-tools .uomt-page-header-icon svg {
+    height: .875rem * $uomt-scale;
+    margin-bottom: .1875rem * $uomt-scale;
+    margin-top: .4375rem * $uomt-scale;
+    width: .875rem * $uomt-scale;
+  }
+}
+
+//== Button menus
+//
+//#
+
+.navbar .uomt-page-header-tools {
+  li > .dropdown-menu {
+    // Sets the distance between the menu boxes and the navbar
+    margin-top: 2px;
+  }
+
+  ul.dropdown-menu {
+    left: auto;
+    right: 0;
+    font-size: 14px;
+
+    li {
+      width: 100%;
+    }
+
+    li > a:hover, .active > a, .active > a:hover {
+      background-color: $uomt-col-lightestblue;
+    }
+
+    &.context-selection {
+      @media(min-width: $screen-sm) {
+        overflow-y: inherit;
+        max-height: inherit;
+      }
+    }
+  }
+
+  .dropdown-header-username {
+    text-transform: none;
+    margin-left: 0.75rem;
+  }
+}

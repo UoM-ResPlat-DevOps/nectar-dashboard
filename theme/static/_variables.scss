@@ -3,25 +3,115 @@
 // in Sass 3.3 this can be improved with: function-exists(twbs-font-path)
 $bootstrap-sass-asset-helper: (twbs-font-path("") != unquote('twbs-font-path("")')) !default;
 //
-// Variables
+// Variables - Unimelb Specific
 // --------------------------------------------------
 
+//== Unimelb Design System Globals
+//
+//## <https://github.com/unimelb/unimelb-design-system/blob/aa5958f5fa6f34338fd6d8a600fa49cf87d5f0b1/assets/shared/_globals.css>
+
+//** Scaling
+//## This var is used to convert rem values from the UoM template CSS for
+//## use here (this makes inspection of the UoM templates easier). The scale is
+//## 1.6 because html { font-size: 10px; } is set in Horizon vs. 16px in UoM.
+$uomt-scale: 1.6;
+
+//** Colors
+$uomt-col-darkgray: #333;
+$uomt-col-midgray: #666;
+$uomt-col-midgrayer: #777;
+$uomt-col-gray: #adb8c1;
+$uomt-col-lightgray: #f6f6f6;
+$uomt-col-lightergray: #e0e0e0;
+
+$uomt-col-navy: #0c304a;
+$uomt-col-blue: #304e64;
+$uomt-col-menu: #036;
+$uomt-col-darkblue: #004576;
+$uomt-col-borderblue: #7399b7;
+$uomt-col-midblue: #366996;
+$uomt-col-lightblue: #82a1bd;
+$uomt-col-lighterblue: #006fdc;
+$uomt-col-lightestblue: #e1eaf5;
+$uomt-col-paleblue: #f2f5f8;
+
+$uomt-col-paleyellow: #fffbcc;
+$uomt-col-palegreen: #d2f1cf;
+$uomt-col-salmon: #ea4f62;
+$uomt-col-bronze: #e5e1dc;
+$uomt-col-yellow: #eecc00;
+
+$uomt-col-green: #008a00;
+$uomt-col-cherry: #df0620;
+
+$uomt-col-twitter: #55acee;
+
+//** Layout widths
+$uomt-w-sml: 43.75rem * $uomt-scale;
+$uomt-w-mid: 56.25rem * $uomt-scale;
+$uomt-w-lge: 87.5rem * $uomt-scale;
+
+//** Font stacks
+$uomt-ff-sans: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+$uomt-ff-fixed: 'Courier New', 'Courier', fixed;
+$uomt-ff-serif: 'Georgia', 'Times New Roman', 'Times', serif;
+
+//** Font weights
+$uomt-fw-thin: 100;
+$uomt-fw-light: 300;
+$uomt-fw-regular: 400;
+$uomt-fw-bold: 700;
+
+//** Helper variables - DO NOT EDIT
+$uomt-header-height: 5.625rem * $uomt-scale; // 90px
+$uomt-header-height-small: 3.75rem * $uomt-scale; // 60px
+$uomt-header-height-fixed: 2.5rem * $uomt-scale; // 40px
+$uomt-sidebar-width: 300px;
+
+
+//== Unimelb Brand Hub
+//
+//##
+
+//** Colours
+//## <https://brandhub.unimelb.edu.au/guidelines/colour-palette>
+$uom-blue:              #094183;
+$uom-black-dark:        #000;
+$uom-black-light:       #99a2aa;
+$uom-teal-dark:         #3fa7c2;
+$uom-teal-light:        #7cbdcd;
+$uom-emerald-dark:      #59b17f;
+$uom-emerald-light:     #98d6c3;
+$uom-blue-dark:         #5d7ebd;
+$uom-blue-light:        #adcdf0;
+$uom-yellow-dark:       #ecae65;
+$uom-yellow-light:      #ffdca2;
+$uom-orange-dark:       #e77052;
+$uom-orange-light:      #ffa478;
+$uom-green-dark:        #a0d172;
+$uom-green-light:       #dae299;
+$uom-purple-dark:       #7283be;
+$uom-purple-light:      #afbce0;
+$uom-pink-dark:         #ee8889;
+$uom-pink-light:        #ffbccc;
+
+$uom-ff-sans: 'Source Sans Pro', 'Gill Sans', 'Trebuchet MS', Arial, sans-serif;
+
+//
+// Variables - Bootstrap
+// --------------------------------------------------
 
 //== Colors
 //
 //## Gray and brand colors for use across Bootstrap.
 
-
-/* Bootstrap variables overrides */
-
-
 $gray-darker:            lighten(#000, 13.5%) !default; // #222
 $gray-dark:              lighten(#000, 20%) !default;   // #333
 $gray:                   #6e6e6e !default;
-$gray-light:             #BBB !default;
+$gray-light:             #bbb !default;
 $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
 
-$brand-primary:         #428bca !default;
+$brand-primary:         $uomt-col-darkblue !default;
 $brand-success:         #5cb85c !default;
 $brand-info:            #5bc0de !default;
 $brand-warning:         #f0ad4e !default;
@@ -31,29 +121,31 @@ $brand-danger:          #d9534f !default;
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
+//## https://github.com/unimelb/unimelb-design-system/blob/aa5958f5fa6f34338fd6d8a600fa49cf87d5f0b1/assets/components/base/_typography.css
 
 //** Background color for `<body>`.
 $body-bg:               #fff !default;
 //** Global text color on `<body>`.
-$text-color:            $gray-dark !default;
+$text-color:            #000 !default;
 
 //** Global textual link color.
-$link-color:            $brand-primary !default;
-//** Link hover color set via `darken()` function.
-$link-hover-color:      darken($link-color, 15%) !default;
+$link-color:            $uomt-col-lighterblue !default;
+//** Link hover color.
+//   (Should be darken($link-color, 15%) but that produces #004890.)
+$link-hover-color:      #00478f !default;
 
 
 //== Typography
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
+$font-family-sans-serif:  $uomt-ff-sans !default;
+$font-family-serif:       $uomt-ff-serif !default;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
-$font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
+$font-family-monospace:   $uomt-ff-fixed !default;
 $font-family-base:        $font-family-sans-serif !default;
 
-$font-size-base:          13px !default;
+$font-size-base:          14px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default;
 $font-size-small:         ceil(($font-size-base * 0.85)) !default;
 
@@ -65,13 +157,13 @@ $font-size-h5:            $font-size-base !default;
 $font-size-h6:            ceil(($font-size-base * 0.85)) !default;
 
 //** Unit-less `line-height` for use in components like buttons.
-$line-height-base:        1.428571429 !default; // 20/14
+$line-height-base:        1.5789 !default;
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
-$line-height-computed:    floor(($font-size-base * $line-height-base)) !default;
+$line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~23px
 
 //** By default, this inherits from the `<body>`.
 $headings-font-family:    inherit !default;
-$headings-font-weight:    500 !default;
+$headings-font-weight:    400 !default;
 $headings-line-height:    1.1 !default;
 $headings-color:          inherit !default;
 
@@ -90,7 +182,7 @@ $icon-font-svg-id:        "glyphicons_halflingsregular" !default;
 
 //== Components
 //
-//## Define common padding and border radius sizes and more.
+//## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
 $padding-base-vertical:     6px !default;
 $padding-base-horizontal:   12px !default;
@@ -154,24 +246,24 @@ $btn-default-bg:                 #fff !default;
 $btn-default-border:             #ccc !default;
 
 $btn-primary-color:              #fff !default;
-$btn-primary-bg:                 $brand-primary !default;
-$btn-primary-border:             darken($btn-primary-bg, 5%) !default;
+$btn-primary-bg:                 $uomt-col-midblue !default;
+$btn-primary-border:             $btn-primary-bg !default;
 
 $btn-success-color:              #fff !default;
 $btn-success-bg:                 $brand-success !default;
-$btn-success-border:             darken($btn-success-bg, 5%) !default;
+$btn-success-border:             $btn-success-bg !default;
 
 $btn-info-color:                 #fff !default;
 $btn-info-bg:                    $brand-info !default;
-$btn-info-border:                darken($btn-info-bg, 5%) !default;
+$btn-info-border:                $btn-info-bg !default;
 
 $btn-warning-color:              #fff !default;
 $btn-warning-bg:                 $brand-warning !default;
-$btn-warning-border:             darken($btn-warning-bg, 5%) !default;
+$btn-warning-border:             $btn-warning-bg !default;
 
 $btn-danger-color:               #fff !default;
 $btn-danger-bg:                  $brand-danger !default;
-$btn-danger-border:              darken($btn-danger-bg, 5%) !default;
+$btn-danger-border:              $btn-danger-bg !default;
 
 $btn-link-disabled-color:        $gray-light !default;
 
@@ -192,13 +284,13 @@ $input-border:                   #ccc !default;
 //** `<input>` border radius
 $input-border-radius:            $border-radius-base !default;
 //** Border color for inputs on focus
-$input-border-focus:             #66afe9 !default;
+$input-border-focus:             $uomt-col-darkblue !default;
 
 //** Placeholder text color
 $input-color-placeholder:        $gray-light !default;
 
 //** Default `.form-control` height
-$input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2.5) !default;
+$input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
 //** Large `.form-control` height
 $input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
 //** Small `.form-control` height
@@ -246,6 +338,10 @@ $dropdown-header-color:          $gray !default;
 
 //** Deprecated `$dropdown-caret-color` as of v3.1.0
 $dropdown-caret-color:           #000 !default;
+
+//** Required for queens
+$dropdown-item-padding-vertical: 0 !default;
+$dropdown-item-padding-horizontal: 0 !default;
 
 
 //-- Z-index master list
@@ -343,29 +439,29 @@ $container-lg:                 $container-large-desktop !default;
 //##
 
 // Basics of a navbar
-$navbar-height:                    36px !default;
-$navbar-margin-bottom:             $line-height-computed !default;
+$navbar-height:                    0 !default;
+$navbar-margin-bottom:             0 !default;
 $navbar-border-radius:             0 !default;
-$navbar-padding-horizontal:        floor(($grid-gutter-width / 2)) !default;
-$navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2) !default;
+$navbar-padding-horizontal:        0 !default;
+$navbar-padding-vertical:          0 !default;
 $navbar-collapse-max-height:       340px !default;
 
-$navbar-default-color:             #333 !default;
-$navbar-default-bg:                #eee !default;
-$navbar-default-border:            #ccc !default;
+$navbar-default-color:             $link-color !default;
+$navbar-default-bg:                #fff !default;
+$navbar-default-border:            transparent !default;
 
 // Navbar links
 $navbar-default-link-color:                $navbar-default-color !default;
-$navbar-default-link-hover-color:          $navbar-default-color !default;
-$navbar-default-link-hover-bg:             #d5d5d5 !default;
-$navbar-default-link-active-color:         $navbar-default-color !default;
-$navbar-default-link-active-bg:            $navbar-default-link-hover-bg !default;
+$navbar-default-link-hover-color:          $uomt-col-midblue !default;
+$navbar-default-link-hover-bg:             $uomt-col-darkblue !default;
+$navbar-default-link-active-color:         #000 !default;
+$navbar-default-link-active-bg:            transparent !default;
 $navbar-default-link-disabled-color:       $gray-light !default;
 $navbar-default-link-disabled-bg:          transparent !default;
 
 // Navbar brand label
-$navbar-default-brand-color:               $navbar-default-link-color !default;
-$navbar-default-brand-hover-color:         darken($navbar-default-brand-color, 10%) !default;
+$navbar-default-brand-color:               $uomt-col-darkblue !default;
+$navbar-default-brand-hover-color:         $uomt-col-darkblue !default;
 $navbar-default-brand-hover-bg:            transparent !default;
 
 // Navbar toggle
@@ -405,8 +501,8 @@ $navbar-inverse-toggle-border-color:        #333 !default;
 //##
 
 //=== Shared nav styles
-$nav-link-padding:                          0.8em 1.2em !default;
-$nav-link-hover-bg:                         $gray-lighter !default;
+$nav-link-padding:                          0.5em 1.2em !default;
+$nav-link-hover-bg:                         #dbdcdf !default;
 
 $nav-disabled-link-color:                   $gray-light !default;
 $nav-disabled-link-hover-color:             $gray-light !default;
@@ -426,9 +522,9 @@ $nav-tabs-justified-link-border-color:            #ddd !default;
 $nav-tabs-justified-active-link-border-color:     $body-bg !default;
 
 //== Pills
-$nav-pills-border-radius:                   $border-radius-base !default;
-$nav-pills-active-link-hover-bg:            $component-active-bg !default;
-$nav-pills-active-link-hover-color:         $component-active-color !default;
+$nav-pills-border-radius:                   0 !default;
+$nav-pills-active-link-hover-bg:            #e3e4e6 !default;
+$nav-pills-active-link-hover-color:         $gray !default;
 
 
 //== Pagination
@@ -575,10 +671,10 @@ $label-link-hover-color:      #fff !default;
 //##
 
 //** Padding applied to the modal body
-$modal-inner-padding:         15px !default;
+$modal-inner-padding:         25px !default;
 
 //** Padding applied to the modal title
-$modal-title-padding:         15px !default;
+$modal-title-padding:         25px !default;
 //** Modal title line-height
 $modal-title-line-height:     $line-height-base !default;
 
@@ -598,8 +694,8 @@ $modal-header-border-color:   #e5e5e5 !default;
 //** Modal footer border color
 $modal-footer-border-color:   $modal-header-border-color !default;
 
-$modal-lg:                    960px !default;
-$modal-md:                    732px !default;
+$modal-lg:                    900px !default;
+$modal-md:                    825px !default; // changed from 732px so Advanced Options is on same line
 $modal-sm:                    300px !default;
 
 //== Alerts
@@ -689,16 +785,16 @@ $list-group-link-heading-color: #333 !default;
 $panel-bg:                    #fff !default;
 $panel-body-padding:          15px !default;
 $panel-heading-padding:       10px 15px !default;
-$panel-footer-padding:        15px !default;
+$panel-footer-padding:        $panel-heading-padding !default;
 $panel-border-radius:         $border-radius-base !default;
 
 //** Border color for elements within panels
 $panel-inner-border:          #ddd !default;
-$panel-footer-bg:             $panel-bg !default;
+$panel-footer-bg:             #f5f5f5 !default;
 
 $panel-default-text:          $gray-dark !default;
 $panel-default-border:        #ddd !default;
-$panel-default-heading-bg:    $panel-bg !default;
+$panel-default-heading-bg:    #f5f5f5 !default;
 
 $panel-primary-text:          #fff !default;
 $panel-primary-border:        $brand-primary !default;
@@ -776,9 +872,9 @@ $breadcrumb-padding-horizontal: 15px !default;
 //** Breadcrumb background color
 $breadcrumb-bg:                 #f5f5f5 !default;
 //** Breadcrumb text color
-$breadcrumb-color:              $gray !default;
+$breadcrumb-color:              #ccc !default;
 //** Text color of current page in the breadcrumb
-$breadcrumb-active-color:       $gray !default;
+$breadcrumb-active-color:       $gray-light !default;
 //** Textual separator for between breadcrumb elements
 $breadcrumb-separator:          "/" !default;
 
@@ -811,17 +907,17 @@ $close-text-shadow:           0 1px 0 #fff !default;
 
 //== Code
 //
-//##
+//## https://github.com/unimelb/unimelb-design-system/blob/aa5958f5fa6f34338fd6d8a600fa49cf87d5f0b1/assets/components/text/_code.css
 
-$code-color:                  #c7254e !default;
-$code-bg:                     #f9f2f4 !default;
+$code-color:                  $uomt-col-midgray !default;
+$code-bg:                     #f1f1f1 !default;
 
-$kbd-color:                   #fff !default;
-$kbd-bg:                      #333 !default;
+$kbd-color:                   #fff !default; // ???
+$kbd-bg:                      #333 !default; // ???
 
-$pre-bg:                      #f5f5f5 !default;
-$pre-color:                   $gray-dark !default;
-$pre-border-color:            #ccc !default;
+$pre-bg:                      #f1f1f1 !default;
+$pre-color:                   $uomt-col-midgray !default;
+$pre-border-color:            #e4e4e4 !default;
 $pre-scrollable-max-height:   340px !default;
 
 
@@ -849,5 +945,3 @@ $page-header-border-color:    $gray-lighter !default;
 $dl-horizontal-offset:        $component-offset-horizontal !default;
 //** Horizontal line color.
 $hr-border:                   $gray-lighter !default;
-
-
