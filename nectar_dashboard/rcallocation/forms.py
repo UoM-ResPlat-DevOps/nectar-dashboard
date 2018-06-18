@@ -133,18 +133,25 @@ class BaseAllocationForm(ModelForm):
 
 
 class AllocationRequestForm(BaseAllocationForm):
-
+    # TODO: Set prefix as a var in HORIZON_CONFIG and call here. Consider also
+    # validating the prefix.
+    prefix = 'unimelb-'
+    regex = ('^' + prefix + '[a-zA-Z][-_a-zA-Z0-9]{1,' + str(31-len(prefix))
+        + '}$')
     project_name = CharField(
         validators=[
-            RegexValidator(regex=r'^[a-zA-Z][-_a-zA-Z0-9]{1,31}$',
-                           message='Letters, numbers, underscore and '
-                                   'hyphens only. Must start with a letter.')],
+            RegexValidator(regex=regex,
+                           message='Letters, numbers, underscores and hyphens '
+                                   'only. 32 characters maximum. Must start '
+                                   'with {prefix} and have at least 2 '
+                                   'characters.'.format(prefix=prefix))],
         max_length=32,
         label='Project Identifier',
         required=True,
+        initial=prefix,
         help_text='A short name used to identify your project.<br>'
                   'Letters, numbers, underscores and hyphens only.<br>'
-                  'Must start with a letter and be less than 32 characters.',
+                  'Must be less than 32 characters.',
         widget=TextInput(attrs={'autofocus': 'autofocus'}))
 
     def clean(self):

@@ -599,3 +599,18 @@ function change_core_hours(number_of_cores, hours_diff){
     var input_number_core_hours = $("input#id_core_hours");
     input_number_core_hours.val(estimated_core_hours);
 }
+
+// Persist prefix on input edits
+// TODO: Set prefix as a var in HORIZON_CONFIG and call here. Consider also
+// validating the prefix.
+$(document).ready(function(){
+  $("input#id_project_name").keydown(function(e) {
+  var oldvalue=$(this).val();
+  var field=this;
+  setTimeout(function () {
+      if(field.value.indexOf('unimelb-') !== 0) {
+          $(field).val(oldvalue);
+      }
+  }, 1);
+  });
+})
