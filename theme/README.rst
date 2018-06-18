@@ -9,7 +9,7 @@ Todo
   the brand name (hardcoded as 'Melbourne Research Cloud') load from
   ``{% site_branding %}``.
 * ``templates/header/_header.html``: Safe load support link as a variable set
-  in HORIZON_CONFIG.
+  in ``HORIZON_CONFIG``.
 
 Development
 ===========
@@ -105,6 +105,18 @@ development of this theme.
   https://web.unimelb.edu.au/layouts/with-login/
 * The login/splash page and the sidebar were based on:
   https://research.unimelb.edu.au/infrastructure/research-platform-services/services/research-cloud
+
+Notes
+-----
+
+If you have any issues with the SCSS being compressed run the following
+commands (replacing ``/path/to`` with the appropriate path)::
+
+  sudo rm /path/to/static/themes/custom/*
+  sudo /path/to/horizon-manage.py mtime_cache --clean
+  sudo /path/to/horizon-manage.py collectstatic --noinput
+  sudo /path/to/horizon-manage.py compress
+  sudo service apache2 restart
 
 Browser compatibility *(incomplete)*
 ====================================
