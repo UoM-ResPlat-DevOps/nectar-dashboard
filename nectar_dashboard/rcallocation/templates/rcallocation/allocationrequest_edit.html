@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load url from future %}
 
 {% block title %}Allocation Request{% endblock title %}
 
@@ -46,10 +47,9 @@
     {% block form_intro %}
     <br/>
     <p>
-      This form allows you to request a project specific
-      allocation on the Nectar Research Cloud.
+      This form allows you to request a project specific allocation on The University of Melbourne Research Cloud.
     <br/>
-    Allocations take up to 3 weeks to process. If you have any questions please email <a href="mailto:support@nectar.org.au">support@nectar.org.au</a>
+    Allocations take up to 3 weeks to process. If you have any questions please email <a href="mailto:rc-support@unimelb.edu.au">rc-support@unimelb.edu.au</a>
     </p>
     <p>
       <span class="label label-info">Note:</span>
@@ -86,6 +86,31 @@
     <div class="row">
       <div class="col-md-12">
         {% include "rcallocation/field.html" with field=form.project_description %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {% include "rcallocation/field.html" with field=form.requester_name %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {% include "rcallocation/field.html" with field=form.requester_phone %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {% include "rcallocation/field.html" with field=form.requester_dept %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {% include "rcallocation/field.html" with field=form.requester_faculty %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {% include "rcallocation/field.html" with field=form.requester_role %}
       </div>
     </div>
     <div class="row">
@@ -155,11 +180,13 @@
       <div class="col-md-12">
         <h2>Usage Information</h2>
         <hr/>
+        {% include "rcallocation/field.html" with field=form.use_category %}
         {% include "rcallocation/field.html" with field=form.use_case %}
         {% include "rcallocation/field.html" with field=form.usage_patterns %}
         {% include "rcallocation/field.html" with field=form.allocation_home %}
         {% include "rcallocation/field.html" with field=form.geographic_requirements %}
         {% include "rcallocation/field.html" with field=form.estimated_number_users %}
+        {% include "rcallocation/field.html" with field=form.use_other %}
       </div>
     </div>
     <div class="row">
@@ -199,11 +226,10 @@
     <div class="row">
       <div class="institution_formset">
         <div class="col-md-12">
-          <h2>Supported Institutions</h2>
+          <h2>Collaborating Institutions</h2>
           <hr/>
           <span class="label label-info">Note:</span>
-          Specify which universities or research institutions will
-          be supported by the application or specify 'all'.
+          Specify which universities or research institutions this project intends to collaborate with.
           <br/>
           <br/>
           {{ institution_formset.management_form }}
@@ -243,21 +269,22 @@
       <div class="col-md-12">
         <h2>Research Grant Information</h2>
         <hr/>
-	{% if grant_formset.non_form_errors %}
-	<div class="alert alert-danger" role="alert"
-	  {{ grant_formset.non_form_errors }}
-	</div>
-	{% endif %}
+      	{% if grant_formset.non_form_errors %}
+      	<div class="alert alert-danger" role="alert">
+      	  {{ grant_formset.non_form_errors }}
+      	</div>
+      	{% endif %}
         <p><span class="label label-info">Note:</span>
-	  Research grant information aids in the assessment of research allocations and indicates the scale of the research supported. You must put at least one grant, or specify you have no grants for the project</p>
+	         Research grant information aids in the assessment of research allocations and indicates the scale of the research supported. You must put at least one grant, or specify you have no grants for the project
+        </p>
         <p>A National project allocation request can only be approved if the project is:</p>
-	  <ul>
-	    <li>funded through a <a href="https://docs.education.gov.au/system/files/doc/other/2016_acgr_listing_final.pdf">national competitive research grant</a></li>
-	    <li>funded by, or supports, a <a href="https://www.education.gov.au/funded-research-infrastructure-projects">National Collaborative Research Infrastructure Strategy</a> (NCRIS) capability</li>
-	    <li>funded by Nectar, ANDS or RDS (e.g. a Virtual Laboratory).</li>
-	  </ul>
-	<p>Note that if a project meets the above criteria, it is not automatically entitled to a national allocation. In some cases it may be more suited to a local allocation.</p>
-	<p>If your project is not eligible for a national allocation it may receive a local (node-prioritised) allocation at a particular node.</p>
+    	  <ul>
+    	    <li>funded through a <a href="https://docs.education.gov.au/system/files/doc/other/2016_acgr_listing_final.pdf">national competitive research grant</a></li>
+    	    <li>funded by, or supports, a <a href="https://www.education.gov.au/funded-research-infrastructure-projects">National Collaborative Research Infrastructure Strategy</a> (NCRIS) capability</li>
+    	    <li>funded by Nectar, ANDS or RDS (e.g. a Virtual Laboratory).</li>
+    	  </ul>
+        <p>Note that if a project meets the above criteria, it is not automatically entitled to a national allocation. In some cases it may be more suited to a local allocation.</p>
+        <p>If your project is not eligible for a national allocation it may receive a local (node-prioritised) allocation at a particular node.</p>
         <br/>
         <br/>
         <div class="grant_formset">
@@ -270,49 +297,54 @@
         {% include "rcallocation/medium_field.html" with field=form.ncris_support %}
       </div>
     </div>
-    <div class="form-actions">
-      <input type="submit" value="Submit" class="btn btn-primary"/>
+    <div class="row">
+      <div class="col-md-12">
+        {% include "rcallocation/inline_field.html" with field=form.accepted_terms %}
+      </div>
+      <div class="form-actions">
+        <input type="submit" value="Submit" class="btn btn-primary"/>
+      </div>
+      <script>
+        /* For browsers that don't recognize the autofocus attribute... */
+        if (!("autofocus" in document.createElement("input"))) {
+          document.getElementById("id_project_description").focus();
+        }
+
+        $(document).ready(function() {
+          $('div#quota_formset').formset({
+            prefix: 'quotas',
+            service_types: {{ service_types|safe }},
+            resources: {{ resources|safe }},
+            zones: {{ zones|safe }},
+          });
+        });
+
+        $(document).ready(function() {
+          $('div.institution_formset').mformset({
+            prefix: 'institutions',
+            formset_class_id: 'institution_formset',
+            field_name: 'name'
+          });
+        });
+
+        $(document).ready(function() {
+          $('div.publication_formset').mformset({
+            prefix: 'publications',
+            formset_class_id: 'publication_formset',
+            field_name: 'publication',
+            input_style_css:'medium_width',
+            show_label:true
+          });
+        });
+
+        $(document).ready(function() {
+          $('div.grant_formset').gformset({
+            prefix: 'grants',
+            formset_class_id: 'grant_formset'
+          });
+        });
+      </script>
     </div>
-    <script>
-      /* For browsers that don't recognize the autofocus attribute... */
-      if (!("autofocus" in document.createElement("input"))) {
-        document.getElementById("id_project_description").focus();
-      }
-
-      $(document).ready(function() {
-        $('div#quota_formset').formset({
-          prefix: 'quotas',
-          service_types: {{ service_types|safe }},
-          resources: {{ resources|safe }},
-          zones: {{ zones|safe }},
-        });
-      });
-
-      $(document).ready(function() {
-        $('div.institution_formset').mformset({
-          prefix: 'institutions',
-          formset_class_id: 'institution_formset',
-          field_name: 'name'
-        });
-      });
-
-      $(document).ready(function() {
-        $('div.publication_formset').mformset({
-          prefix: 'publications',
-          formset_class_id: 'publication_formset',
-          field_name: 'publication',
-          input_style_css:'medium_width',
-          show_label:true
-        });
-      });
-
-      $(document).ready(function() {
-        $('div.grant_formset').gformset({
-          prefix: 'grants',
-          formset_class_id: 'grant_formset'
-        });
-      });
-    </script>
   </form>
 </div>
 {% endblock %}

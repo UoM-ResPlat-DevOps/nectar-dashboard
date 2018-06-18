@@ -15,6 +15,9 @@
         <br/>
         <br/>
 
+        <div class="col-md-12">
+            {% include "rcallocation/inline_field.html" with field=investigator_form.requester_is_ci %}
+        </div>
         <div class="col-xs-3 col-sm-2">
             {% include "rcallocation/field.html" with field=investigator_form.title %}
         </div>

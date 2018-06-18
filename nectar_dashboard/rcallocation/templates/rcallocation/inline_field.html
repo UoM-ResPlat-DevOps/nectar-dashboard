@@ -1,0 +1,29 @@
+{% if field %}
+  <div class="form-group allocation-inline {% if field.errors %}has-error{% endif %}">
+    <label for="id_{{ field.html_name }}">
+      {% autoescape off %}{{ field.label }}{% endautoescape %}
+      {% if field.field.required %}
+        <span class="glyphicon glyphicon-asterisk text-primary"></span>
+      {% endif %}
+      {% block help_sp %}
+      &nbsp;&nbsp;&nbsp;<span title="{{ field.label }}" id="id_{{ field.html_name }}" class="help-icon-sp"> <img class="help-icon" src='{{ STATIC_URL }}rcportal/img/help.png'> </span>
+      {% endblock %}
+   </label>
+    <div class="controls">
+      <div class="input-group">
+        {% block field %}
+          {{ field }}
+        {% endblock %}
+      </div>
+    </div>
+    {% for error in field.errors %}
+    <span class="help-block">{{ error }}</span>
+    {% endfor %}
+  </div>
+  {% if field.help_text %}
+    <span class="help-block">
+      <div id="id_{{ field.html_name }}" class="help-text-div">{% autoescape off %}{{ field.help_text }}{% endautoescape %}</div>
+    </span>
+  {% endif %}
+  <div class="label-resource-help"></div>
+{% endif %}

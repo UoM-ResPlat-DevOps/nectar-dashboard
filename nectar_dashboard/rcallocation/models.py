@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 import logging
 
 from django.core.mail import EmailMessage
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.loader import get_template
@@ -14,6 +14,7 @@ from django.template import Context
 from django.conf import settings
 
 import for_choices
+from requester_choices import DEPT_CHOICE, FACULTY_CHOICE, REQUESTER_ROLE_CHOICE, USE_CATEGORY_CHOICE
 from allocation_home_choices import ALLOC_HOME_CHOICE
 from project_duration_choices import DURATION_CHOICE
 from grant_type import GRANT_TYPES
@@ -135,6 +136,49 @@ class AllocationRequest(models.Model):
                      and ask them to correct your e-mail address!"""
     )
 
+    requester_name = models.CharField(
+        'Name of requester',
+        max_length=255,
+        blank=False,
+        null=True,
+        help_text='Name of the requester.'
+    )
+
+    requester_phone = models.CharField(
+        'Contact phone number',
+        max_length=255,
+        blank=False,
+        null=True,
+        help_text='Phone number of requester.'
+    )
+
+    requester_dept = models.CharField(
+        'Department this project is for',
+        max_length=255,
+        choices=DEPT_CHOICE,
+        blank=False,
+        null=True,
+        help_text='Select the main department this project is for.'
+    )
+
+    requester_faculty = models.CharField(
+        'Faculty this project is for',
+        max_length=255,
+        choices=FACULTY_CHOICE,
+        blank=False,
+        null=True,
+        help_text=''
+    )
+
+    requester_role = models.CharField(
+        'Your role',
+        max_length=255,
+        choices=REQUESTER_ROLE_CHOICE,
+        blank=False,
+        null=True,
+        help_text=''
+    )
+
     start_date = models.DateField(
         'Start date',
         default=datetime.date.today,
@@ -167,8 +211,17 @@ class AllocationRequest(models.Model):
 
     approver_email = models.EmailField('Approver email', blank=True)
 
+    use_category = models.CharField(
+        'Category of work',
+        max_length=255,
+        choices=USE_CATEGORY_CHOICE,
+        blank=False,
+        null=True,
+        help_text=''
+    )
+
     use_case = models.TextField(
-        "Research use case",
+        "Use case",
         max_length=4096,
         help_text="""Provide a very brief overview of your research project,
         and how you will use the cloud to support your project.""")
@@ -181,12 +234,13 @@ class AllocationRequest(models.Model):
         Will your instances be long running or created and deleted as needed
         Your answers here will help us.""")
 
+    # TODO: Ensure this sets to default regardless of whether it's in the form
     allocation_home = models.CharField(
         "Allocation home location",
         choices=ALLOC_HOME_CHOICE,
         blank=False,
         null=False,
-        default='national',
+        default='melbourne',
         max_length=128,
         help_text="""You can provide a primary location where you expect to
                 use most resources, effectively the main Nectar site for your
@@ -198,10 +252,11 @@ class AllocationRequest(models.Model):
                 """
     )
 
+    # TODO: Consider renaming field
     geographic_requirements = models.TextField(
         max_length=1024,
         blank=True,
-        verbose_name="Additional location requirements",
+        verbose_name="Special requirements",
         help_text="""Indicate to the allocations committee any special
                 geographic requirements that you may need, e.g. to run
                 at more than one node.""")
@@ -216,6 +271,14 @@ class AllocationRequest(models.Model):
             'min_value': 'The estimated number of users must be great than 0'},
         help_text="""Estimated number of users, researchers and collaborators
         to be supported by the allocation.""")
+
+    use_other = models.TextField(
+        'List other capabilities you use/intend to use with this project',
+        max_length=1024,
+        blank=True,
+        help_text="""e.g. AWS, Google compute, Nectar, other NCRIS platforms,
+            ..."""
+    )
 
     FOR_CHOICES = for_choices.FOR_CHOICES
     PERCENTAGE_CHOICES = (
@@ -296,6 +359,22 @@ class AllocationRequest(models.Model):
         max_length=128,
         help_text="""You can choose the node that complements
                     the National Funding."""
+    )
+
+    accepted_terms = models.CharField(
+        """I have read and accepted the <a href="/terms" target="_blank">
+            University of Melbourne - Terms and Conditions</a>""",
+        max_length=255
+        choices=(
+            ('yes', 'Yes'),
+            ('no', 'No'),
+        ),
+        blank=False,
+        null=True,
+        validators=[RegexValidator(
+            regex=r'^yes$',
+            message="You must accept the Terms and Conditions."
+        )],
     )
 
     provisioned = models.BooleanField(default=False)
@@ -582,6 +661,17 @@ class Quota(models.Model):
 class ChiefInvestigator(models.Model):
     allocation = models.ForeignKey(AllocationRequest,
                                    related_name='investigators')
+
+    requester_is_ci = models.CharField(
+        max_length=255
+        'I am the Chief Investigator',
+        choices=(
+            ('yes', 'Yes'),
+            ('no', 'No'),
+        ),
+        blank=False,
+        null=True,
+    )
 
     title = models.CharField(
         'Title',
