@@ -1,11 +1,3 @@
-div.topbar {
-  background: none;
-}
-
-div#content_body {
-  padding-top: 20px;
-}
-
 div#content_body .page-header {
   display: none;
 }
@@ -22,81 +14,23 @@ div#services_region_switcher {
   border-left-color: #FBE397;
 }
 
-.dropdown-menu li > a:hover, .dropdown-menu .active > a, .dropdown-menu .active > a:hover {
-  background-color: #FBE397;
-  color: inherit;
-}
-
 .dropdown-menu .divider {
   display: none;
 }
 
-#footer a {
-    background: none;
-    color: #bbb;
-}
-
-#splash .shibboleth {
-  background: #fff url(../img/logo-splash.svg) no-repeat center 35px;
-}
-
-#splash .login.shibboleth input {
-  width: 100px;
-}
-
-html,
-body {
-   margin: 0;
-   padding: 0;
-   height: 100%;
-}
-
-body {
-}
-
-#container {
-   min-height: 100%;
-   position: relative;
-<!--[if IE 6]>
-   height: 100%;
-<![endif]-->
-   margin-bottom: 60px;   /* Height of the footer */
-}
-
-body#splash #footer {
-    bottom: 0;
-}
-
-#footer {
-    width: 100%;
-    height: 60px;   /* Height of the footer */
-}
-
-#footer .wrapper {
-    margin-top: 10px;
-    padding: 14px;
-    align: middle;
-    text-align: center;
-}
-
-#footer a {
-    background: none;
-    color: #bbb;
-}
-
-.dl-horizontal dt {
-/*    clear: left; */
-    float: left;
-    overflow: hidden;
-    text-align: right;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 120px;
-}
-
-.dl-horizontal dd {
-    margin-left: 130px;
-}
+// .dl-horizontal dt {
+// /*    clear: left; */
+//     float: left;
+//     overflow: hidden;
+//     text-align: right;
+//     text-overflow: ellipsis;
+//     white-space: nowrap;
+//     width: 120px;
+// }
+//
+// .dl-horizontal dd {
+//     margin-left: 130px;
+// }
 
 #password_reset_form .modal-body .well {
     text-align: center;
@@ -164,4 +98,27 @@ body#splash #footer {
 
 .label-resource-help {
     font-size: small;
+}
+
+div.form-group.allocation-inline {
+  .controls {
+    float: left;
+    padding-right: 1em;
+  }
+
+  label {
+    padding-top: 5px;
+  }
+
+  img.help-icon {
+    margin-left: 1em;
+    margin-right: 0;
+    margin-bottom: 6px;
+  }
+}
+
+form#new-allocation {
+  input[type="submit"] {
+    margin-top: 30px;
+  }
 }

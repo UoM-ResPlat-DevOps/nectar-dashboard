@@ -17,6 +17,6 @@ AUTO_DISCOVER_STATIC_FILES = True
 
 ADD_SCSS_FILES = [
     'rcportal/scss/jquery.mDialog.scss',
-    'rcportal/scss/nectar.scss',
+    'rcportal/scss/allocation.scss',
     'rcportal/scss/bootstrap-toggle.scss',
 ]
