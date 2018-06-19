@@ -364,7 +364,7 @@ class AllocationRequest(models.Model):
     accepted_terms = models.CharField(
         """I have read and accepted the <a href="/terms" target="_blank">
             University of Melbourne - Terms and Conditions</a>""",
-        max_length=255
+        max_length=255,
         choices=(
             ('yes', 'Yes'),
             ('no', 'No'),
@@ -663,8 +663,8 @@ class ChiefInvestigator(models.Model):
                                    related_name='investigators')
 
     requester_is_ci = models.CharField(
-        max_length=255
         'I am the Chief Investigator',
+        max_length=255,
         choices=(
             ('yes', 'Yes'),
             ('no', 'No'),
