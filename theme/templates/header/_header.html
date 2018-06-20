@@ -25,24 +25,7 @@
   <ul class="uomt-page-header-tools">
     {% include "header/_context_selection.html" %}
     {% include "header/_user_menu.html" %}
-    <li class="dropdown">
-      <a href="https://unimelb.service-now.com/research" role="button" class="uomt-page-header-icon" target="_blank" title="Support">
-        <svg role="img" focusable="false"><use xlink:href="#icon-world"></use></svg> Support
-      </a>
-    </li>
-    <li class="dropdown">
-      <a href="#" role="button" class="uomt-page-header-icon" title="Search">
-        <svg role="img" focusable="false"><use xlink:href="#icon-search"></use></svg> Search
-      </a>
-    </li>
-    <li class="dropdown">
-      <a href="#" role="button" class="uomt-page-header-icon" title="Menu">
-        <svg role="img" focusable="false"><use xlink:href="#icon-menu"></use></svg> Menu
-      </a>
-    </li>
-    <li class="dropdown hide">
-      {% include "horizon/common/_region_selector.html" %}
-    </li>
+    {% include "header/_support_menu.html" %}
   </ul>
 </nav>
 <div id="sidebar-bg"></div>

@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load themes %}
+
+{% if not_list %}
+  <div class="dropdown user-menu">
+{% else %}
+  <li class="dropdown user-menu">
+{% endif %}
+    <a data-toggle="dropdown" href="#" class="dropdown-toggle uomt-page-header-icon" role="button" aria-expanded="false" title="Support">
+      <svg role="img" focusable="false"><use xlink:href="#icon-world"></use></svg>Support
+      <span class="fa fa-caret-down"></span>
+    </a>
+    <ul class="dropdown-menu selection-menu">
+      <li>
+        <ul class="dropdown-menu">
+          {% for link in HORIZON_CONFIG.navbar_support_links %}
+          <li>
+            <a href="{{ link.url }}" target="_blank">
+              <span class="fa {{ link.icon|default:"fa-question-circle" }}"></span>
+              {% trans link.text %}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+    </ul>
+{% if not_list %}
+  </div>
+{% else %}
+  </li>
+{% endif %}
