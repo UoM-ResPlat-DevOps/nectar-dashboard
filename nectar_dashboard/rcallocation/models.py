@@ -122,8 +122,7 @@ class AllocationRequest(models.Model):
     project_description = models.CharField(
         'Project allocation title',
         max_length=200,
-        help_text='A human-friendly descriptive name for your research '
-                  'project.')
+        help_text='A human-friendly descriptive name for your project.')
 
     contact_email = models.EmailField(
         'Contact e-mail', blank=True,
@@ -141,7 +140,7 @@ class AllocationRequest(models.Model):
         max_length=255,
         blank=False,
         null=True,
-        help_text='Name of the requester.'
+        help_text='Your full name.'
     )
 
     requester_phone = models.CharField(
@@ -149,7 +148,7 @@ class AllocationRequest(models.Model):
         max_length=255,
         blank=False,
         null=True,
-        help_text='Phone number of requester.'
+        help_text='Your preferred contact phone number.'
     )
 
     requester_dept = models.CharField(
@@ -176,7 +175,8 @@ class AllocationRequest(models.Model):
         choices=REQUESTER_ROLE_CHOICE,
         blank=False,
         null=True,
-        help_text=''
+        help_text="""Select the category that best fits your role in this
+                     project."""
     )
 
     start_date = models.DateField(
@@ -217,22 +217,24 @@ class AllocationRequest(models.Model):
         choices=USE_CATEGORY_CHOICE,
         blank=False,
         null=True,
-        help_text=''
-    )
+        help_text='Select the category that this project is primarily for.')
 
     use_case = models.TextField(
         "Use case",
         max_length=4096,
-        help_text="""Provide a very brief overview of your research project,
-        and how you will use the cloud to support your project.""")
+        help_text="""Provide a very brief overview of your project, and how 
+                     you will use the cloud to support it.""")
 
     usage_patterns = models.TextField(
         "Instance, Object Storage and Volumes Storage Usage Patterns",
         max_length=1024, blank=True,
-        help_text="""Will your project have many users and small data
-        sets? Or will it have large data sets with a small number of users?
-        Will your instances be long running or created and deleted as needed
-        Your answers here will help us.""")
+        help_text="""Will your project have many users and small data sets? 
+                     Or will it have large data sets with a small number of 
+                     users? Will your instances be long running or created 
+                     and deleted as needed? <br>
+                     Your answers here will help validate the Instances, 
+                     Object Storage and Volume Storages is right for the 
+                     project.""")
 
     # TODO: Ensure this sets to default regardless of whether it's in the form
     allocation_home = models.CharField(
@@ -257,9 +259,9 @@ class AllocationRequest(models.Model):
         max_length=1024,
         blank=True,
         verbose_name="Special requirements",
-        help_text="""Indicate to the allocations committee any special
-                geographic requirements that you may need, e.g. to run
-                at more than one node.""")
+        help_text="""Describe any special requirements you need for your 
+                     project. For example geographical location, 
+                     high-memory nodes, or GPU enable nodes.""")
 
     project_id = models.CharField(max_length=36, blank=True, null=True)
 
@@ -270,7 +272,7 @@ class AllocationRequest(models.Model):
         error_messages={
             'min_value': 'The estimated number of users must be great than 0'},
         help_text="""Estimated number of users, researchers and collaborators
-        to be supported by the allocation.""")
+        to be supported by the project.""")
 
     use_other = models.TextField(
         'List other capabilities you use/intend to use with this project',
@@ -333,6 +335,8 @@ class AllocationRequest(models.Model):
     nectar_support = models.CharField(
         """List any ANDS, Nectar, or RDS funded projects supporting this
         request.""",
+        help_text="""List the name of the project and funding 
+                     organsiation.""",
         blank=True,
         max_length=255)
 
@@ -364,6 +368,8 @@ class AllocationRequest(models.Model):
     accepted_terms = models.CharField(
         """I have read and accepted the <a href="/terms" target="_blank">
             University of Melbourne - Terms and Conditions</a>""",
+        help_text="""Users of The University of Melbourne Research Cloud must 
+                     read and accept the Terms and Conditions.""",
         max_length=255,
         choices=(
             ('yes', 'Yes'),
@@ -665,6 +671,7 @@ class ChiefInvestigator(models.Model):
     requester_is_ci = models.CharField(
         'I am the Chief Investigator',
         max_length=255,
+        help_text="""Please select 'yes' if you are the Chief Investigator""",
         choices=(
             ('yes', 'Yes'),
             ('no', 'No'),
@@ -697,8 +704,7 @@ class ChiefInvestigator(models.Model):
     email = models.EmailField(
         'Institutional email address',
         blank=False,
-        help_text="""Email address must belong the university or
-            organisation for accountability."""
+        help_text="""Chief Investigator's institutional email address."""
     )
 
     institution = models.CharField(
@@ -716,9 +722,9 @@ class ChiefInvestigator(models.Model):
         blank=True,
         max_length=1000,
         default='',
-        help_text="""Please list all other primary investigators, partner
-        investigators and other research collaborators"""
-    )
+        help_text="""Include full names, and the name of their Research 
+                     Institution, University or Organisation they 
+                     belong to.""")
 
     def __unicode__(self):
         return '{0} {1} {2}'.format(self.title, self.given_name, self.surname)
@@ -728,13 +734,14 @@ class Institution(models.Model):
     name = models.CharField(
         'Supported institutions',
         max_length=200,
-        help_text="""List the Australian research institutions and
-                    universities supported by this application. If this
-                    application is just for you, just write the name of
-                    your institution or university. If you are running a
-                    public web service list the Australian research
-                    institutions and universities that
-                    you think will benefit most.""")
+        help_text="""List one or more Research Institutions and Universities 
+                     this project intends to collaborate with. <br>
+                     If this project is just for you, write the name of the 
+                     your Reserarch Institution or University. <br>
+                     If you are running a public web service, list the 
+                     Research Institutions and Universities that will benefit 
+                     the most."""
+    )
 
     allocation = models.ForeignKey(AllocationRequest,
                                    related_name='institutions')
