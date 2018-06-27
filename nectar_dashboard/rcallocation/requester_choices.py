@@ -139,23 +139,12 @@ DEPT_CHOICE = (
 )
 
 REQUESTER_ROLE_CHOICE = (
-    # ("academic-level-e", "Academic - Professor / Level E"),
-    # ("academic-level-d", "Academic - Associate Professor / Level D"),
-    # ("academic-level-c", "Academic - Senior Lecturer / Level C"),
-    # ("academic-level-b", "Academic - Lecturer / Level B"),
-    # ("academic-level-a", "Academic - Tutor / Level A"),
-    # ("academic-clinical-supervisor", "Academic - Clinical Supervisor"),
-    # ("academic-ra", "Academic - Research Assistant"),
-    # ("academic-other", "Academic - Other"),
-    # ("professional-it", "Professional Staff - IT"),
-    # ("professional-other", "Professional Staff - Other"),
-    # ("student-gr", "Student - Graduate Research"),
-    # ("student-other", "Student - Other"),
-    ("professor", "Professor"),
-    ("student-masters", "Student - Masters by Research"),
-    ("student-phd", "Student - PhD"),
-    ("era", "ERA"),
-    ("techical-support-staff", "Technical support staff"),
+    ("researcher", "Researcher"),
+    ("student-research", "Student - Masters/PhD by Research"),
+    ("student-coursework", "Student - Masters by Coursework"),
+    ("student-undergraduate", "Student - Undergraduate"),
+    ("technical-support-staff", "Technical support staff"),
+    ("other", "Other"),
 )
 
 USE_CATEGORY_CHOICE = (
