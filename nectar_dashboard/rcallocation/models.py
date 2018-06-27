@@ -108,6 +108,23 @@ class AllocationRequest(models.Model):
     modified_time = models.DateTimeField('Modified Date',
                                          default=datetime.datetime.utcnow)
 
+    allocation_home = models.CharField(
+        "Allocation home location",
+        choices=ALLOC_HOME_CHOICE,
+        blank=False,
+        null=False,
+        default='uom',
+        max_length=128,
+        help_text="""You can provide a primary location where you expect to
+                use most resources, effectively the main Nectar site for your
+                allocation. Use of other locations is still possible.
+                This can also indicate a specific arrangement with a
+                Nectar site, for example where you obtain support, or if
+                your institution is a supporting member of that site.
+                Select unassigned if you have no preference.
+                """
+    )
+
     # The ordering of the following fields are important, as it
     # governs the order they appear on the forms
     project_name = models.CharField(
@@ -227,23 +244,7 @@ class AllocationRequest(models.Model):
                      Object Storage and Volume Storages is right for the 
                      project.""")
 
-    # TODO: Ensure this sets to default regardless of whether it's in the form
-    allocation_home = models.CharField(
-        "Allocation home location",
-        choices=ALLOC_HOME_CHOICE,
-        blank=False,
-        null=False,
-        default='melbourne',
-        max_length=128,
-        help_text="""You can provide a primary location where you expect to
-                use most resources, effectively the main Nectar site for your
-                allocation. Use of other locations is still possible.
-                This can also indicate a specific arrangement with a
-                Nectar site, for example where you obtain support, or if
-                your institution is a supporting member of that site.
-                Select unassigned if you have no preference.
-                """
-    )
+
 
     # TODO: Consider renaming field
     geographic_requirements = models.TextField(
