@@ -138,19 +138,6 @@ DEPT_CHOICE = (
     ("9790", "9790 - Project Services"),
 )
 
-FACULTY_CHOICE = (
-    ("fabp", "Faculty of Architecture, Building and Planning"),
-    ("arts", "Faculty of Arts"),
-    ("fbe", "Faculty of Business and Economics"),
-    ("finearts-music", "Faculty of Fine Arts and Music"),
-    ("mdhs", "Faculty of Medicine, Dentistry and Health Sciences"),
-    ("science", "Faculty of Science"),
-    ("fvas", "Faculty of Veterinary and Agricultural Sciences"),
-    ("mgse", "Melbourne Graduate School of Education"),
-    ("mls", "Melbourne Law School"),
-    ("engineering", "Melbourne School of Engineering"),
-)
-
 REQUESTER_ROLE_CHOICE = (
     # ("academic-level-e", "Academic - Professor / Level E"),
     # ("academic-level-d", "Academic - Associate Professor / Level D"),

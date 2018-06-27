@@ -14,7 +14,7 @@ from django.template import Context
 from django.conf import settings
 
 import for_choices
-from requester_choices import DEPT_CHOICE, FACULTY_CHOICE, REQUESTER_ROLE_CHOICE, USE_CATEGORY_CHOICE
+from requester_choices import DEPT_CHOICE, REQUESTER_ROLE_CHOICE, USE_CATEGORY_CHOICE
 from allocation_home_choices import ALLOC_HOME_CHOICE
 from project_duration_choices import DURATION_CHOICE
 from grant_type import GRANT_TYPES
@@ -158,15 +158,6 @@ class AllocationRequest(models.Model):
         blank=False,
         null=True,
         help_text='Select the main department this project is for.'
-    )
-
-    requester_faculty = models.CharField(
-        'Faculty this project is for',
-        max_length=255,
-        choices=FACULTY_CHOICE,
-        blank=False,
-        null=True,
-        help_text=''
     )
 
     requester_role = models.CharField(
