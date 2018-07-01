@@ -254,7 +254,7 @@ class BaseAllocationView(UpdateView):
             resource_kwargs['requestable'] = True
 
         quota_formsets = OrderedDict()
-        for service_type in models.ServiceType.objects.all():
+        for service_type in models.ServiceType.objects.order_by('index'):
             existing_groups = []
 
             initial = []

@@ -602,6 +602,8 @@ class ServiceType(models.Model):
     name = models.CharField(max_length=64)
     description = models.TextField(null=True, blank=True)
     zones = models.ManyToManyField(Zone)
+    index = models.IntegerField(default=99)
+    required = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.name
