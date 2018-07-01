@@ -121,4 +121,23 @@ form#new-allocation {
   input[type="submit"] {
     margin-top: 30px;
   }
+
+  .form-group div.input-group:not(.form-group) {
+    max-width: 40rem;
+    width: 100%;
+  }
+
+  textarea {
+    height: 11rem;
+  }
+
+  input[type="text"].datepicker2 {
+    width: 12rem;
+    border-radius: 0;
+  }
+
+  div#quota_formset > div {
+    max-width: 130rem;
+    clear: both;
+  }
 }

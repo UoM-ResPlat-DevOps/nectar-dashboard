@@ -26,12 +26,7 @@ class BaseAllocationForm(ModelForm):
                    'project_id', 'notes', 'allocation_home')
 
         widgets = {
-            'status_explanation': Textarea(
-                attrs={'class': 'col-md-6',
-                       'style': 'height:120px; width:420px'}),
-            'start_date': TextInput(attrs={'class': 'datepicker2 col-md-12',
-                                           'style': 'border-radius:0;'}),
-            'estimated_project_duration': Select(attrs={'class': 'col-md-6'}),
+            'start_date': TextInput(attrs={'class': 'datepicker2 col-md-12'}),
             'convert_trial_project': Select(
                 attrs={'class': 'col-md-6'},
                 choices=[
@@ -39,24 +34,7 @@ class BaseAllocationForm(ModelForm):
                     (True, 'Yes, move resources from my pt- project to '
                            'this new project.'),
                 ]),
-            'project_name': TextInput(attrs={'class': 'col-md-12'}),
-            'contact_email': TextInput(attrs={'readonly': 'readonly'}),
-            'use_case': Textarea(attrs={'class': 'col-md-6',
-                                        'style': 'height:120px; width:420px'}),
-            'usage_patterns': Textarea(
-                attrs={'class': 'col-md-6',
-                       'style': 'height:120px; width:420px'}),
-            'geographic_requirements': Textarea(
-                attrs={'class': 'col-md-6',
-                       'style': 'height:120px; width:420px'}),
-            'field_of_research_1': Select(attrs={'class': 'col-md-6'}),
-            'field_of_research_2': Select(attrs={'class': 'col-md-6'}),
-            'field_of_research_3': Select(attrs={'class': 'col-md-6'}),
-            'for_percentage_1': Select(attrs={'class': 'col-md-2'}),
-            'for_percentage_2': Select(attrs={'class': 'col-md-2'}),
-            'for_percentage_3': Select(attrs={'class': 'col-md-2'}),
-            'nectar_support': TextInput(attrs={'class': 'col-md-12'}),
-            'ncris_support': TextInput(attrs={'class': 'col-md-12'}),
+            'contact_email': TextInput(attrs={'readonly': 'readonly'})
         }
 
     groups = (
@@ -258,10 +236,6 @@ class NectarBaseModelForm(ModelForm):
 class ChiefInvestigatorForm(NectarBaseModelForm):
     class Meta(NectarBaseModelForm.Meta):
         model = ChiefInvestigator
-        widgets = {
-            'additional_researchers': Textarea(
-                attrs={'style': 'height:120px; width:420px'}),
-        }
 
     def __init__(self, **kwargs):
         super(ChiefInvestigatorForm, self).__init__(**kwargs)
