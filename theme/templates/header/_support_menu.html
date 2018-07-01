@@ -14,12 +14,16 @@
       <li>
         <ul class="dropdown-menu">
           {% for link in HORIZON_CONFIG.navbar_support_links %}
+          {% if link == '-' %}
+          <li class="divider"></li>
+          {% else %}
           <li>
             <a href="{{ link.url }}" target="_blank">
               <span class="fa {{ link.icon|default:"fa-question-circle" }}"></span>
               {% trans link.text %}
             </a>
           </li>
+          {% endif %}
           {% endfor %}
         </ul>
       </li>

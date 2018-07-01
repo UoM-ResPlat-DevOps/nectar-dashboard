@@ -26,6 +26,7 @@ The following settings are required for UoM-specific features to work::
           'icon': 'fa-group',
           'url': 'https://research.unimelb.edu.au/infrastructure/research-platform-services/training/research-cloud'
       },
+      '-',
       {
           'text': 'Research Platform Services website',
           'icon': 'fa-external-link',
@@ -34,7 +35,8 @@ The following settings are required for UoM-specific features to work::
   ]
 
 For configuring ``navbar_support_links`` the ``icon`` field is optional. Visit
-the `Font Awesome website`_ to see available icons.
+the `Font Awesome website`_ to see available icons. To add a divider between
+links add ``'-'`` to the list in place of a dict, as shown above.
 
 Features
 --------
