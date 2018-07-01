@@ -47,9 +47,9 @@
     {% block form_intro %}
     <br/>
     <p>
-      This form allows you to request a project specific allocation on The University of Melbourne Research Cloud.
+      This form allows you to request a project-specific allocation on The University of Melbourne Research Cloud.
     <br/>
-    Allocations take up to 3 weeks to process. If you have any questions please email <a href="mailto:rc-support@unimelb.edu.au">rc-support@unimelb.edu.au</a>
+    Allocations take up to three weeks to process. If you have any questions please email <a href="mailto:rc-support@unimelb.edu.au">rc-support@unimelb.edu.au</a>
     </p>
     <p>
       <span class="label label-info">Note:</span>
@@ -76,55 +76,46 @@
       {{ hidden }}
     {% endfor %}
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         {% include "rcallocation/field.html" with field=form.project_name %}
-      </div>
-      <div class="col-md-6">
-        {% include "rcallocation/field.html" with field=form.contact_email %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
         {% include "rcallocation/field.html" with field=form.project_description %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        {% include "rcallocation/field.html" with field=form.requester_name %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        {% include "rcallocation/field.html" with field=form.requester_phone %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        {% include "rcallocation/field.html" with field=form.requester_dept %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        {% include "rcallocation/field.html" with field=form.requester_role %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
+        {% include "rcallocation/field.html" with field=form.project_dept %}
         {% include "rcallocation/field.html" with field=form.start_date %}
         {% include "rcallocation/field.html" with field=form.estimated_project_duration %}
         {% block convert_trial_project %}
-        {% include "rcallocation/field.html" with field=form.convert_trial_project %}
         {% endblock %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Your Details</h2>
+        <hr/>
+        {% include "rcallocation/field.html" with field=form.requester_name %}
+        {% include "rcallocation/field.html" with field=form.contact_email %}
+        {% include "rcallocation/field.html" with field=form.requester_phone %}
+        {% include "rcallocation/field.html" with field=form.requester_role %}
+        {% include "rcallocation/field.html" with field=form.requester_is_ci %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div id="investigator_formset">
+        {{ investigator_formset.management_form }}
+        {% for investigator_form in investigator_formset.forms %}
+        {% include "rcallocation/investigator_form.html" %}
+        {% endfor %}
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-12">
         <h2>Cloud Resources</h2>
-        <p>Specify the maximum infrastructure that your project will need access to.
+        <hr/>
+        <p>
+          Specify the maximum resources that your project will need access to.
           This quota can be extended at a later date if more resources are required.
-          The overall availability of resources may vary over time and at different locations.
-          Resource may not always be available.</p>
+          Resources may not always be available.
+        </p>
         <div id="quota_formset">
           {% for service_type, form_tuple in quota_formsets %}
           <div id="panel-quota-{{ service_type.catalog_name }}" class="col-md-12">
@@ -194,7 +185,7 @@
         Please select up to 3 Fields of Research (FOR)
         codes describing your work, adding up to a total
         of 100%. For more information on FOR codes please
-        refer to the following <a href="http://www.abs.gov.au/Ausstats/abs@.nsf/Latestproducts/6BB427AB9696C225CA2574180004463E?opendocument">website</a>
+        refer to the following <a href="http://www.abs.gov.au/Ausstats/abs@.nsf/Latestproducts/6BB427AB9696C225CA2574180004463E?opendocument" target="_blank">website</a>
         {% endautoescape %}
         <br/>
         <br/>
@@ -237,15 +228,6 @@
     </div>
 
     <div class="row">
-      <div id="investigator_formset">
-        {{ investigator_formset.management_form }}
-        {% for investigator_form in investigator_formset.forms %}
-        {% include "rcallocation/investigator_form.html" %}
-        {% endfor %}
-      </div>
-    </div>
-
-    <div class="row">
       <div class="publication_formset">
         <div class="col-md-12">
           <h2>Publication/Output</h2>
@@ -271,9 +253,8 @@
       	</div>
       	{% endif %}
         <p><span class="label label-info">Note:</span>
-	         Research grant information aids in the assessment of research allocations and indicates the scale of the research supported. You must put at least one grant, or specify you have no grants for the project
+	         Research grant information aids in the assessment of research allocations and indicates the scale of the research supported. You must put at least one grant, or specify you have no grants for the project.
         </p>
-        <br/>
         <br/>
         <div class="grant_formset">
           {{ grant_formset.management_form }}
@@ -286,6 +267,8 @@
       </div>
     </div>
     <div class="row">
+      <h2>Terms and Conditions</h2>
+      <hr/>
       <div class="col-md-12">
         {% include "rcallocation/inline_field.html" with field=form.accepted_terms %}
       </div>

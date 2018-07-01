@@ -9,28 +9,17 @@
         <hr/>
         <span class="label label-info">Note:</span>
         <ul>
-            <li>For research projects specify the first investigator. 
+            <li>For research projects specify the first investigator.
             <li>For higher degree research projects specify the primary supervisor.
             <li>For other activities specify the academic sponsor or head of the managing organisation unit.
         </ul>
         <br/>
         <br/>
-
         <div class="col-md-12">
-            {% include "rcallocation/inline_field.html" with field=investigator_form.requester_is_ci %}
-        </div>
-        <div class="col-xs-3 col-sm-2">
             {% include "rcallocation/field.html" with field=investigator_form.title %}
-        </div>
-        <div class="col-xs-3 col-sm-2">
             {% include "rcallocation/field.html" with field=investigator_form.given_name %}
-        </div>
-        <div class="col-xs-3 col-sm-2">
             {% include "rcallocation/field.html" with field=investigator_form.surname %}
-        </div>
-        <div class="col-md-12">
             {% include "rcallocation/field.html" with field=investigator_form.email %}
-            {% include "rcallocation/field.html" with field=investigator_form.institution %}
             {% include "rcallocation/field.html" with field=investigator_form.additional_researchers %}
         </div>
     </div>

@@ -6,7 +6,8 @@ from dateutil.relativedelta import relativedelta
 import logging
 
 from django.core.mail import EmailMessage
-from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, \
+    RegexValidator
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.loader import get_template
@@ -14,7 +15,8 @@ from django.template import Context
 from django.conf import settings
 
 import for_choices
-from requester_choices import DEPT_CHOICE, REQUESTER_ROLE_CHOICE, USE_CATEGORY_CHOICE
+from requester_choices import DEPT_CHOICE, REQUESTER_ROLE_CHOICE, \
+    USE_CATEGORY_CHOICE
 from allocation_home_choices import ALLOC_HOME_CHOICE
 from project_duration_choices import DURATION_CHOICE
 from grant_type import GRANT_TYPES
@@ -108,6 +110,14 @@ class AllocationRequest(models.Model):
     modified_time = models.DateTimeField('Modified Date',
                                          default=datetime.datetime.utcnow)
 
+    convert_trial_project = models.BooleanField(
+        'Convert trial project?',
+        default=False,
+        help_text='If selected, your existing trial project pt- will be '
+                  'renamed so any resources inside it will become part of '
+                  'this new allocation. A new trial project will be created '
+                  'in its place.')
+
     allocation_home = models.CharField(
         "Allocation home location",
         choices=ALLOC_HOME_CHOICE,
@@ -141,57 +151,25 @@ class AllocationRequest(models.Model):
         max_length=200,
         help_text='A human-friendly descriptive name for your project.')
 
-    contact_email = models.EmailField(
-        'Contact e-mail', blank=True,
-        help_text="""The e-mail address provided by your IdP which
-                     will be used to communicate with you about this
-                     allocation request.  <strong>Note:</strong> <i>if
-                     this is not a valid e-mail address you will not
-                     receive communications on any allocation request
-                     you make</i>. If invalid please contact your IdP
-                     and ask them to correct your e-mail address!"""
-    )
-
-    requester_name = models.CharField(
-        'Name of requester',
-        max_length=255,
-        blank=False,
-        null=True,
-        help_text='Your full name.'
-    )
-
-    requester_phone = models.CharField(
-        'Contact phone number',
-        max_length=255,
-        blank=False,
-        null=True,
-        help_text='Your preferred contact phone number.'
-    )
-
-    requester_dept = models.CharField(
+    project_dept = models.CharField(
         'Department this project is for',
         max_length=255,
         choices=DEPT_CHOICE,
         blank=False,
         null=True,
-        help_text='Select the main department this project is for.'
-    )
-
-    requester_role = models.CharField(
-        'Your role',
-        max_length=255,
-        choices=REQUESTER_ROLE_CHOICE,
-        blank=False,
-        null=True,
-        help_text="""Select the category that best fits your role in this
-                     project."""
+        help_text="""Select the main department this project is for.
+                  <br><br>If you cannot find your department, school
+                  or faculty listed here, please select "0000 -
+                  University General".
+                  """
     )
 
     start_date = models.DateField(
         'Start date',
         default=datetime.date.today,
-        help_text="""The day on which you want your Project Allocation to
-                     go live. Format: yyyy-mm-dd""")
+        help_text="""The day on which you want your project
+            allocation to go live. Format: YYYY-MM-DD."""
+    )
 
     end_date = models.DateField(
         'Estimated end date',
@@ -205,17 +183,59 @@ class AllocationRequest(models.Model):
         blank=False,
         null=False,
         default=1,
-        help_text="""Resources are approved for at most 12-months,
-                    but projects can extend a request for resources
-                    once it has been approved.""")
+        help_text="""Resources are approved for 12 months at most,
+                    but projects can be extended once they have been
+                    approved.""")
 
-    convert_trial_project = models.BooleanField(
-        'Convert trial project?',
-        default=False,
-        help_text='If selected, your existing trial project pt- will be '
-                  'renamed so any resources inside it will become part of '
-                  'this new allocation. A new trial project will be created '
-                  'in its place.')
+    requester_name = models.CharField(
+        'Your full name',
+        max_length=255,
+        blank=False,
+        null=True,
+        help_text='Your full name.'
+    )
+
+    contact_email = models.EmailField(
+        'Contact e-mail', blank=True,
+        help_text="""The e-mail address which will be used to
+            communicate with you about this allocation request.<br>
+            <br><strong>Note:</strong> <i>If this is not a valid
+            email address you will not receive communications on any
+            allocation request you make</i>. If invalid please
+            submit a support ticket in ServiceNow (link provided in
+            top navigation bar)."""
+    )
+
+    requester_phone = models.CharField(
+        'Contact phone number',
+        max_length=255,
+        blank=False,
+        null=True,
+        help_text='Your preferred contact phone number.'
+    )
+
+    requester_role = models.CharField(
+        'Your role',
+        max_length=255,
+        choices=REQUESTER_ROLE_CHOICE,
+        blank=False,
+        null=True,
+        help_text="""Select the category that best fits your role in
+            this project."""
+    )
+
+    requester_is_ci = models.CharField(
+        'Are you the Chief Investigator?',
+        max_length=255,
+        help_text="""Please select 'Yes' if you are the Chief
+            Investigator.""",
+        choices=(
+            ('yes', 'Yes'),
+            ('no', 'No'),
+        ),
+        blank=False,
+        null=True,
+    )
 
     approver_email = models.EmailField('Approver email', blank=True)
 
@@ -230,29 +250,27 @@ class AllocationRequest(models.Model):
     use_case = models.TextField(
         "Use case",
         max_length=4096,
-        help_text="""Provide a very brief overview of your project, and how 
+        help_text="""Provide a very brief overview of your project, and how
                      you will use the cloud to support it.""")
 
     usage_patterns = models.TextField(
         "Instance, Object Storage and Volumes Storage Usage Patterns",
         max_length=1024, blank=True,
-        help_text="""Will your project have many users and small data sets? 
-                     Or will it have large data sets with a small number of 
-                     users? Will your instances be long running or created 
+        help_text="""Will your project have many users and small data sets?
+                     Or will it have large data sets with a small number of
+                     users? Will your instances be long running or created
                      and deleted as needed? <br>
-                     Your answers here will help validate the Instances, 
-                     Object Storage and Volume Storages is right for the 
+                     Your answers here will help validate the Instances,
+                     Object Storage and Volume Storages is right for the
                      project.""")
-
-
 
     # TODO: Consider renaming field
     geographic_requirements = models.TextField(
         max_length=1024,
         blank=True,
         verbose_name="Special requirements",
-        help_text="""Describe any special requirements you need for your 
-                     project. For example geographical location, 
+        help_text="""Describe any special requirements you need for your
+                     project. For example geographical location,
                      high-memory nodes, or GPU enable nodes.""")
 
     project_id = models.CharField(max_length=36, blank=True, null=True)
@@ -327,8 +345,8 @@ class AllocationRequest(models.Model):
     nectar_support = models.CharField(
         """List any ANDS, Nectar, or RDS funded projects supporting this
         request.""",
-        help_text="""List the name of the project and funding 
-                     organsiation.""",
+        help_text="""List the name of the project and funding
+                     organisation.""",
         blank=True,
         max_length=255)
 
@@ -360,7 +378,7 @@ class AllocationRequest(models.Model):
     accepted_terms = models.CharField(
         """I have read and accepted the <a href="/terms" target="_blank">
             University of Melbourne - Terms and Conditions</a>""",
-        help_text="""Users of The University of Melbourne Research Cloud must 
+        help_text="""Users of The University of Melbourne Research Cloud must
                      read and accept the Terms and Conditions.""",
         max_length=255,
         choices=(
@@ -662,18 +680,6 @@ class ChiefInvestigator(models.Model):
     allocation = models.ForeignKey(AllocationRequest,
                                    related_name='investigators')
 
-    requester_is_ci = models.CharField(
-        'I am the Chief Investigator',
-        max_length=255,
-        help_text="""Please select 'yes' if you are the Chief Investigator""",
-        choices=(
-            ('yes', 'Yes'),
-            ('no', 'No'),
-        ),
-        blank=False,
-        null=True,
-    )
-
     title = models.CharField(
         'Title',
         blank=False,
@@ -703,8 +709,9 @@ class ChiefInvestigator(models.Model):
 
     institution = models.CharField(
         'Institution',
-        blank=False,
+        blank=True,
         max_length=200,
+        default='',
         help_text="""The name of the institution or university of
                     the chief investigator including the schools,
                     faculty and/or department."""
@@ -716,8 +723,8 @@ class ChiefInvestigator(models.Model):
         blank=True,
         max_length=1000,
         default='',
-        help_text="""Include full names, and the name of their Research 
-                     Institution, University or Organisation they 
+        help_text="""Include full names, and the name of their Research
+                     Institution, University or Organisation they
                      belong to.""")
 
     def __unicode__(self):
@@ -726,14 +733,14 @@ class ChiefInvestigator(models.Model):
 
 class Institution(models.Model):
     name = models.CharField(
-        'Supported institutions',
+        'Collaborating institutions',
         max_length=200,
-        help_text="""List one or more Research Institutions and Universities 
+        help_text="""List one or more Research Institutions and Universities
                      this project intends to collaborate with. <br>
-                     If this project is just for you, write the name of the 
+                     If this project is just for you, write the name of the
                      your Reserarch Institution or University. <br>
-                     If you are running a public web service, list the 
-                     Research Institutions and Universities that will benefit 
+                     If you are running a public web service, list the
+                     Research Institutions and Universities that will benefit
                      the most."""
     )
 

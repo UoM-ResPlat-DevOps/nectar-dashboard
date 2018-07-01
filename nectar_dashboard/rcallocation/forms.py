@@ -123,7 +123,7 @@ class AllocationRequestForm(BaseAllocationForm):
                                    'with {prefix} and have at least 2 '
                                    'characters.'.format(prefix=prefix))],
         max_length=32,
-        label='Project Identifier',
+        label='Project identifier',
         required=True,
         initial=prefix,
         help_text='A short name used to identify your project.<br>'
