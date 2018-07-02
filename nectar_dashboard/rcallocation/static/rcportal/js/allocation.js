@@ -376,7 +376,7 @@ function show_help_message(el, help_title, help_message) {
         label_section = "<label for='id_"+ opts.prefix + "-" + row_index + "-" + field_name +"'>";
         label_section += field_label;
         if(required == true){
-            label_section += "<span class='glyphicon glyphicon-asterisk text-primary'></span>";
+            label_section += "<span class='glyphicon glyphicon-asterisk text-danger'></span>";
         }
         label_section += "&nbsp;&nbsp;&nbsp;<span class='help-icon-sp' id='id_" + opts.prefix + "-" + row_index + "-" + field_name + "' title='" + field_label + "'>";
         label_section += "<img src='/static/rcportal/img/help.png' class='help-icon'>";
