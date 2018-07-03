@@ -40,6 +40,49 @@ div#content_body {
   }
 }
 
-// .dl-horizontal dt {
-//   font-weight: 600 !important;
-// }
+.uomt-button-hero {
+  outline: 0;
+  background-color: #fff;
+
+  border-radius: 5px;
+  font-size: .8125rem * $uomt-scale;
+  letter-spacing: .0625rem * $uomt-scale;
+  margin: 1.25rem*$uomt-scale 0;
+  padding: .625rem * $uomt-scale;
+  border: 2px solid #000;
+  color: #000;
+  cursor: pointer;
+  display: inline-block;
+  font-style: normal;
+  font-weight: 700;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  &:active {
+    opacity: .3;
+    color: #000;
+  }
+  &:focus, &:hover {
+    background-color: $uomt-col-lighterblue;
+    color: #fff;
+    border-color: transparent;
+    text-decoration: none;
+  }
+  &:after {
+    font-size: .9375rem * $uomt-scale;
+    padding-left: .625rem * $uomt-scale;
+    content: "\2192";
+    line-height: 0;
+  }
+  @media (min-height: 700px) {
+    font-size: .9375rem * $uomt-scale;
+    margin: 1.25rem*$uomt-scale 0;
+    padding: 1.25rem * $uomt-scale;
+    &:after {
+      font-size: 1.625rem * $uomt-scale;
+      padding-left: .9375rem * $uomt-scale;
+    }
+  }
+}

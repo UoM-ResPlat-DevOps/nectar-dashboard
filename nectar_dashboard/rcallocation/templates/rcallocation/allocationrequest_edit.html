@@ -267,54 +267,54 @@
       </div>
     </div>
     <div class="row">
-      <h2>Terms and Conditions</h2>
-      <hr/>
       <div class="col-md-12">
+        <h2>Terms and Conditions</h2>
+        <hr/>
         {% include "rcallocation/inline_field.html" with field=form.accepted_terms %}
+        <div class="form-actions">
+          <input type="submit" value="Submit" class="uomt-button-hero"/>
+        </div>
+        <script>
+          /* For browsers that don't recognize the autofocus attribute... */
+          if (!("autofocus" in document.createElement("input"))) {
+            document.getElementById("id_project_description").focus();
+          }
+
+          $(document).ready(function() {
+            $('div#quota_formset').formset({
+              prefix: 'quotas',
+              service_types: {{ service_types|safe }},
+              resources: {{ resources|safe }},
+              zones: {{ zones|safe }},
+            });
+          });
+
+          $(document).ready(function() {
+            $('div.institution_formset').mformset({
+              prefix: 'institutions',
+              formset_class_id: 'institution_formset',
+              field_name: 'name'
+            });
+          });
+
+          $(document).ready(function() {
+            $('div.publication_formset').mformset({
+              prefix: 'publications',
+              formset_class_id: 'publication_formset',
+              field_name: 'publication',
+              input_style_css:'medium_width',
+              show_label:true
+            });
+          });
+
+          $(document).ready(function() {
+            $('div.grant_formset').gformset({
+              prefix: 'grants',
+              formset_class_id: 'grant_formset'
+            });
+          });
+        </script>
       </div>
-      <div class="form-actions">
-        <input type="submit" value="Submit" class="btn btn-primary"/>
-      </div>
-      <script>
-        /* For browsers that don't recognize the autofocus attribute... */
-        if (!("autofocus" in document.createElement("input"))) {
-          document.getElementById("id_project_description").focus();
-        }
-
-        $(document).ready(function() {
-          $('div#quota_formset').formset({
-            prefix: 'quotas',
-            service_types: {{ service_types|safe }},
-            resources: {{ resources|safe }},
-            zones: {{ zones|safe }},
-          });
-        });
-
-        $(document).ready(function() {
-          $('div.institution_formset').mformset({
-            prefix: 'institutions',
-            formset_class_id: 'institution_formset',
-            field_name: 'name'
-          });
-        });
-
-        $(document).ready(function() {
-          $('div.publication_formset').mformset({
-            prefix: 'publications',
-            formset_class_id: 'publication_formset',
-            field_name: 'publication',
-            input_style_css:'medium_width',
-            show_label:true
-          });
-        });
-
-        $(document).ready(function() {
-          $('div.grant_formset').gformset({
-            prefix: 'grants',
-            formset_class_id: 'grant_formset'
-          });
-        });
-      </script>
     </div>
   </form>
 </div>
