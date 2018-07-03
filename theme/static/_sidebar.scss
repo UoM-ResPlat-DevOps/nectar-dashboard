@@ -56,18 +56,12 @@ nav#sidebar ul.nav.nav-pills.nav-stacked {
     font-weight: $uomt-fw-light;
     text-decoration: none;
     white-space: normal;
-
     // .uomcontent a
     color: $link-color;
-
     // body.jumpnav-active .uomcontent #outer li
     font-size: 14px;
-
     // .uomcontent li, .uomcontent p
     letter-spacing: .0125rem * $uomt-scale;
-
-    // body
-    //line-height: 1.5789;
 
     &:hover, &:focus {
       color: $link-hover-color;
@@ -82,9 +76,6 @@ nav#sidebar ul.nav.nav-pills.nav-stacked {
     @media screen and (min-width: $screen-sm) {
       // body.jumpnav-active .uomcontent #outer a
       border-bottom: 1px solid $uomt-col-lightergray;
-
-      // body
-      //line-height: 1.68;
     }
   }
 
@@ -100,18 +91,14 @@ nav#sidebar ul.nav.nav-pills.nav-stacked {
   // Level 2 headings
   li.openstack-panel-group {
     margin-left: 15px;
-  }
-  //li.nav-header > a > span.nav-header-title,
-  li.openstack-panel-group > a {
-    // Unset level 2 header styling and align left
-    //font-size: inherit;
-    //font-weight: inherit;
-    text-transform: inherit;
-    text-align: left;
-    width: 100%;
-    display: inline-block;
 
-    //color: #006fdc !important;
+    & > a {
+      // Unset level 2 header styling and align left
+      text-transform: inherit;
+      text-align: left;
+      width: 100%;
+      display: inline-block;
+    }
   }
 
   // Size of the toggle icon
@@ -119,22 +106,17 @@ nav#sidebar ul.nav.nav-pills.nav-stacked {
     font-size: 14px;
   }
 
-  // Style for a selected panel
+  // Styles for when panel is selected
   a.openstack-panel.active {
     text-decoration: underline;
-    //font-weight: 400;
-    //color: #004576;
     color: #000;
   }
 
   // Sets the arrow toggles for each dashboard list
   .openstack-dashboard [data-toggle="collapse"] {
-    .openstack-toggle.fa {
-      // font-size: $font-size-small;
-      &::before {
-        // Type of arrow, $fa-var-angle-up in /horizon/lib/font-awesome/scss/variables
-        content: "\f106";
-      }
+    .openstack-toggle.fa::before {
+      // Icon for arrow, $fa-var-angle-up in /horizon/lib/font-awesome/scss/variables
+      content: "\f106";
     }
     &.collapsed {
       .openstack-toggle.fa {
