@@ -1,0 +1,51 @@
+{% load branding i18n themes %}
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <title>{% trans "Login" %} - {% site_branding %}</title>
+  <link rel="shortcut icon" href="{% themable_asset 'img/favicon.ico' %}"/>
+  <link rel="stylesheet" href="https://d2h9b02ioca40d.cloudfront.net/v7.0/uom.css">
+  <script src="https://d2h9b02ioca40d.cloudfront.net/v7.0/uom.js"></script>
+</head>
+<body>
+  <div class="uomcontent">
+    <div class="page-inner">
+      <ol class="page-local-history" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+        <li class="root" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+          <a href="#" title="Melbourne Research Cloud" itemprop="item">
+            <span itemprop="name">{% site_branding %}</span>
+          </a>
+          <meta content="1" itemprop="position" />
+        </li>
+        <li class="last" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+          <a href="#" itemprop="item" title="Login">
+            <span itemprop="name">{% trans "Login" %}</span>
+          </a>
+          <meta content="2" itemprop="position" />
+        </li>
+      </ol>
+      <div role="main">
+        <header>
+          <h1>{% site_branding %}</h1>
+        </header>
+
+        <p></p>
+        {% include 'auth/_login.html' %}
+
+      </div>
+    </div>
+
+    <footer class="cta" style="padding: 0; border-bottom: 1px solid #597182;">
+      <ul class="quicklinks" style="padding: 0;">
+        <li>
+          <a href="/terms/"><svg role="img" class="icon"><use xlink:href="#icon-campaign"></use></svg>Terms and Conditions</a>
+        </li>
+      </ul>
+    </footer>
+
+  </div>
+</body>
+</html>
