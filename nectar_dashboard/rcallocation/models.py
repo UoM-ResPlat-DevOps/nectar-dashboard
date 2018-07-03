@@ -243,7 +243,11 @@ class AllocationRequest(models.Model):
         'Are you the Chief Investigator?',
         max_length=255,
         help_text="""Please select 'Yes' if you are the Chief
-            Investigator.""",
+            Investigator.<ul><li>For research projects this is the first
+            investigator.</li><li>For higher degree research projects this is
+            the primary supervisor.</li><li>For other activities this is the
+            academic sponsor or head of the managing organisation unit.</li>
+            </ul>""",
         choices=(
             ('yes', 'Yes'),
             ('no', 'No'),

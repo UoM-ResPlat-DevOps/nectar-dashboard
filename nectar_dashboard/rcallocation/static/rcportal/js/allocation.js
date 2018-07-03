@@ -585,6 +585,24 @@ $("form#new-allocation").on("change","#id_cores", function() {
     change_core_hours(number_cores, diff_hours);
 });
 
+$("form#new-allocation").on("change","#id_requester_is_ci", function() {
+    // Get the current value
+    var currentValue = $("select#id_requester_is_ci").val();
+    // If the value has changed to "Yes"
+    if (currentValue == "yes") {
+      // Get current requester details
+      var title = $("input#id_requester_title").val();
+      var given_name = $("input#id_requester_given_name").val();
+      var surname = $("input#id_requester_surname").val();
+      var contact_email = $("input#id_contact_email").val();
+      // Set CI details to be the same
+      $("input#id_investigators-0-title").val(title);
+      $("input#id_investigators-0-given_name").val(given_name);
+      $("input#id_investigators-0-surname").val(surname);
+      $("input#id_investigators-0-email").val(contact_email);
+    }
+});
+
 function convert_diff_days(input_start_date, duration_in_month){
     var one_hour_time =1000*60*60;
     var start_date =  new Date(input_start_date);
