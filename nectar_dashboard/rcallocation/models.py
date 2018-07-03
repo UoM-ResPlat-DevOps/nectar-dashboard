@@ -187,23 +187,38 @@ class AllocationRequest(models.Model):
                     but projects can be extended once they have been
                     approved.""")
 
-    requester_name = models.CharField(
-        'Your full name',
+    requester_title = models.CharField(
+        'Title',
+        max_length=60,
+        blank=False,
+        null=True,
+        help_text='Your title.'
+    )
+
+    requester_given_name = models.CharField(
+        'Given name',
         max_length=255,
         blank=False,
         null=True,
-        help_text='Your full name.'
+        help_text='Your given name.'
+    )
+
+    requester_surname = models.CharField(
+        'Surname',
+        max_length=255,
+        blank=False,
+        null=True,
+        help_text='Your surname.'
     )
 
     contact_email = models.EmailField(
         'Contact e-mail', blank=True,
-        help_text="""The e-mail address which will be used to
-            communicate with you about this allocation request.<br>
-            <br><strong>Note:</strong> <i>If this is not a valid
-            email address you will not receive communications on any
-            allocation request you make</i>. If invalid please
-            submit a support ticket in ServiceNow (link provided in
-            top navigation bar)."""
+        help_text="""Please verify that this e-mail address is current and
+            accessible. It will be used to communicate with you about this
+            allocation request.<br><br><strong>Note:</strong> <i>If this is not
+            a valid email address you will not receive communications on any
+            allocation request you make</i>. If invalid please submit a support
+            ticket in ServiceNow (link provided in top navigation bar)."""
     )
 
     requester_phone = models.CharField(

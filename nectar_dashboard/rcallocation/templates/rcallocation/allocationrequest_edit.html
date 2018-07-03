@@ -90,7 +90,9 @@
       <div class="col-md-12">
         <h2>Your Details</h2>
         <hr/>
-        {% include "rcallocation/field.html" with field=form.requester_name %}
+        {% include "rcallocation/field.html" with field=form.requester_title %}
+        {% include "rcallocation/field.html" with field=form.requester_given_name %}
+        {% include "rcallocation/field.html" with field=form.requester_surname %}
         {% include "rcallocation/field.html" with field=form.contact_email %}
         {% include "rcallocation/field.html" with field=form.requester_phone %}
         {% include "rcallocation/field.html" with field=form.requester_role %}
