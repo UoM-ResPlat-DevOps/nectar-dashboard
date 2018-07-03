@@ -178,14 +178,13 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <h2>Fields of Research (FOR)</h2>
+        <h2>Fields of Research</h2>
         <hr/>
         <span class="label label-info">Note:</span>
         {% autoescape off %}
-        Please select up to 3 Fields of Research (FOR)
-        codes describing your work, adding up to a total
-        of 100%. For more information on FOR codes please
-        refer to the following <a href="http://www.abs.gov.au/Ausstats/abs@.nsf/Latestproducts/6BB427AB9696C225CA2574180004463E?opendocument" target="_blank">website</a>
+        Select up to two Field of Research (FOR) codes describing your work
+        (minimum one). For more information on FOR codes please refer to the
+        <a href="http://www.abs.gov.au/Ausstats/abs@.nsf/Latestproducts/6BB427AB9696C225CA2574180004463E?opendocument" target="_blank">Australian Bureau of Statistics website</a>.
         {% endautoescape %}
         <br/>
         <br/>
@@ -202,7 +201,7 @@
         <div class="form-group {% if field.errors %}has-error{% endif %}">
           {% for field in group %}
             {% if forloop.first %}
-              <label>{{ field.label }}</label>
+              <label>{{ field.label }}{% if field.name == 'field_of_research_1' %} <span class="glyphicon glyphicon-asterisk text-danger">{% endif %}</span></label>
             {% endif %}
             {{ field }}
           {% endfor %}

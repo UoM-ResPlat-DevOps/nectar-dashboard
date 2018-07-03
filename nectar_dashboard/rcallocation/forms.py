@@ -38,9 +38,8 @@ class BaseAllocationForm(ModelForm):
         }
 
     groups = (
-        ('field_of_research_1', 'for_percentage_1'),
-        ('field_of_research_2', 'for_percentage_2'),
-        ('field_of_research_3', 'for_percentage_3'),
+        ('field_of_research_1',),
+        ('field_of_research_2',),
     )
 
     def __init__(self, **kwargs):
@@ -86,25 +85,11 @@ class BaseAllocationForm(ModelForm):
 
     def clean(self):
         cleaned_data = super(BaseAllocationForm, self).clean()
-        fors = []
-        for for_name, perc_name in self.groups:
-            perc = cleaned_data.get(perc_name)
-            FOR = cleaned_data.get(for_name)
-            if not FOR and not perc:
-                continue
-            if FOR and perc == 0:
-                raise FORValidationError(
-                    "Percentage for Field Of Research '%s' cannot be 0" % FOR)
 
-            if not FOR and perc > 0:
-                raise FORValidationError(
-                    "Percentage set for unspecified Field Of Research")
-            fors.append(perc)
-
-        for_sum = sum(fors)
-        if for_sum > 100:
+        field_of_research_1 = cleaned_data.get('field_of_research_1')
+        if field_of_research_1 is None:
             raise FORValidationError(
-                "Sum of Field Of Research percentages greater than 100")
+                "You must make a selection for the First Field of Research.")
 
         return cleaned_data
 
