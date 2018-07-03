@@ -735,6 +735,7 @@ class Institution(models.Model):
     name = models.CharField(
         'Collaborating institutions',
         max_length=200,
+        default='The University of Melbourne',
         help_text="""List one or more Research Institutions and Universities
                      this project intends to collaborate with. <br>
                      If this project is just for you, write the name of the

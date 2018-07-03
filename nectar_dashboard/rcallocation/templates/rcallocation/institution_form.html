@@ -1,19 +1,7 @@
-<div class="label_header">
-    <label>
-        {{ field.label }}
-        <span class="glyphicon glyphicon-asterisk text-danger"></span>
-        &nbsp;&nbsp;&nbsp;<span title="{{ field.label }}" id="id_{{ field.html_name }}" class="help-icon-sp"> <img class="help-icon" src='{{ STATIC_URL }}rcportal/img/help.png'> </span>
-    </label>
-    <span class="help-block">
-        <div id="id_{{ field.html_name }}" class="help-text-div">
-            {% autoescape off %}{{ field.help_text }}{% endautoescape %}
-        </div>
-    </span>
-</div>
 <table class="more_fields_tab">
     <tbody>
     {% for institution_form in institution_formset.forms %}
-        <tr>
+        <tr{% if forloop.first %} class="hidden"{% endif %}>
             {% if institution_form.non_field_errors %}
                 <div class="alert alert-danger" role="alert">{{ institution_form.non_field_errors }}</div>
             {% endif %}
