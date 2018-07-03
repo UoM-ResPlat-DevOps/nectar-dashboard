@@ -21,7 +21,7 @@
     <div class="form-group input-group">
       <input class="form-control" id="id_{{ service_type.catalog_name }}___prefix__-service_type" name="{{ service_type.catalog_name }}___prefix__-service_type" value="{{ service_type.catalog_name }}" type="hidden">
       {% if service_type.zones.all|length == 1 %}
-      <input class="form-control" id="id_{{ service_type.catalog_name }}___prefix__-zone" name="{{ service_type.catalog_name }}___prefix__-zone" type="hidden" value="nectar" />
+      <input class="form-control" id="id_{{ service_type.catalog_name }}___prefix__-zone" name="{{ service_type.catalog_name }}___prefix__-zone" type="hidden" value="melbourne" />
       {% else %}
       <select class="form-control" id="id_{{ service_type.catalog_name }}___prefix__-zone" name="{{ service_type.catalog_name }}___prefix__-zone">
 	<option value="" selected="selected">---------</option>
