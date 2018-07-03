@@ -1,23 +1,42 @@
-@mixin sidebar-width {
-  width: $uomt-sidebar-width;
-  left: $uomt-sidebar-width;
-  margin-left: -$uomt-sidebar-width;
-}
-
 div#sidebar-bg {
-  @include sidebar-width;
+  width: $uomt-sidebar-width;
+  height: 100%;
   position: fixed;
   top: 0;
+  left: 0;
   z-index: -1;
-  height: 100%;
   box-shadow: 2px 0px 10px $uomt-col-paleblue;
+  display: none;
+
+  @media screen and (min-width: $screen-sm) {
+    display: block;
+  }
 }
 
 nav#sidebar {
-  @include sidebar-width;
-  position: absolute;
-  height: 100%;
-  padding: 77px 45px 30px; // width: 210px;
+  width: $uomt-sidebar-width;
+
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 15px 40px 15px;
+  float: none;
+
+  // Bootstrap overrides
+  top: initial;
+  bottom: initial;
+  left: initial;
+
+  @media screen and (min-width: $screen-sm) {
+    height: 100%;
+
+    position: absolute;
+    left: $uomt-sidebar-width;
+    margin-left: -$uomt-sidebar-width;
+    margin-right: 0;
+    padding: 77px 45px 30px; // width: 210px;
+    float: left;
+  }
 }
 
 nav#sidebar ul.nav.nav-pills.nav-stacked {

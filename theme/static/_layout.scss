@@ -28,12 +28,12 @@ body {
 }
 
 div#content_body {
-  padding-left: $uomt-sidebar-width + 30px;
-  padding-right: 3rem;
-  padding-top: 2rem;
-  padding-bottom: 2em;
-
   @media (min-width:$screen-sm) {
+    padding-left: $uomt-sidebar-width + 30px;
+    padding-right: 3rem;
+    padding-top: 2rem;
+    padding-bottom: 2em;
+
     &.padding-fixed-nav {
       padding-top: 2rem + $uomt-header-height-fixed;
     }
