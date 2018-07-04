@@ -135,6 +135,40 @@ class AllocationRequest(models.Model):
                 """
     )
 
+    FOR_CHOICES = for_choices.FOR_CHOICES
+    PERCENTAGE_CHOICES = (
+        (0, '0%'),
+        (10, '10%'),
+        (20, '20%'),
+        (30, '30%'),
+        (40, '40%'),
+        (50, '50%'),
+        (60, '60%'),
+        (70, '70%'),
+        (80, '80%'),
+        (90, '90%'),
+        (100, '100%'),
+    )
+
+    for_percentage_1 = models.IntegerField(
+        choices=PERCENTAGE_CHOICES, default=100, blank=True,
+        help_text="""The percentage""")
+
+    for_percentage_2 = models.IntegerField(
+        choices=PERCENTAGE_CHOICES, default=0, blank=True,
+        help_text="""The percentage""")
+
+    field_of_research_3 = models.CharField(
+        "Third Field Of Research",
+        choices=FOR_CHOICES,
+        blank=True,
+        null=True,
+        max_length=6
+    )
+
+    for_percentage_3 = models.IntegerField(
+        choices=PERCENTAGE_CHOICES, default=0, blank=True)
+
     # The ordering of the following fields are important, as it
     # governs the order they appear on the forms
     project_name = models.CharField(
@@ -311,21 +345,6 @@ class AllocationRequest(models.Model):
             ..."""
     )
 
-    FOR_CHOICES = for_choices.FOR_CHOICES
-    PERCENTAGE_CHOICES = (
-        (0, '0%'),
-        (10, '10%'),
-        (20, '20%'),
-        (30, '30%'),
-        (40, '40%'),
-        (50, '50%'),
-        (60, '60%'),
-        (70, '70%'),
-        (80, '80%'),
-        (90, '90%'),
-        (100, '100%'),
-    )
-
     field_of_research_1 = models.CharField(
         "First Field Of Research",
         choices=FOR_CHOICES,
@@ -334,10 +353,6 @@ class AllocationRequest(models.Model):
         max_length=6
     )
 
-    for_percentage_1 = models.IntegerField(
-        choices=PERCENTAGE_CHOICES, default=100,
-        help_text="""The percentage""")
-
     field_of_research_2 = models.CharField(
         "Second Field Of Research",
         choices=FOR_CHOICES,
@@ -345,21 +360,6 @@ class AllocationRequest(models.Model):
         null=True,
         max_length=6
     )
-
-    for_percentage_2 = models.IntegerField(
-        choices=PERCENTAGE_CHOICES, default=0,
-        help_text="""The percentage""")
-
-    field_of_research_3 = models.CharField(
-        "Third Field Of Research",
-        choices=FOR_CHOICES,
-        blank=True,
-        null=True,
-        max_length=6
-    )
-
-    for_percentage_3 = models.IntegerField(
-        choices=PERCENTAGE_CHOICES, default=0)
 
     nectar_support = models.CharField(
         """List any ANDS, Nectar, or RDS funded projects supporting this

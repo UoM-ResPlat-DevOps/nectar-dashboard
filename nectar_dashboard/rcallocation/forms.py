@@ -23,7 +23,9 @@ class BaseAllocationForm(ModelForm):
         exclude = ('status', 'created_by', 'submit_date', 'approver_email',
                    'modified_time', 'parent_request',
                    'funding_national_percent', 'funding_node', 'provisioned',
-                   'project_id', 'notes', 'allocation_home')
+                   'project_id', 'notes', 'allocation_home', 'for_percentage_1',
+                   'for_percentage_2', 'field_of_research_3',
+                   'for_percentage_3',)
 
         widgets = {
             'start_date': TextInput(attrs={'class': 'datepicker2 col-md-12'}),
