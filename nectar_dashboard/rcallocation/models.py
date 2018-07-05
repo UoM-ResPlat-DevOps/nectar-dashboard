@@ -110,6 +110,9 @@ class AllocationRequest(models.Model):
     modified_time = models.DateTimeField('Modified Date',
                                          default=datetime.datetime.utcnow)
 
+    # The following fields (all before project_name) are no longer used,
+    # but are kept for consistency
+
     convert_trial_project = models.BooleanField(
         'Convert trial project?',
         default=False,
@@ -168,6 +171,26 @@ class AllocationRequest(models.Model):
 
     for_percentage_3 = models.IntegerField(
         choices=PERCENTAGE_CHOICES, default=0, blank=True)
+
+    funding_national_percent = models.IntegerField(
+        'Nationally Funded Percentage [0..100]',
+        default='0',
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+        error_messages={'min_value': 'The minimum percent is 0',
+                        'max_value': 'The maximum percent is 100'},
+        help_text="""Percentage funded under the National
+                    Allocation Scheme.""")
+
+    funding_node = models.CharField(
+        "Node Funding Remainder (if applicable)",
+        choices=ALLOC_HOME_CHOICE[1:],
+        default='uom',
+        blank=True,
+        null=True,
+        max_length=128,
+        help_text="""You can choose the node that complements
+                    the National Funding."""
+    )
 
     # The ordering of the following fields are important, as it
     # governs the order they appear on the forms
@@ -317,7 +340,7 @@ class AllocationRequest(models.Model):
                      Object Storage and Volume Storages is right for the
                      project.""")
 
-    # TODO: Consider renaming field
+    # TODO: Rename field
     geographic_requirements = models.TextField(
         max_length=1024,
         blank=True,
@@ -362,36 +385,21 @@ class AllocationRequest(models.Model):
     )
 
     nectar_support = models.CharField(
-        """List any ANDS, Nectar, or RDS funded projects supporting this
-        request.""",
-        help_text="""List the name of the project and funding
-                     organisation.""",
+        """List any ARDC (formerly ANDS, Nectar and RDS) funded projects
+        supporting this request.""",
+        help_text="""List the names of any ARDC funded projects.<br><br><strong>
+            Note:</strong> On 1 July 2018 ANDS, Nectar and RDS combined to form
+            the Australian Research Data Commons (ARDC).""",
         blank=True,
-        max_length=255)
+        max_length=255
+    )
 
     ncris_support = models.CharField(
-        'List NCRIS capabilities supporting this request',
+        'List any NCRIS capabilities supporting this request.',
         blank=True,
         max_length=255,
-        help_text="""Specify NCRIS capabilities supporting this request.""")
-
-    funding_national_percent = models.IntegerField(
-        'Nationally Funded Percentage [0..100]',
-        default='100',
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-        error_messages={'min_value': 'The minimum percent is 0',
-                        'max_value': 'The maximum percent is 100'},
-        help_text="""Percentage funded under the National
-                    Allocation Scheme.""")
-
-    funding_node = models.CharField(
-        "Node Funding Remainder (if applicable)",
-        choices=ALLOC_HOME_CHOICE[1:],
-        blank=True,
-        null=True,
-        max_length=128,
-        help_text="""You can choose the node that complements
-                    the National Funding."""
+        help_text="""List the names of any NCRIS capabilities supporting this
+            request."""
     )
 
     accepted_terms = models.CharField(
