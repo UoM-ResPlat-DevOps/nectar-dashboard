@@ -96,6 +96,7 @@
         {% include "rcallocation/field.html" with field=form.contact_email %}
         {% include "rcallocation/field.html" with field=form.requester_phone %}
         {% include "rcallocation/field.html" with field=form.requester_role %}
+        {% include "rcallocation/field.html" with field=form.requester_dept %}
         {% include "rcallocation/field.html" with field=form.requester_is_ci %}
       </div>
     </div>
@@ -217,7 +218,7 @@
           <h2>Collaborators</h2>
           <hr/>
           <span class="label label-info">Note:</span>
-          List any other groups which this project intends to collaborate with, 
+          List any other groups which this project intends to collaborate with,
           including other University of Melbourne groups, affiliated or
           external research institutions and other universities.
           <br/>If you are running a public web service, list the groups, research

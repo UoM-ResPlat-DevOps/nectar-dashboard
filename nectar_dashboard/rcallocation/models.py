@@ -286,6 +286,19 @@ class AllocationRequest(models.Model):
         help_text='Your preferred contact phone number.'
     )
 
+    requester_dept = models.CharField(
+        'Your department',
+        max_length=255,
+        choices=DEPT_CHOICE,
+        blank=False,
+        null=True,
+        help_text="""Select the department you belong to.
+                  <br><br>If you cannot find your department, school
+                  or faculty listed here, please select "0000 -
+                  University General".
+                  """
+    )
+
     requester_role = models.CharField(
         'Your role',
         max_length=255,
