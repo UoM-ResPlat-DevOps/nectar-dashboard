@@ -12,10 +12,7 @@ class AllocationApproveForm(d_forms.ModelForm):
         fields = (
             'project_name', 'project_description', 'start_date',
             'estimated_project_duration', 'status_explanation',
-            'funding_national_percent', 'funding_node',
         )
-
-        exclude = ('nectar_support', 'ncris_support',)
 
         widgets = {
             'project_name': d_forms.TextInput(attrs={'readonly': 'readonly'}),
@@ -25,10 +22,6 @@ class AllocationApproveForm(d_forms.ModelForm):
             'status_explanation': d_forms.Textarea(
                 attrs={'class': 'col-md-6 form-control',
                        'style': 'height:120px; width:420px'}),
-            'funding_national_percent': d_forms.NumberInput(
-                attrs={'class': 'form-control col-md-2'}),
-            'funding_node': d_forms.Select(attrs={'class': 'col-md-6'}),
-
         }
 
     def __init__(self, **kwargs):
@@ -49,9 +42,6 @@ class AllocationApproveForm(d_forms.ModelForm):
         self.fields['status_explanation'].help_text = 'Reviewer Comment'
         self.fields['status_explanation'].label = 'Comment'
         self.initial['status_explanation'] = ''
-        self.fields['funding_national_percent'].required = True
-        self.fields['funding_node'].required = False
-        self.fields['funding_node'].widget.attrs['class'] = 'form-control'
 
         if self.instance.status == 'L':
             self.instance.status = 'M'

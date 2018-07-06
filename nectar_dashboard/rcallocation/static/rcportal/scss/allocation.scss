@@ -141,3 +141,20 @@ form#new-allocation {
     clear: both;
   }
 }
+
+div.allocation {
+  @media (min-width: 992px) {
+    .float-right {
+      float: right;
+    }
+  }
+
+  div.detail-actions {
+    margin-top: 5rem;
+  }
+
+  a#allocation_accept_view,
+  a#allocation_reject_view {
+    margin: 5px;
+  }
+}

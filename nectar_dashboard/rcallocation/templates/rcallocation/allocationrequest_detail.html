@@ -37,7 +37,7 @@
       </div>
     {% endif %}
   {% elif allocation.can_be_approved %}
-    <div class="col-md-6 col-md-offset-2">
+    <div class="col-md-12">
       <a href="{% url 'horizon:allocation:requests:approve_request' allocation.pk %}"
          class="btn btn-success btn-lg"
          id="allocation_accept_view">
