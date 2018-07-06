@@ -49,6 +49,8 @@ class BaseAllocationForm(ModelForm):
         for field in self.fields.values():
             field.widget.attrs['class'] = (
                 'form-control ' + field.widget.attrs.get('class', ''))
+        # Make users reaccept terms if they edit/amend/extend their request
+        self.initial['accepted_terms'] = ''
 
     def _in_groups(self, field):
         for group in self.groups:
