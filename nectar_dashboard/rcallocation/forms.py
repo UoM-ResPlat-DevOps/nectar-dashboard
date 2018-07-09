@@ -99,18 +99,21 @@ class BaseAllocationForm(ModelForm):
 
 
 class AllocationRequestForm(BaseAllocationForm):
-    # TODO: Set prefix as a var in HORIZON_CONFIG and call here. Consider also
-    # validating the prefix.
-    prefix = 'unimelb-'
+    # TODO: Create a get_ method for the following, as it is also called in
+    # views.py. Consider sanitising prefix.
+    try:
+        prefix = settings.RCALLOCATIONS_PROJECT_PREFIX
+    except:
+        prefix = ''
     regex = ('^' + prefix + '[a-zA-Z][-_a-zA-Z0-9]{1,' + str(31-len(prefix))
         + '}$')
     project_name = CharField(
-        validators=[
-            RegexValidator(regex=regex,
-                           message='Letters, numbers, underscores and hyphens '
-                                   'only. 32 characters maximum. Must start '
-                                   'with {prefix} and have at least 2 '
-                                   'characters.'.format(prefix=prefix))],
+        validators=[RegexValidator(
+            regex=regex,
+            message='Letters, numbers, underscores and hyphens only. 32 '
+                    'characters maximum. Must start with {prefix} and have at '
+                    'least 2 characters.'.format(prefix=prefix)
+            )],
         max_length=32,
         label='Project identifier',
         required=True,

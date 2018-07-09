@@ -39,6 +39,19 @@
 {{ block.super }}
 <script src='{{ STATIC_URL }}rcportal/js/allocation.js' type='text/javascript' charset='utf-8'></script>
 <script src='{{ STATIC_URL }}rcportal/js/jquery.mDialog.js' type='text/javascript' charset='utf-8'></script>
+<script>
+$(document).ready(function(){
+  $("input#id_project_name").keydown(function(e) {
+  var oldvalue=$(this).val();
+  var field=this;
+  setTimeout(function () {
+      if(field.value.indexOf('{{ project_prefix }}') !== 0) {
+          $(field).val(oldvalue);
+      }
+  }, 1);
+  });
+})
+</script>
 {% endblock %}
 
 {% block main %}

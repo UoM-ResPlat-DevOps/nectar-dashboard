@@ -4,6 +4,7 @@ import json
 from operator import methodcaller
 import re
 
+from django.conf import settings
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import ModelFormMixin
@@ -451,6 +452,13 @@ class BaseAllocationView(UpdateView):
         formset_grant_class = self.get_formset_grant_class()
         if formset_grant_class:
             kwargs['grant_formset'] = self.get_formset(formset_grant_class)
+
+        # TODO: Create a get_ method for the following, as it is also called in
+        # forms.py. Consider sanitising prefix.
+        try:
+            kwargs['project_prefix'] = settings.RCALLOCATIONS_PROJECT_PREFIX
+        except:
+            kwargs['project_prefix'] = ''
 
         return self.render_to_response(self.get_context_data(**kwargs))
 
