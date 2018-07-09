@@ -150,6 +150,12 @@ ol#uomt-page-local-history span {
   padding: 0;
   color: inherit;
 }
+ol#uomt-page-local-history span[itemprop="name"] {
+  color: #000;
+  font-weight: 300;
+  display: inline;
+  vertical-align: middle;
+}
 ol#uomt-page-local-history [data-icon] {
   margin-bottom: .25rem * $uomt-scale;
   margin-right: .3125rem * $uomt-scale;

@@ -21,8 +21,7 @@
   </div>
   {% endif %}
 
-  <p>Click below to log in using the Australian Access Federation (AAF).</p>
-  <p><a href="https://unimelb.service-now.com/research" target="_blank">Having trouble logging in?</a></p>
+  {% include 'auth/_description.html' %}
 
   <fieldset hz-login-finder>
     {% if request.user.is_authenticated and 'next' in request.GET %}
@@ -45,7 +44,7 @@
 {% block modal-footer %}
   <p class="center">
     <button id="loginBtn" type="submit" class="button-hero">
-      <span>Log in via AAF</span>
+      <span>Log in</span>
     </button>
   </p>
 {% endblock %}

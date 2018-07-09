@@ -10,6 +10,8 @@ Todo
   ``{% site_branding %}``.
 * ``templates/header/_header.html``: Safe load support link as a variable set
   in ``HORIZON_CONFIG``.
+* Responsive sidebar: Move to top of page for mobile version so content box has
+  full width.
 
 Development
 ===========
@@ -64,7 +66,7 @@ Approach to adapting Unimelb Design System
 
 HTML markup has been copied from the Design System for the header and footers.
 All classes taken from the Design System are prefixed with ``uomt-`` (i.e.
-**U**niversity **o**f **M**elbourne **T**emplate) to prevent any unintentional
+*U*niversity *o*f *M*elbourne *T*emplate) to prevent any unintentional
 element targeting (e.g. ``.nav`` is a class used in both the Design System and
 Horizon bootstrap). This maintains provenance in the markup so it can be easily
 traced to its source. In some instances elements have also been defined as an
@@ -166,6 +168,10 @@ features (broken down by page section):
 
 * Scroll down and check the header becoming fixed. Check the transitions and
   vertical text alignment.
+
+**rcallocation**
+
+* Test with plugins that may autofill e.g. LastPass
 
 
 .. _`Unimelb Design System`: https://web.unimelb.edu.au/getting-started/
