@@ -36,7 +36,6 @@ class BaseAllocationForm(ModelForm):
                     (True, 'Yes, move resources from my pt- project to '
                            'this new project.'),
                 ]),
-            'contact_email': TextInput(attrs={'readonly': 'readonly'})
         }
 
     groups = (
