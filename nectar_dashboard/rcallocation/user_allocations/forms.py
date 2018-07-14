@@ -25,12 +25,11 @@ class UserAllocationRequestAmendForm(AllocationAmendRequestForm):
                    ) + AllocationAmendRequestForm.Meta.exclude
 
         widgets = {
-            'project_name': TextInput(attrs={'readonly': 'readonly'}),
-            'project_description': TextInput(attrs={'readonly': 'readonly'}),
-            'contact_email': TextInput(attrs={'readonly': 'readonly'}),
             'start_date': TextInput(attrs={'class': 'datepicker col-md-12',
                                            'style': 'border-radius:0;'}),
         }
+
+    readonly = ('project_name', 'project_description', 'contact_email',)
 
     def __init__(self, **kwargs):
         instance = kwargs['instance']

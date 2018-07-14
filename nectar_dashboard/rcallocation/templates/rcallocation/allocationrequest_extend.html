@@ -11,11 +11,6 @@
   Send a request to an administrator to have a previously approved allocation extended
 {% endblock %}
 
-{% block project_name_and_description %}
-{% include "rcallocation/non_editable_field.html" with field=form.project_name %}
-{% include "rcallocation/non_editable_field.html" with field=form.project_description %}
-{% endblock %}
-
 {% block convert_trial_project %}{% endblock %}
 
 {% block form_action %}{% url 'horizon:allocation:user_requests:edit_change_request' object.pk %}{% endblock %}

@@ -45,6 +45,9 @@ class BaseAllocationForm(ModelForm):
         ('field_of_research_2',),
     )
 
+    readonly = ('contact_email',)
+    __readonly_values = {}
+
     def __init__(self, **kwargs):
         super(BaseAllocationForm, self).__init__(**kwargs)
         for field in self.fields.values():
@@ -52,6 +55,15 @@ class BaseAllocationForm(ModelForm):
                 'form-control ' + field.widget.attrs.get('class', ''))
         # Make users reaccept terms if they edit/amend/extend their request
         self.initial['accepted_terms'] = ''
+
+        # For readonly fields
+        for field in self.readonly:
+            # Store their original value
+            self.__readonly_values[field] = self.initial[field]
+            # Add readonly attribute to widget
+            self.fields[field].widget.attrs.update({
+                'readonly': 'readonly'
+            })
 
     def _in_groups(self, field):
         for group in self.groups:
@@ -90,6 +102,11 @@ class BaseAllocationForm(ModelForm):
 
     def clean(self):
         cleaned_data = super(BaseAllocationForm, self).clean()
+
+        for field in self.readonly:
+            if cleaned_data.get(field) != self.__readonly_values[field]:
+                self.add_error(field, "This field is read-only and must be set"
+                    " to {0}.".format(self.__readonly_values[field]))
 
         field_of_research_1 = cleaned_data.get('field_of_research_1')
         if field_of_research_1 is None:
