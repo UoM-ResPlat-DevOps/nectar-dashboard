@@ -34,7 +34,7 @@ The following settings are required for UoM-specific features to work::
       },
   ]
 
-  RCALLOCATIONS_PROJECT_PREFIX = 'unimelb-'
+  ALLOCATIONS_PROJECT_PREFIX = 'unimelb-'
 
 For configuring ``navbar_support_links`` the ``icon`` field is optional. Visit
 the `Font Awesome website`_ to see available icons. To add a divider between

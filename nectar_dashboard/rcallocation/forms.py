@@ -7,8 +7,10 @@ from django.forms import TextInput, Select, CharField, Textarea, HiddenInput
 from django.forms.forms import NON_FIELD_ERRORS
 from django.forms.formsets import DELETION_FIELD_NAME
 from django.utils.safestring import mark_safe
+
 from nectar_dashboard.rcallocation.models import AllocationRequest, Quota, \
     ChiefInvestigator, Institution, Publication, Grant, QuotaGroup
+from nectar_dashboard.rcallocation.utils import *
 
 
 class FORValidationError(Exception):
@@ -98,12 +100,7 @@ class BaseAllocationForm(ModelForm):
 
 
 class AllocationRequestForm(BaseAllocationForm):
-    # TODO: Create a get_ method for the following, as it is also called in
-    # views.py. Consider sanitising prefix.
-    try:
-        prefix = settings.RCALLOCATIONS_PROJECT_PREFIX
-    except:
-        prefix = ''
+    prefix = get_project_prefix()
     regex = ('^' + prefix + '[a-zA-Z][-_a-zA-Z0-9]{1,' + str(31-len(prefix))
         + '}$')
     project_name = CharField(

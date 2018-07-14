@@ -18,6 +18,7 @@ from horizon import tables as horizon_tables
 from nectar_dashboard.rcallocation import models
 from nectar_dashboard.rcallocation import forms
 from nectar_dashboard.rcallocation import tables
+from nectar_dashboard.rcallocation.utils import *
 
 
 LOG = logging.getLogger('nectar_dashboard.rcallocation')
@@ -453,12 +454,7 @@ class BaseAllocationView(UpdateView):
         if formset_grant_class:
             kwargs['grant_formset'] = self.get_formset(formset_grant_class)
 
-        # TODO: Create a get_ method for the following, as it is also called in
-        # forms.py. Consider sanitising prefix.
-        try:
-            kwargs['project_prefix'] = settings.RCALLOCATIONS_PROJECT_PREFIX
-        except:
-            kwargs['project_prefix'] = ''
+        kwargs['project_prefix'] = get_project_prefix()
 
         return self.render_to_response(self.get_context_data(**kwargs))
 
