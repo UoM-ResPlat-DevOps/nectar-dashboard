@@ -2,6 +2,7 @@
 git+https://github.com/NeCTAR-RC/horizon.git@nectar/queens#egg=horizon
 git+https://github.com/NeCTAR-RC/horizon.git@nectar/queens#egg=openstack_dashboard
 
+Django==1.8.19
 python-dateutil
 pymysql
 djangorestframework==3.6.4
