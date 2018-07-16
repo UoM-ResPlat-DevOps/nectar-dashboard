@@ -27,6 +27,10 @@ body {
    //margin-bottom: 60px;
 }
 
+// div#main_content .tab-content {
+//   border: none;
+// }
+
 div#content_body {
   @media (min-width:$screen-sm) {
     padding-left: $uomt-sidebar-width + 30px;
@@ -38,6 +42,19 @@ div#content_body {
       padding-top: 2rem + $uomt-header-height-fixed;
     }
   }
+}
+
+div#content_body .page-header {
+  display: none;
+}
+
+// div#services_region_switcher {
+//   display: none;
+// }
+
+// Styles the password container for the reset_password panel
+#password_reset_form .modal-body .well {
+  text-align: center;
 }
 
 .uomt-button-hero {
