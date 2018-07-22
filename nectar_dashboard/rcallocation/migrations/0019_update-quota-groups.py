@@ -39,25 +39,16 @@ def migrate_quota_groups(apps, schema_editor):
     )
 
     st_compute.zones.clear()
-    st_compute.zones.add(zone_melbourne)
+    st_compute.zones.add(zone_nectar)
 
     core_resource, created = Resource.objects.update_or_create(
         quota_name='cores',
         service_type=st_compute,
         defaults={
-            'unit': 'VCPUs',
             'name': 'Virtual Cores',
-            'help_text': """This is the maximum number of cores you'd like to use at any one time across all instances. For example, if you'd like to be able to run two "XXL Sized" instances at once (each has 16 CPU cores), you should specify 32 here.""",
-            'service_type': st_compute
-        }
-    )
-
-    ram_resource, created = Resource.objects.update_or_create(
-        quota_name='ram',
-        service_type=st_compute,
-        defaults={
-            'unit': 'GB',
-            'name': 'RAM',
+            'unit': 'VCPUs',
+            'requestable': True,
+            'help_text': None,
             'service_type': st_compute
         }
     )
@@ -66,9 +57,22 @@ def migrate_quota_groups(apps, schema_editor):
         quota_name='instances',
         service_type=st_compute,
         defaults={
-            'unit': 'servers',
             'name': 'Instances',
-            'help_text': """The maximum number of instances that you think your project will require at any one time.""",
+            'unit': 'servers',
+            'requestable': True,
+            'help_text': None,
+            'service_type': st_compute
+        }
+    )
+
+    ram_resource, created = Resource.objects.update_or_create(
+        quota_name='ram',
+        service_type=st_compute,
+        defaults={
+            'name': 'RAM',
+            'unit': 'GiB',
+            'requestable': False,
+            'help_text': "Set RAM quota or leave as 0 to apply 4GiB of ram per core",
             'service_type': st_compute
         }
     )
@@ -86,14 +90,16 @@ def migrate_quota_groups(apps, schema_editor):
     )
 
     st_object.zones.clear()
-    st_object.zones.add(zone_melbourne)
+    st_object.zones.add(zone_nectar)
 
     object_resource, created = Resource.objects.update_or_create(
         quota_name='object',
         service_type=st_object,
         defaults={
-            'unit': 'GB',
-            'name': 'Storage',
+            'name': 'Object storage',
+            'unit': 'GiB',
+            'requestable': True,
+            'help_text': None,
             'service_type': st_object
         }
     )
@@ -117,8 +123,10 @@ def migrate_quota_groups(apps, schema_editor):
         quota_name='gigabytes',
         service_type=st_volume,
         defaults={
-            'unit': 'GB',
-            'name': 'Storage',
+            'name': 'Volume storage',
+            'unit': 'GiB',
+            'requestable': True,
+            'help_text': None,
             'service_type': st_volume
         }
     )
@@ -129,51 +137,59 @@ def migrate_quota_groups(apps, schema_editor):
         catalog_name='network',
         defaults={
             'name': 'Advanced Networking',
-            'description': """Virtual resources for building more advanced network topologies for your instances, including routers, loadbalancers and private networks.""",
+            'description': """Virtual resources for building more advanced network topologies for your instances, including routers, load balancers and private networks.""",
             'index': 3,
             'required': False
         }
     )
 
     st_network.zones.clear()
-    st_network.zones.add(zone_melbourne)
+    st_network.zones.add(zone_nectar)
 
-    networks_resource, created = Resource.objects.update_or_create(
-        quota_name='networks',
+    network_resource, created = Resource.objects.update_or_create(
+        quota_name='network',
         service_type=st_network,
         defaults={
-            'unit': 'Networks',
             'name': 'Networks',
+            'unit': 'Networks',
+            'requestable': True,
+            'help_text': None,
             'service_type': st_network
         }
     )
 
-    routers_resource, created = Resource.objects.update_or_create(
-        quota_name='routers',
+    router_resource, created = Resource.objects.update_or_create(
+        quota_name='router',
         service_type=st_network,
         defaults={
-            'unit': 'Routers',
             'name': 'Routers',
+            'unit': 'Routers',
+            'requestable': True,
+            'help_text': None,
             'service_type': st_network
         }
     )
 
-    floating_ips_resource, created = Resource.objects.update_or_create(
-        quota_name='floating_ips',
+    floatingip_resource, created = Resource.objects.update_or_create(
+        quota_name='floatingip',
         service_type=st_network,
         defaults={
-            'unit': 'Floating IPs',
             'name': 'Floating IPs',
+            'unit': 'Floating IPs',
+            'requestable': True,
+            'help_text': None,
             'service_type': st_network
         }
     )
 
-    load_balancers_resource, created = Resource.objects.update_or_create(
-        quota_name='load_balancers',
+    loadbalancer_resource, created = Resource.objects.update_or_create(
+        quota_name='loadbalancer',
         service_type=st_network,
         defaults={
-            'unit': 'Load Balancers',
             'name': 'Load Balancers',
+            'unit': 'Load Balancers',
+            'requestable': True,
+            'help_text': None,
             'service_type': st_network
         }
     )
