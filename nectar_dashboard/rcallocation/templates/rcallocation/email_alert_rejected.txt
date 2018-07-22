@@ -7,11 +7,8 @@ Your request has been reviewed, and in this case your request has been declined 
 {{ request.status_explanation }}
 
 If indicated, visit the following link to revise your request:
-https://dashboard.rc.nectar.org.au{% url 'horizon:allocation:user_requests:allocation_view' request.id %}
+https://dashboard.cloud.unimelb.edu.au{% url 'horizon:allocation:user_requests:allocation_view' request.id %}
 
 If you have further questions you may reply to this email.
-
-More information on the allocation request process is available at:
-https://support.nectar.org.au/support/solutions/articles/6000068044-managing-an-allocation
 
 {% endblock %}
