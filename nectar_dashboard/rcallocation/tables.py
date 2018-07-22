@@ -30,13 +30,10 @@ class ViewHistory(tables.LinkAction):
 def status_icon(allocation):
     css_style = 'alloc-icon-wip'
     title = allocation.get_status_display()
-    text = allocation.status
+    text = allocation.get_status_display()
     if allocation.status == models.AllocationRequest.APPROVED:
         css_style = 'alloc-icon-ok'
-    data = mark_safe('<p'
-                     ' title="%s"'
-                     ' class="alloc-icon %s">'
-                     '<strong>%s</strong></p>'
+    data = mark_safe('<p title="%s" class="alloc-icon %s">%s</p>'
                      % (title, css_style, text))
     return data
 
@@ -53,11 +50,16 @@ def allocation_title(allocation,
                       escape(unicode(allocation.project_description))))
     return data
 
+def provisioned_yesno(allocation):
+    if allocation.provisioned:
+        return "Yes"
+    else:
+        return "No"
 
 class AllocationListTable(tables.DataTable):
     status = tables.Column(status_icon,
-                           classes=['text-center'],
                            verbose_name="State")
+    provisioned = tables.Column(provisioned_yesno, verbose_name="Provisioned")
     project = tables.Column(allocation_title,
                             verbose_name="Name")
     contact = tables.Column("contact_email", verbose_name="Contact Email")
