@@ -1,8 +1,8 @@
 ===============================
-UoM Cloud Dashboard
+uom-cloud-dashboard
 ===============================
 
-uom-cloud-dashboard
+Forked from `NeCTAR-RC/nectar-dashboard`_.
 
 * Free software: GPLv3+ license
 
@@ -40,10 +40,7 @@ For configuring ``navbar_support_links`` the ``icon`` field is optional. Visit
 the `Font Awesome website`_ to see available icons. To add a divider between
 links add ``'-'`` to the list in place of a dict, as shown above.
 
-Features
---------
-
-* TODO
 
 
+.. _`NeCTAR-RC/nectar-dashboard`: https://github.com/NeCTAR-RC/nectar-dashboard
 .. _`Font Awesome website`: https://fontawesome.com/v4.7.0/icons/
