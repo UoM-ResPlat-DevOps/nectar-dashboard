@@ -1,0 +1,22 @@
+Hi,
+{% block message %}{% endblock message %}
+{% if request.status_explanation %}Approver comment:
+{{ request.status_explanation|safe }}{% endif %}
+
+Allocation ID: {{ request.project_id }}
+Project Name: {{ request.project_name }}
+Description: {{ request.project_description }}
+Expires: {{ request.end_date }}
+
+{% if quotas_old %}
+Previous quotas:
+{% for quota in quotas_old %}
+    {{ quota.service_type }} - {{ quota.resource }}: {{ quota.quota }} {{ quota.unit }} {% endfor %}
+{% endif %}{% if quotas %}
+New quotas:
+{% for quota in quotas %}
+    {{ quota.service_type }} - {{ quota.resource }}: {{ quota.quota }} {{ quota.unit }} {% endfor %}
+{% endif %}
+
+Kind Regards,
+Research Platform Services

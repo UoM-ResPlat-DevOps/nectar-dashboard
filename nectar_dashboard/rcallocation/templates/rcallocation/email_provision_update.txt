@@ -1,0 +1,5 @@
+{% extends 'rcallocation/email_provision_base.txt' %}
+{% block message %}
+Thanks for your continued use of the Melbourne Research Cloud. Your
+request has been processed and the details are below.
+{% endblock message %}
