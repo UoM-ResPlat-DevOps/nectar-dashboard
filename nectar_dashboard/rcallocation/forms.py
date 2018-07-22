@@ -216,7 +216,8 @@ class QuotaGroupForm(BaseQuotaGroupForm):
         self.fields['zone'].queryset = self.service_type.zones
         if len(self.service_type.zones.all()) == 1:
             self.fields['zone'].widget = forms.HiddenInput()
-            self.fields['zone'].initial = 'melbourne'
+            zone_initial = self.service_type.zones.all()[0].name
+            self.fields['zone'].initial = zone_initial
         for field in self.fields.values():
             field.widget.attrs['class'] = (
                 field.widget.attrs.get('class', '') + ' form-control')
