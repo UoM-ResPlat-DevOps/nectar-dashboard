@@ -435,6 +435,8 @@ class AllocationRequest(models.Model):
 
     provisioned = models.BooleanField(default=False)
 
+    locked = models.BooleanField(default=False)
+
     notes = models.TextField(
         "Private notes for admins",
         null=True, blank=True,
@@ -453,10 +455,34 @@ class AllocationRequest(models.Model):
 
         self.status = status
 
+    def lock(self):
+        # TODO: Consider restricting this method to certain statuses e.g. 'A'
+        if not self.locked:
+            self.locked = True
+            # TODO: Passing this kwarg and handling for it in save() is
+            # currently a workaround until save() is refactored.
+            kwargs = {'locking': True}
+            self.save(**kwargs)
+        else:
+            LOG.debug("{0}.lock() called but object is already locked."
+                "".format(__name__))
+        return
+
+    def unlock(self):
+        if self.locked:
+            self.locked = False
+            # TODO: Passing this kwarg and handling for it in save() is
+            # currently a workaround until save() is refactored.
+            kwargs = {'locking': True}
+            self.save(**kwargs)
+        else:
+            LOG.debug("{0}.unlock() called but object is already unlocked."
+                "".format(__name__))
+        return
+
     def is_active(self):
         """
-        Return True if the allocation has either been approved,
-        false otherwise.
+        Return True if the allocation has been approved, false otherwise.
         """
         return self.status.lower() == 'a'
 
@@ -487,23 +513,25 @@ class AllocationRequest(models.Model):
         return self.parent_request is not None
 
     def can_be_amended(self):
-        return self.is_active() and not self.is_archived()
+        return self.is_active() and not self.is_archived() and not self.locked
 
     def can_be_extended(self):
         return self.can_be_amended() and not self.is_archived()
 
     def can_be_edited(self):
-        return not self.is_active() and not self.is_archived()
+        return (not self.is_active() and not self.is_archived() and
+            not self.locked)
 
     def can_admin_edit(self):
-        return self.status.lower() not in ('p', 'a') and not self.is_archived()
+        return self.can_be_edited()
 
     def can_user_edit(self):
-        return self.status.lower() in (
-            'e', 'r', 'n', 'l') and not self.is_archived()
+        return (self.status.lower() in ('e', 'r', 'n', 'l') and
+            not self.is_archived() and not self.locked)
 
     def can_user_edit_amendment(self):
-        return self.amendment_requested() and not self.is_archived()
+        return (self.amendment_requested() and not self.is_archived() and
+            not self.locked)
 
     def can_be_rejected(self):
         return self.is_requested() and not self.is_archived()
@@ -588,6 +616,11 @@ class AllocationRequest(models.Model):
             self.notify_user(template)
 
     def save(self, *args, **kwargs):
+        # TODO: Temp solution until refactoring
+        if 'locking' in kwargs:
+            del kwargs['locking']
+            super(AllocationRequest, self).save(*args, **kwargs)
+            return
         # calculate the end date based on the start date and duration
         duration_relativedelta = relativedelta(
             months=self.estimated_project_duration)

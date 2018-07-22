@@ -44,6 +44,10 @@
                 <th>Provisioned</th>
                 <td>{{ allocation.provisioned|yesno }}</td>
               </tr>
+              <tr>
+                <th>Locked (no editing)</th>
+                <td>{{ allocation.locked|yesno }}</td>
+              </tr>
               {% endif %}
             </tbody>
           </table>

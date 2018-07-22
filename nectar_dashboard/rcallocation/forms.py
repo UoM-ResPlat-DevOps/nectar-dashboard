@@ -65,6 +65,12 @@ class BaseAllocationForm(ModelForm):
                 'readonly': 'readonly'
             })
 
+        # TODO: Figure out a more correct way to set this?
+        try:
+            self.__locked = self.initial['locked']
+        except KeyError:
+            self.__locked = False
+
     def _in_groups(self, field):
         for group in self.groups:
             if field.name in group:
@@ -93,6 +99,9 @@ class BaseAllocationForm(ModelForm):
     def get_for_errors(self):
         return self._errors.get('FOR_ERRORS', [])
 
+    def is_locked(self):
+        return self.__locked
+
     def clean_project_name(self):
         data = self.cleaned_data['project_name']
         if data.startswith('pt-'):
@@ -102,6 +111,9 @@ class BaseAllocationForm(ModelForm):
 
     def clean(self):
         cleaned_data = super(BaseAllocationForm, self).clean()
+
+        if self.__locked:
+            raise ValidationError("")
 
         for field in self.readonly:
             if cleaned_data.get(field) != self.__readonly_values[field]:

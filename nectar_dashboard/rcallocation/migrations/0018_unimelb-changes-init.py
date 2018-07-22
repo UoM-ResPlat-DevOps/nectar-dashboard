@@ -69,6 +69,11 @@ class Migration(migrations.Migration):
             field=models.TextField(help_text=b'e.g. AWS, Google compute, Nectar, other NCRIS platforms,\n            ...', max_length=1024, verbose_name=b'List other capabilities you use/intend to use with this project', blank=True),
         ),
         migrations.AddField(
+            model_name='allocationrequest',
+            name='locked',
+            field=models.BooleanField(default=False),
+        ),
+        migrations.AddField(
             model_name='servicetype',
             name='index',
             field=models.IntegerField(default=99),

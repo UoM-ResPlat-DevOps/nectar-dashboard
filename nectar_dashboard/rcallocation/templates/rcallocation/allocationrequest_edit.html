@@ -77,6 +77,9 @@ $(document).ready(function(){
     Required fields are marked with an <span class="glyphicon glyphicon-asterisk text-danger"></span>
     sign.
   </blockquote>
+  {% if form.is_locked == True %}
+  <div class="alert alert-danger" role="alert">This allocation is currently locked.</div>
+  {% endif %}
   {% if form.errors or institution_formset.errors or investigator_formset.errors or publication_formset.errors or grant_formset.errors or grant_formset.non_form_errors %}
   <div class="alert alert-danger" role="alert">Please fix up the below errors</div>
   {% endif %}
