@@ -45,6 +45,8 @@ The following settings are required for UoM-specific features to work::
       ('project_domain_id', 'default'),
   )
 
+  ALLOCATIONS_NECTAR_ADMIN_ROLE = 'AllocationAdmin'
+
 
 For configuring ``navbar_support_links`` the ``icon`` field is optional. Visit
 the `Font Awesome website`_ to see available icons. To add a divider between

@@ -87,10 +87,18 @@ class Command(BaseCommand):
             LOG.critical(msg)
             raise CommandError(msg)
 
-        # TODO: Check that the auth has the correct roles for managing allocs
-        # e.g. allocationadmin
-        auth_ref = auth.get_auth_ref(sess)
-        roles = auth_ref.role_names
+        # Check that the auth has the correct role for managing allocations
+        try:
+            admin_role = settings.ALLOCATIONS_NECTAR_ADMIN_ROLE
+            auth_ref = auth.get_auth_ref(sess)
+            roles = auth_ref.role_names
+            if not admin_role in roles:
+                raise Exception("User {0} does not have the required role "
+                    "({1}) to manage allocations: {2}".format(
+                    auth_options['username'], admin_role, str(roles)))
+        except Exception as e:
+            LOG.critical(e.message)
+            raise CommandError(str(e))
 
         # Generate a project_name filter and sanitise project_name input(s)
         project_filter = Q()
