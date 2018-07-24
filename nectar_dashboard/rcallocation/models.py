@@ -384,7 +384,7 @@ class AllocationRequest(models.Model):
     field_of_research_1 = models.CharField(
         "First Field Of Research",
         choices=FOR_CHOICES,
-        blank=True,
+        blank=False,
         null=True,
         max_length=6
     )

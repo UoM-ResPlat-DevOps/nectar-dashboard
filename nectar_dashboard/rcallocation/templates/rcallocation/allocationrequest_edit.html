@@ -206,25 +206,8 @@ $(document).ready(function(){
         {% endautoescape %}
         <br/>
         <br/>
-        {% for error in form.get_for_errors %}
-        <div class="form-group has-error">
-          <span class="help-block">{{error}}</span>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        {% for group in form.grouped_fields %}
-        <div class="form-group {% if field.errors %}has-error{% endif %}">
-          {% for field in group %}
-            {% if forloop.first %}
-              <label>{{ field.label }}{% if field.name == 'field_of_research_1' %} <span class="glyphicon glyphicon-asterisk text-danger">{% endif %}</span></label>
-            {% endif %}
-            {{ field }}
-          {% endfor %}
-        </div>
-        {% endfor %}
+        {% include "rcallocation/field.html" with field=form.field_of_research_1 %}
+        {% include "rcallocation/field.html" with field=form.field_of_research_2 %}
       </div>
     </div>
     <div class="row">

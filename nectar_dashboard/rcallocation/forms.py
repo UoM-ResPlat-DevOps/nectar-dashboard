@@ -13,10 +13,6 @@ from nectar_dashboard.rcallocation.models import AllocationRequest, Quota, \
 from nectar_dashboard.rcallocation.utils import *
 
 
-class FORValidationError(Exception):
-    pass
-
-
 class BaseAllocationForm(ModelForm):
     error_css_class = 'has-error'
 
@@ -39,11 +35,6 @@ class BaseAllocationForm(ModelForm):
                            'this new project.'),
                 ]),
         }
-
-    groups = (
-        ('field_of_research_1',),
-        ('field_of_research_2',),
-    )
 
     readonly = ('contact_email',)
     __readonly_values = {}
@@ -71,33 +62,15 @@ class BaseAllocationForm(ModelForm):
         except KeyError:
             self.__locked = False
 
-    def _in_groups(self, field):
-        for group in self.groups:
-            if field.name in group:
-                return True
-        return False
-
     def visible_fields(self):
         return [field for field in self
-                if (not field.is_hidden and
-                    not self._in_groups(field))]
-
-    def grouped_fields(self):
-        grouped_fields = []
-        for grouping in self.groups:
-            grouped_fields.append([f for f in self if f.name in grouping])
-        return grouped_fields
+                if (not field.is_hidden)]
 
     def _clean_form(self):
         try:
             self.cleaned_data = self.clean()
-        except FORValidationError as e:
-            self._errors['FOR_ERRORS'] = self.error_class([e.message])
         except ValidationError as e:
             self._errors[NON_FIELD_ERRORS] = self.error_class([e.message])
-
-    def get_for_errors(self):
-        return self._errors.get('FOR_ERRORS', [])
 
     def is_locked(self):
         return self.__locked
@@ -119,11 +92,6 @@ class BaseAllocationForm(ModelForm):
             if cleaned_data.get(field) != self.__readonly_values[field]:
                 self.add_error(field, "This field is read-only and must be set"
                     " to {0}.".format(self.__readonly_values[field]))
-
-        field_of_research_1 = cleaned_data.get('field_of_research_1')
-        if field_of_research_1 is None:
-            raise FORValidationError(
-                "You must make a selection for the First Field of Research.")
 
         return cleaned_data
 
