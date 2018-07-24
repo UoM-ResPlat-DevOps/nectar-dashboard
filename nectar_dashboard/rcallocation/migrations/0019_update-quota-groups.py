@@ -32,7 +32,7 @@ def migrate_quota_groups(apps, schema_editor):
         catalog_name='compute',
         defaults={
             'name': 'Compute Resources',
-            'description': """The maximum number of instances and virtual cores that you think your project will require at any one time. Please consult the <a href="#">flavour list</a> to see the relationship between number of instances and virtual cores.""",
+            'description': """The maximum number of instances and virtual cores that you think your project will require at any one time.""",
             'index': 0,
             'required': True
         }
