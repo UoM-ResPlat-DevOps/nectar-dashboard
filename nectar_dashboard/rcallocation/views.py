@@ -42,8 +42,7 @@ class AllocationDetailView(DetailView, ModelFormMixin):
         self.object = self.get_object()
         allocations = (models.AllocationRequest.objects
                        .filter(status=models.AllocationRequest.APPROVED)
-                       .filter(parent_request=self.object.pk)
-                       .order_by('-modified_time')[:1])
+                       .filter(parent_request=self.object.pk)[:1])
 
         if allocations:
             kwargs['previous_allocation'] = allocations[0]
@@ -93,10 +92,9 @@ class AllocationHistoryView(horizon_tables.DataTableView):
     def get_data(self):
         pk = self.kwargs['pk']
         return models.AllocationRequest.objects.filter(
-            Q(parent_request=pk) | Q(pk=pk)).order_by(
-                '-modified_time').prefetch_related(
-                    'quotas', 'investigators', 'institutions',
-                    'publications', 'grants')
+            Q(parent_request=pk) | Q(pk=pk)).prefetch_related(
+                'quotas', 'investigators', 'institutions',
+                'publications', 'grants')
 
 
 class BaseAllocationView(UpdateView):
