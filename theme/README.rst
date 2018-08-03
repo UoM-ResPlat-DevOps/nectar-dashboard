@@ -5,9 +5,6 @@ Unimelb Theme
 Todo
 ====
 
-* ``templates/header/_header.html`` and ``templates/auth/_login.html``: Make
-  the brand name (hardcoded as 'Melbourne Research Cloud') load from
-  ``{% site_branding %}``.
 * ``templates/header/_header.html``: Safe load support link as a variable set
   in ``HORIZON_CONFIG``.
 * Responsive sidebar: Move to top of page for mobile version so content box has
