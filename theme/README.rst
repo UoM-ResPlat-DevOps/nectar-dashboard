@@ -89,6 +89,9 @@ Where deemed appropriate, external links to .css files on the Design System
 GitHub are included in inline comments in the .scss theme files for easy
 reference.
 
+The login page, unlike the rest of the dashboard, uses the Design System
+templating assets (``static/uom.js`` and ``static/uom.css``).
+
 Mobile browser support
 ----------------------
 
