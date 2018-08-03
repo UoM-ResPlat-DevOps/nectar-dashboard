@@ -2,14 +2,6 @@
 Unimelb Theme
 =============
 
-Todo
-====
-
-* ``templates/header/_header.html``: Safe load support link as a variable set
-  in ``HORIZON_CONFIG``.
-* Responsive sidebar: Move to top of page for mobile version so content box has
-  full width.
-
 Development
 ===========
 
