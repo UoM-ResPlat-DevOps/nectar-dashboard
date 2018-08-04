@@ -364,7 +364,7 @@ function show_help_message(el, help_title, help_message) {
         new_row += "</div>"
         new_row += "</td>";
         new_row += "<td>";
-        new_row += "<button type='button' id='delete-grant' class='pull-right btn btn-default'>";
+        new_row += "<button type='button' id='delete-grant' class='btn btn-danger'>";
         new_row += "Delete";
         new_row += "</button>";
         new_row += "</td>";
