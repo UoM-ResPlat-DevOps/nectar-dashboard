@@ -1,8 +1,8 @@
 # Testing notes:
-# * Line 351: Comment out approve() if the auth user does not have allocations
+# * Line 333: Comment out approve() if the auth user does not have allocations
 #   permissions. Forbidden: {u'detail': u'Permission denied or allocation in
 #   wrong state.'} (HTTP 403)
-# * Line 412-413: Uncomment var assignments that override the provisioned and
+# * Line 394-395: Uncomment var assignments that override the provisioned and
 #   project_id values retrieved from the NeCTAR database.
 
 import textwrap
@@ -25,6 +25,7 @@ from django.template.loader import get_template
 from django.template import Context
 
 from nectar_dashboard.rcallocation.models import AllocationRequest
+from nectar_dashboard.rcallocation.utils import *
 
 LOG = logging.getLogger('rcallocation.commands.provision')
 
@@ -35,8 +36,7 @@ class Command(BaseCommand):
     # Create dict so we can convert from letters to full status names
     statuses = dict(AllocationRequest.REQUEST_STATUS_CHOICES)
 
-    #ALLOCATION_SOURCE = settings.ALLOCATION_SOURCE
-    NECTAR_CLIENT_VERS = '1'
+    #ALLOCATIONS_NECTAR_SOURCE = settings.ALLOCATIONS_NECTAR_SOURCE
 
     def add_arguments(self, parser):
         parser.add_argument('--noinput',
@@ -69,33 +69,8 @@ class Command(BaseCommand):
         self.dry_run = options['dry_run']
         self.force = options['force']
 
-        # TODO: This should be its own class or method since we need to use
-        # this elsewhere in the app.
         try:
-            auth_options = dict(settings.ALLOCATIONS_KEYSTONE)
-            # TODO: Consider validating settings.ALLOCATIONS_KEYSTONE inputs
-            loader = loading.get_plugin_loader('password')
-            auth = loader.load_from_options(**auth_options)
-            sess = session.Session(auth=auth)
-            self.nectar = client.Client(self.NECTAR_CLIENT_VERS, session=sess)
-            # TODO: Are any exceptions actually thrown? Or do we need to stat
-            # something to see if the session and client are valid?
-            # `public endpoint for allocations service not found`
-        except Exception as e:
-            msg = ("Keystone authentication failed. Exception raised: {0}"
-                "".format(str(e)))
-            LOG.critical(msg)
-            raise CommandError(msg)
-
-        # Check that the auth has the correct role for managing allocations
-        try:
-            admin_role = settings.ALLOCATIONS_NECTAR_ADMIN_ROLE
-            auth_ref = auth.get_auth_ref(sess)
-            roles = auth_ref.role_names
-            if not admin_role in roles:
-                raise Exception("User {0} does not have the required role "
-                    "({1}) to manage allocations: {2}".format(
-                    auth_options['username'], admin_role, str(roles)))
+            self.nectar = get_nectar_client()
         except Exception as e:
             LOG.critical(e.message)
             raise CommandError(str(e))
