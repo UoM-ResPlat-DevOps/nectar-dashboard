@@ -110,17 +110,17 @@ class AllocationHistoryTable(tables.DataTable):
     project = tables.Column("project_description", verbose_name="Project name",
                             link="horizon:allocation:requests:allocation_view")
     approver = tables.Column("approver_email", verbose_name="Approver")
+    instances = tables.Column(
+        get_quota_by_resource("instances"),
+        verbose_name="Instances")
     cores = tables.Column(
         get_quota_by_resource("cores"),
         verbose_name="Cores")
-    ram = tables.Column(
-        get_quota_by_resource("ram"),
-        verbose_name="RAM")
     object_store = tables.Column(
         get_quota_by_resource("object"),
         verbose_name="Object Storage")
     volume_storage = tables.Column(
-        get_quota_by_resource("volume"),
+        get_quota_by_resource("gigabytes"),
         verbose_name="Volume Storage")
     status = tables.Column("get_status_display", verbose_name="Status")
     modified_time = tables.Column(
