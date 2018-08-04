@@ -545,75 +545,82 @@ class AllocationRequest(models.Model):
     def can_approve_change(self):
         return self.amendment_requested() and not self.is_archived()
 
-    def notify_via_e_mail(self, sender, recipient_list, template, cc_list=[],
-                          bcc_list=[], reply_to=None):
-        """
-        Send an email to the requester notifying them that their
+    def send_email_notification(self, template_name):
+        """Sends an email to the requester notifying them that their
         allocation has been processed.
         """
-        if not sender and recipient_list:
-            # TODO (shauno): log this problem
-            raise Exception
 
-        plaintext = get_template(template)
-        ctx = Context({"request": self})
-        text = plaintext.render(ctx)
-        subject, body = text.split('')
-        email = EmailMessage(
-            subject.strip(),
-            body,
-            sender,
-            recipient_list,
-            cc=cc_list
-        )
+        email_kwargs = {}
+        # Required arguments
+        try:
+            email_kwargs['from_email'] = settings.ALLOCATION_EMAIL_FROM
+            email_kwargs['to'] = [self.contact_email]
+        except:
+            LOG.critical("")
+            raise
+        # Optional arguments
+        for kwarg, setting in [('cc', 'ALLOCATION_EMAIL_RECIPIENTS',),
+            ('bcc', 'ALLOCATION_EMAIL_BCC_RECIPIENTS',),
+            ('reply_to', 'ALLOCATION_EMAIL_REPLY_TO',)]:
+            try:
+                email_kwargs[kwarg] = getattr(settings, setting)
+            except:
+                pass
 
-        if bcc_list:
-            email.bcc = bcc_list
+        template = get_template(template_name)
+        context = self.create_email_context()
+        text = template.render(context)
 
-        if reply_to:
-            email.extra_headers = {'Reply-To': reply_to}
+        email_kwargs['subject'], delimiter, email_kwargs['body'] = (
+            text.partition('\n\n'))
 
+        email = EmailMessage(**email_kwargs)
         email.send()
 
-    def notify_user(self, template):
-        to = [self.contact_email]
-        cc = settings.ALLOCATION_EMAIL_RECIPIENTS
-        sender = settings.ALLOCATION_EMAIL_FROM
-        reply_to = settings.ALLOCATION_EMAIL_REPLY_TO
-        self.notify_via_e_mail(
-            template=template,
-            sender=sender,
-            recipient_list=to,
-            cc_list=cc,
-            reply_to=reply_to,
-        )
+    def create_email_context(self):
+        context = {'request': self}
+        context['quotas'] = self.get_quotas_sorted_list(self)
+        try:
+            alloc_old = AllocationRequest.objects.filter(
+                project_name=self.project_name, provisioned=True)[1]
+            context['quotas_old'] = self.get_quotas_sorted_list(alloc_old)
+        except:
+            context['quotas_old'] = []
+        return Context(context)
 
-    def notify_admin(self, template):
-        self.notify_via_e_mail(
-            sender=settings.ALLOCATION_EMAIL_FROM,
-            recipient_list=settings.ALLOCATION_EMAIL_RECIPIENTS,
-            template=template,
-            cc_list=[self.contact_email],
-            bcc_list=settings.ALLOCATION_EMAIL_BCC_RECIPIENTS,
-            reply_to=settings.ALLOCATION_EMAIL_REPLY_TO,
-        )
+    def get_quotas_sorted_list(self, alloc):
+        quotas = []
+        for quota_group in alloc.quotas.all():
+            for quota in quota_group.quota_set.all():
+                quotas.append({
+                    'index': quota_group.service_type.index,
+                    'service_type': quota_group.service_type.name,
+                    'resource': quota.resource.name,
+                    'unit': quota.resource.unit,
+                    'zone': quota_group.zone.display_name,
+                    'quota': quota.quota,
+                    'requested_quota': quota.requested_quota,
+                })
+        quotas_sorted = sorted(quotas, key=lambda k: k['index'])
+        return quotas_sorted
 
     def send_notifications(self):
-        status = self.status.lower()
-        if status in ['n', 'e', 'x']:
-            if status == 'n':
+        if self.status in [self.NEW, self.SUBMITTED, self.UPDATE_PENDING]:
+            if self.status == self.NEW:
                 template = 'rcallocation/email_alert_acknowledge.txt'
             else:
                 template = 'rcallocation/email_alert.txt'
-            self.notify_admin(template)
-            if status == 'n':
+            self.send_email_notification(template)
+            #NOTE:STATE CHANGE
+            if self.status == self.NEW:
                 # N is a special state showing that the
                 # request has been created but no email has
                 # been sent. Progress it once it's been sent.
-                self.status = 'E'
+                self.status = self.SUBMITTED
+                self.save()
         elif self.is_rejected():
             template = 'rcallocation/email_alert_rejected.txt'
-            self.notify_user(template)
+            self.send_email_notification(template)
 
     def save(self, *args, **kwargs):
         # TODO: Temp solution until refactoring
@@ -621,25 +628,13 @@ class AllocationRequest(models.Model):
             del kwargs['locking']
             super(AllocationRequest, self).save(*args, **kwargs)
             return
-        # calculate the end date based on the start date and duration
-        duration_relativedelta = relativedelta(
-            months=self.estimated_project_duration)
-        self.end_date = self.start_date + duration_relativedelta
         if not kwargs.get('provisioning'):
             if not self.is_archived():
                 self.modified_time = datetime.datetime.utcnow()
-                try:
-                    self.send_notifications()
-                except:
-                    LOG.error(
-                        'Could not send notification email for allocation %s.'
-                        % self.project_name)
-                    if settings.DEBUG:
-                        raise
-        if self.status == 'M':
-            self.status = 'A'
-        elif self.status == 'O':
-            self.status = 'R'
+        if self.status == self.LEGACY_APPROVED:
+            self.status = self.APPROVED
+        elif self.status == self.LEGACY_REJECTED:
+            self.status = self.DECLINED
         if 'provisioning' in kwargs:
             del kwargs['provisioning']
         super(AllocationRequest, self).save(*args, **kwargs)

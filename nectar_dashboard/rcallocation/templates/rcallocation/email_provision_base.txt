@@ -1,3 +1,5 @@
+Allocation provisioned [{{ request.project_description }}]
+
 Hi,
 {% block message %}{% endblock message %}
 {% if request.status_explanation %}Approver comment:

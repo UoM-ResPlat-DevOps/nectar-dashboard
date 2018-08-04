@@ -458,54 +458,12 @@ class Command(BaseCommand):
         else:
             template = 'rcallocation/email_provision_update.txt'
 
-        # Build quotas context for email
-        quotas = self.get_quota_data(alloc_local)
-        try:
-            alloc_local_old = AllocationRequest.objects.filter(
-                project_name=alloc_local.project_name, provisioned=True)[1]
-            quotas_old = self.get_quota_data(alloc_local_old)
-        except:
-            quotas_old = []
-
-        try:
-            sender = settings.ALLOCATION_EMAIL_FROM
-            recipient_list = [alloc_local.contact_email]
-            cc_list = settings.ALLOCATION_EMAIL_RECIPIENTS
-        except Exception as e:
-            LOG.error("")
-
-        # Build email object
-        plaintext = get_template(template)
-        ctx = Context({'request': alloc_local, 'quotas': quotas,
-            'quotas_old': quotas_old})
-        body = plaintext.render(ctx)
-        subject = "Cloud resources allocated for {0}".format(project_name)
-        email = EmailMessage(
-            subject=subject,
-            body=body,
-            from_email=sender,
-            to=recipient_list,
-            cc=cc_list
-        )
-        # TODO: Consider sending an HTML version of the email
-        # email.attach_alternative(body, "text/html")
-        try:
-            email.bcc = settings.ALLOCATION_EMAIL_BCC_RECIPIENTS
-        except:
-            pass
-        try:
-            email.extra_headers = {
-                'Reply-To': settings.ALLOCATION_EMAIL_REPLY_TO
-            }
-        except:
-            pass
-
         # Send email
         if not self.dry_run:
             self.stdout.write("  Sending email notification to user... ",
                 ending='')
             try:
-                email.send()
+                alloc_local.send_email_notification(template)
                 self.write_ok()
             except Exception as e:
                 self.write_failed("Exception raised when trying to send email "
@@ -559,19 +517,3 @@ class Command(BaseCommand):
         if log_message is not None:
             LOG.error(log_message)
         return
-
-    def get_quota_data(self, alloc_local):
-        quotas = []
-        for quota_group_local in alloc_local.quotas.all():
-            for quota in quota_group_local.quota_set.all():
-                quotas.append({
-                    'index': quota_group_local.service_type.index,
-                    'service_type': quota_group_local.service_type.name,
-                    'resource': quota.resource.name,
-                    'unit': quota.resource.unit,
-                    'zone': quota_group_local.zone.display_name,
-                    'quota': quota.quota,
-                    'requested_quota': quota.requested_quota,
-                })
-        quotas_sorted = sorted(quotas, key=lambda k: k['index'])
-        return quotas_sorted

@@ -3,6 +3,8 @@ import logging
 import json
 from operator import methodcaller
 import re
+import datetime
+from dateutil.relativedelta import relativedelta
 
 from django.conf import settings
 from django.views.generic import DetailView
@@ -518,6 +520,13 @@ class BaseAllocationView(UpdateView):
 
         # Set the editor attribute
         setattr(object, self.editor_attr, self.request.user.username)
+
+        # Calculate the end date based on the start date and duration
+        duration_relativedelta = relativedelta(
+            months=object.estimated_project_duration)
+        object.end_date = object.start_date + duration_relativedelta
+        end_date = object.end_date
+
         object.provisioned = False
         object.save()
         self.object = object
@@ -563,6 +572,16 @@ class BaseAllocationView(UpdateView):
                     instance.save()
                 for instance in formset.deleted_objects:
                     instance.delete()
+
+        # Send notification email
+        try:
+            self.object.send_notifications()
+        except:
+            LOG.error(
+                'Could not send notification email for allocation %s.'
+                % self.object.project_name)
+            if settings.DEBUG:
+                raise
 
         return HttpResponseRedirect(self.get_success_url())
 
