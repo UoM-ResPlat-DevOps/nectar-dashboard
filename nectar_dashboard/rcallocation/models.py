@@ -14,12 +14,11 @@ from django.template.loader import get_template
 from django.template import Context
 from django.conf import settings
 
-import for_choices
-from requester_choices import DEPT_CHOICE, REQUESTER_ROLE_CHOICE, \
-    USE_CATEGORY_CHOICE
-from allocation_home_choices import ALLOC_HOME_CHOICE
-from project_duration_choices import DURATION_CHOICE
-from grant_type import GRANT_TYPES
+from choices import ALLOC_HOME_CHOICE, DURATION_CHOICE, GRANT_TYPES, \
+    REQUESTER_ROLE_CHOICE, USE_CATEGORY_CHOICE
+from choices_dept import DEPT_CHOICE
+from choices_for import FOR_CHOICES
+
 
 LOG = logging.getLogger('rcallocation')
 
@@ -138,7 +137,6 @@ class AllocationRequest(models.Model):
                 """
     )
 
-    FOR_CHOICES = for_choices.FOR_CHOICES
     PERCENTAGE_CHOICES = (
         (0, '0%'),
         (10, '10%'),

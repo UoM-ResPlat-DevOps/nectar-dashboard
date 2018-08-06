@@ -3,13 +3,12 @@ from django.forms.models import model_to_dict
 from factory import fuzzy
 
 from nectar_dashboard.rcallocation import models
-from nectar_dashboard.rcallocation import for_choices, project_duration_choices, \
-    allocation_home_choices, grant_type
+from nectar_dashboard.rcallocation import choices_for, choices
 
-FOR_CHOICES = dict(for_choices.FOR_CHOICES)
-DURATION_CHOICES = dict(project_duration_choices.DURATION_CHOICE)
-ALLOCATION_HOMES = dict(allocation_home_choices.ALLOC_HOME_CHOICE)
-GRANT_TYPES = dict(grant_type.GRANT_TYPES)
+FOR_CHOICES = dict(choices_for.FOR_CHOICES)
+DURATION_CHOICES = dict(choices.DURATION_CHOICE)
+ALLOCATION_HOMES = dict(choices.ALLOC_HOME_CHOICE)
+GRANT_TYPES = dict(choices.GRANT_TYPES)
 
 
 def allocation_to_dict(model):

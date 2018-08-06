@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
 from nectar_dashboard.rcallocation.models import AllocationRequest
-from nectar_dashboard.rcallocation.requester_choices import DEPT_CHOICE
+from nectar_dashboard.rcallocation.choices_dept import DEPT_CHOICE
 
 LOG = logging.getLogger('nectar_dashboard.rcallocation')
 

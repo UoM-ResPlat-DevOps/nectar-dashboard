@@ -144,18 +144,3 @@ DEPT_CHOICE = (
     ('9790', '9790 - Project Services'),
     ('9800', '9800 - Commercial Services'),
 )
-
-REQUESTER_ROLE_CHOICE = (
-    ("researcher", "Researcher"),
-    ("student-research", "Student - Masters/PhD by Research"),
-    ("student-coursework", "Student - Masters by Coursework"),
-    ("student-undergraduate", "Student - Undergraduate"),
-    ("technical-support-staff", "Technical support staff"),
-    ("other", "Other"),
-)
-
-USE_CATEGORY_CHOICE = (
-    ("research", "Research"),
-    ("teaching", "Teaching/Training"),
-    ("support", "Support/Other"),
-)

@@ -2,14 +2,13 @@ from datetime import date, timedelta
 import factory
 from factory import fuzzy
 
-from nectar_dashboard.rcallocation import for_choices, project_duration_choices, \
-    allocation_home_choices, grant_type
+from nectar_dashboard.rcallocation import choices, choices_for
 
 
-FOR_CHOICES = dict(for_choices.FOR_CHOICES)
-DURATION_CHOICES = dict(project_duration_choices.DURATION_CHOICE)
-ALLOCATION_HOMES = dict(allocation_home_choices.ALLOC_HOME_CHOICE)
-GRANT_TYPES = dict(grant_type.GRANT_TYPES)
+FOR_CHOICES = dict(choices_for.FOR_CHOICES)
+DURATION_CHOICES = dict(choices.DURATION_CHOICE)
+ALLOCATION_HOMES = dict(choices.ALLOC_HOME_CHOICE)
+GRANT_TYPES = dict(choices.GRANT_TYPES)
 
 for_code = fuzzy.FuzzyChoice(FOR_CHOICES.keys())
 _1_year = date.today() + timedelta(days=365)
