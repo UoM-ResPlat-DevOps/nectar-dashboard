@@ -20,7 +20,7 @@ from choices_dept import DEPT_CHOICE
 from choices_for import FOR_CHOICES
 
 
-LOG = logging.getLogger('rcallocation')
+LOG = logging.getLogger(__name__)
 
 
 #############################################################################
@@ -458,17 +458,12 @@ class AllocationRequest(models.Model):
                 "".format(__name__))
         return
 
-    # TODO: How many of the below methods are actually used?
-
     def is_active(self):
         """
         Return True if the allocation has been approved, false otherwise.
         """
         return self.status.lower() == 'a'
 
-    # NOTE: Not used.
-    # TODO: I don't think this is correct? It returns is_active() which only
-    # evaluates for 'a' (accepted), but not 'r' (rejected)
     def is_decided(self):
         """
         Return True if the allocation has either been accepted or
@@ -622,61 +617,40 @@ class AllocationRequest(models.Model):
             del kwargs['provisioning']
         super(AllocationRequest, self).save(*args, **kwargs)
 
-    # def get_all_fields(self):
-    #     """
-    #     Returns a list of all non None fields, each entry containing
-    #     the fields label, field name, and value (if the display value
-    #     exists it is preferred)
-    #     """
-    #     fields = []
-    #     for f in self._meta.fields:
-    #         if f.editable:
-    #             field_name = f.name
-    #
-    #             # resolve picklists/choices, with get_xyz_display() function
-    #             try:
-    #                 get_choice = 'get_' + field_name + '_display'
-    #                 if hasattr(self, get_choice):
-    #                     value = getattr(self, get_choice)()
-    #                 else:
-    #                     value = getattr(self, field_name)
-    #             except AttributeError:
-    #                 value = None
-    #
-    #             # only display fields with values and skip some fields entirely
-    #             if not (value is None or field_name in ('id', 'status')):
-    #                 fields.append(
-    #                     {
-    #                         'label': f.verbose_name,
-    #                         'name': field_name,
-    #                         'value': value,
-    #                     }
-    #                 )
-    #     return fields
+    def get_all_fields(self):
+        """
+        Returns a list of all non None fields, each entry containing
+        the fields label, field name, and value (if the display value
+        exists it is preferred)
+        """
+        fields = []
+        for f in self._meta.fields:
+            if f.editable:
+                field_name = f.name
+
+                # resolve picklists/choices, with get_xyz_display() function
+                try:
+                    get_choice = 'get_' + field_name + '_display'
+                    if hasattr(self, get_choice):
+                        value = getattr(self, get_choice)()
+                    else:
+                        value = getattr(self, field_name)
+                except AttributeError:
+                    value = None
+
+                # only display fields with values and skip some fields entirely
+                if not (value is None or field_name in ('id', 'status')):
+                    fields.append(
+                        {
+                            'label': f.verbose_name,
+                            'name': field_name,
+                            'value': value,
+                        }
+                    )
+        return fields
 
     def __unicode__(self):
         return '"{0}" {1}'.format(self.project_name, self.contact_email)
-
-    # New methods
-
-    def submit(self):
-        # IF NEW
-        return True
-
-    def amend(self):
-        return True
-
-    def approve(self):
-        return True
-
-    def reject(self):
-        return True
-
-    def provision(self):
-        return True
-
-    def expire(self):
-        return True
 
 
 class Zone(models.Model):
