@@ -156,7 +156,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='allocationrequest',
             name='start_date',
-            field=models.DateField(default=datetime.date.today, help_text=b'The day on which you want your project\n            allocation to go live. Format: YYYY-MM-DD.', verbose_name=b'Start date'),
+            field=models.DateField(default=datetime.date.today, help_text=b'The day on which you want your project allocation\n            to go live. Format: YYYY-MM-DD.<br><br>Note that if the\n            project is provisioned at a later date than your desired\n            start date, the start date will be updated to the day of\n            provisioning.', verbose_name=b'Start date'),
         ),
         migrations.AlterField(
             model_name='allocationrequest',

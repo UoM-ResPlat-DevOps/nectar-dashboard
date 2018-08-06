@@ -211,8 +211,11 @@ class AllocationRequest(models.Model):
     start_date = models.DateField(
         'Start date',
         default=datetime.date.today,
-        help_text="""The day on which you want your project
-            allocation to go live. Format: YYYY-MM-DD."""
+        help_text="""The day on which you want your project allocation
+            to go live. Format: YYYY-MM-DD.<br><br>Note that if the
+            project is provisioned at a later date than your desired
+            start date, the start date will be updated to the day of
+            provisioning."""
     )
 
     end_date = models.DateField(
