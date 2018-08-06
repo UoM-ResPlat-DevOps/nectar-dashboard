@@ -208,19 +208,6 @@ class AllocationRequest(models.Model):
         max_length=200,
         help_text='A human-friendly descriptive name for your project.')
 
-    project_dept = models.CharField(
-        'Department this project is for',
-        max_length=255,
-        choices=DEPT_CHOICE,
-        blank=False,
-        null=True,
-        help_text="""Select the main department this project is for.
-                  <br><br>If you cannot find your department, school
-                  or faculty listed here, please select "0000 -
-                  University General".
-                  """
-    )
-
     start_date = models.DateField(
         'Start date',
         default=datetime.date.today,
@@ -284,19 +271,6 @@ class AllocationRequest(models.Model):
         blank=False,
         null=True,
         help_text='Your preferred contact phone number.'
-    )
-
-    requester_dept = models.CharField(
-        'Your department',
-        max_length=255,
-        choices=DEPT_CHOICE,
-        blank=False,
-        null=True,
-        help_text="""Select the department you belong to.
-                  <br><br>If you cannot find your department, school
-                  or faculty listed here, please select "0000 -
-                  University General".
-                  """
     )
 
     requester_role = models.CharField(
@@ -767,6 +741,19 @@ class ChiefInvestigator(models.Model):
         blank=False,
         max_length=200,
         help_text="""The chief investigator's surname"""
+    )
+
+    dept = models.CharField(
+        'Department',
+        max_length=255,
+        choices=DEPT_CHOICE,
+        blank=False,
+        null=True,
+        help_text="""Select the Chief Investigator's department.
+                  <br><br>If you cannot find the appropriate department,
+                  school or faculty listed here, please select "0000 -
+                  University General".
+                  """
     )
 
     email = models.EmailField(

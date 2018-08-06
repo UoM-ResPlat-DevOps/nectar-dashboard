@@ -99,18 +99,14 @@ class Command(BaseCommand):
             '\nAffected allocation requests:'))
         none_affected = True
         for ar in AllocationRequest.objects.filter(parent_request=None):
-            if ar.requester_dept in deletions_dict_keys:
+            dept = ar.investigators.all()[0].dept
+            if dept in deletions_dict_keys:
                 self.stdout.write(self.style.MIGRATE_FAILURE(
-                    '  * {0} has requester_dept {1}'.format(
-                    ar.project_name, deletions_dict[ar.requester_dept])
+                    '  * {0} has ChiefInvestigator.dept {1}'.format(
+                    ar.project_name, deletions_dict[dept])
                 ))
                 none_affected = False
-            if ar.project_dept in deletions_dict_keys:
-                self.stdout.write(self.style.MIGRATE_FAILURE(
-                    '  * {0} has project_dept {1}'.format(
-                    ar.project_name, deletions_dict[ar.project_dept])
-                ))
-                none_affected = False
+
         if none_affected:
             self.stdout.write(self.style.MIGRATE_SUCCESS(
                 '  * No allocation requests affected.'))

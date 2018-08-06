@@ -94,7 +94,6 @@ $(document).ready(function(){
       <div class="col-md-12">
         {% include "rcallocation/field.html" with field=form.project_name %}
         {% include "rcallocation/field.html" with field=form.project_description %}
-        {% include "rcallocation/field.html" with field=form.project_dept %}
         {% include "rcallocation/field.html" with field=form.start_date %}
         {% include "rcallocation/field.html" with field=form.estimated_project_duration %}
         {% block convert_trial_project %}
@@ -111,7 +110,6 @@ $(document).ready(function(){
         {% include "rcallocation/field.html" with field=form.contact_email %}
         {% include "rcallocation/field.html" with field=form.requester_phone %}
         {% include "rcallocation/field.html" with field=form.requester_role %}
-        {% include "rcallocation/field.html" with field=form.requester_dept %}
         {% include "rcallocation/field.html" with field=form.requester_is_ci %}
       </div>
     </div>

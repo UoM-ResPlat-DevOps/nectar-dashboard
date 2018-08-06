@@ -59,10 +59,6 @@
               <td>{{ allocation.project_name|default:"(Project not linked)" }}</td>
             </tr>
             <tr>
-              <th>Project department</th>
-              <td>{{ allocation.get_project_dept_display }}</td>
-            </tr>
-            <tr>
               <th>Start date</th>
               <td>{{ allocation.start_date }}</td>
             </tr>
@@ -93,10 +89,6 @@
               <td>{{ allocation.requester_phone }}</td>
             </tr>
             <tr>
-              <th>Department</th>
-              <td>{{ allocation.get_requester_dept_display }}</td>
-            </tr>
-            <tr>
               <th>Role</th>
               <td>{{ allocation.get_requester_role_display }}</td>
             </tr>
@@ -112,6 +104,10 @@
                     <tr>
                         <th width="200">Name</th>
                         <td>{{ invest.title }} {{ invest.given_name }} {{ invest.surname }}</td>
+                    </tr>
+                    <tr>
+                        <th>Department</th>
+                        <td>{{ invest.get_dept_display }} </td>
                     </tr>
                     <tr>
                         <th>Email</th>
