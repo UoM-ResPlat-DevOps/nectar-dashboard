@@ -1,17 +1,7 @@
-# Testing notes:
-# * Line 333: Comment out approve() if the auth user does not have allocations
-#   permissions. Forbidden: {u'detail': u'Permission denied or allocation in
-#   wrong state.'} (HTTP 403)
-# * Line 394-395: Uncomment var assignments that override the provisioned and
-#   project_id values retrieved from the NeCTAR database.
-
-import textwrap
 import logging
 import datetime
 from dateutil.relativedelta import relativedelta
 
-from keystoneauth1 import loading
-from keystoneauth1 import session
 from nectarallocationclient import client
 from nectarallocationclient.exceptions import AllocationDoesNotExist, \
     Forbidden
@@ -19,13 +9,9 @@ from nectarallocationclient.exceptions import AllocationDoesNotExist, \
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db.models import Q
-from django.core.mail import EmailMessage
-#from django.core.mail import EmailMultiAlternatives as EmailMessage
-from django.template.loader import get_template
-from django.template import Context
 
 from nectar_dashboard.rcallocation.models import AllocationRequest
-from nectar_dashboard.rcallocation.utils import *
+from nectar_dashboard.rcallocation import utils
 
 LOG = logging.getLogger('rcallocation.commands.provision')
 
@@ -35,8 +21,6 @@ class Command(BaseCommand):
 
     # Create dict so we can convert from letters to full status names
     statuses = dict(AllocationRequest.REQUEST_STATUS_CHOICES)
-
-    #ALLOCATIONS_NECTAR_SOURCE = settings.ALLOCATIONS_NECTAR_SOURCE
 
     def add_arguments(self, parser):
         parser.add_argument('--noinput',
@@ -70,7 +54,7 @@ class Command(BaseCommand):
         self.force = options['force']
 
         try:
-            self.nectar = get_nectar_client()
+            self.nectar = utils.get_nectar_client()
         except Exception as e:
             LOG.critical(e.message)
             raise CommandError(str(e))
