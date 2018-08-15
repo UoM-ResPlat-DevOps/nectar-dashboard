@@ -1,12 +1,12 @@
 Allocation provisioned [{{ request.project_description }}]
 
-Hi,
+Dear {{ request.requester_title }} {{ request.requester_surname }},
 {% block message %}{% endblock message %}
 {% if request.status_explanation %}Approver comment:
-{{ request.status_explanation|safe }}{% endif %}
+{{ request.status_explanation|safe }}
 
-Allocation ID: {{ request.project_id }}
-Project Name: {{ request.project_name }}
+{% endif %}Project Name: {{ request.project_name }}
+Project ID: {{ request.project_id }}
 Description: {{ request.project_description }}
 Expires: {{ request.end_date }}
 
