@@ -9,13 +9,13 @@ def migrate_quota_groups(apps, schema_editor):
     Resource = apps.get_model('rcallocation', 'Resource')
     ServiceType = apps.get_model('rcallocation', 'ServiceType')
 
-    # Note: Use objects.delete() to remove Resources <https://docs.djangoproject.com/en/2.0/ref/models/querysets/#delete>
+    # NOTE: Use objects.delete() to remove Resources <https://docs.djangoproject.com/en/2.0/ref/models/querysets/#delete>
 
-    # Melbourne zones
+    # Main zones
+    zone_nectar, created = Zone.objects.update_or_create(name='nectar', defaults={'display_name': 'NeCTAR'})
     zone_melbourne, created = Zone.objects.update_or_create(name='melbourne', defaults={'display_name': 'Melbourne'})
 
-    # Legacy NeCTAR zones
-    zone_nectar, created = Zone.objects.update_or_create(name='nectar', defaults={'display_name': 'NeCTAR'})
+    # Other NeCTAR zones
     zone_auckland, created = Zone.objects.update_or_create(name='auckland', defaults={'display_name': 'Auckland (NZ)'})
     zone_intersect, created = Zone.objects.update_or_create(name='intersect', defaults={'display_name': 'Intersect (NSW)'})
     zone_monash, created = Zone.objects.update_or_create(name='monash', defaults={'display_name': 'Monash (VIC)'})
@@ -26,7 +26,7 @@ def migrate_quota_groups(apps, schema_editor):
     zone_swinburne, created = Zone.objects.update_or_create(name='swinburne', defaults={'display_name': 'Swinburne (VIC)'})
     zone_tasmania, created = Zone.objects.update_or_create(name='tasmania', defaults={'display_name': 'Tasmania'})
 
-    # Compute Service
+    # Nova (Compute Service)
 
     st_compute, created = ServiceType.objects.update_or_create(
         catalog_name='compute',
@@ -77,7 +77,7 @@ def migrate_quota_groups(apps, schema_editor):
         }
     )
 
-    # Object Service
+    # Swift (Object Service)
 
     st_object, created = ServiceType.objects.update_or_create(
         catalog_name='object',
@@ -104,7 +104,7 @@ def migrate_quota_groups(apps, schema_editor):
         }
     )
 
-    # Volume Service
+    # Cinder (Volume Service)
 
     st_volume, created = ServiceType.objects.update_or_create(
         catalog_name='volume',
@@ -131,14 +131,53 @@ def migrate_quota_groups(apps, schema_editor):
         }
     )
 
-    # Advanced Networking
+    # Trove (Database Service)
+
+    st_database, created = ServiceType.objects.update_or_create(
+        catalog_name='database',
+        defaults={
+            'name': 'Database Service',
+            'description': """The database service provides a simple interface for provisioning and managing database engines supporting MySQL, with PostgreSQL and MongoDB coming soon. You can specify the number of database servers, the total database storage your project would require, or both.""",
+            'index': 3,
+            'required': False
+        }
+    )
+
+    st_database.zones.clear()
+    st_database.zones.add(zone_nectar)
+
+    instances_resource, created = Resource.objects.update_or_create(
+        quota_name='instances',
+        service_type=st_database,
+        defaults={
+            'name': 'Database servers',
+            'unit': 'Servers',
+            'requestable': True,
+            'help_text': None,
+            'service_type': st_database
+        }
+    )
+
+    volumes_resource, created = Resource.objects.update_or_create(
+        quota_name='volumes',
+        service_type=st_database,
+        defaults={
+            'name': 'Database storage',
+            'unit': 'GiB',
+            'requestable': True,
+            'help_text': None,
+            'service_type': st_database
+        }
+    )
+
+    # Neutron (Networking Service)
 
     st_network, created = ServiceType.objects.update_or_create(
         catalog_name='network',
         defaults={
             'name': 'Advanced Networking',
             'description': """Virtual resources for building more advanced network topologies for your instances, including routers, load balancers and private networks.""",
-            'index': 3,
+            'index': 4,
             'required': False
         }
     )

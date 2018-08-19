@@ -259,23 +259,24 @@ class Command(BaseCommand):
         # NOTE: Need to be able to find id/pk of each resource type based on
         # its quota_name, but list() does not seem to filter when passed a
         # quota_name kwarg, so they're mapped here
-        # WARNING: This specifically excludes the `share` service_type because
-        # both it and `volume` have a resource type called `gigabytes`
         nectar_resources = {}
         for resource in self.nectar.resources.list():
             service_type = getattr(resource, 'service_type')
-            if service_type != 'share':
-                quota_name = getattr(resource, 'quota_name')
-                id = getattr(resource, 'id')
-                nectar_resources[quota_name] = id
+            if not nectar_resources.get(service_type):
+                nectar_resources[service_type] = {}
+            quota_name = getattr(resource, 'quota_name')
+            id = getattr(resource, 'id')
+            nectar_resources[service_type][quota_name] = id
 
         # Generate a list of data dicts to pass to quotas.create()
         quotas_local = []
         for quota_group_local in alloc_local.quotas.all():
+            service_type = quota_group_local.service_type.catalog_name
             for quota in quota_group_local.quota_set.all():
+                quota_name = quota.resource.quota_name
                 quotas_local.append({
                     'allocation': alloc_nectar,
-                    'resource': nectar_resources[quota.resource.quota_name],
+                    'resource': nectar_resources[service_type][quota_name],
                     'zone': quota_group_local.zone_id,
                     'quota': quota.quota,
                     'requested_quota': quota.requested_quota,
