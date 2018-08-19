@@ -161,6 +161,12 @@ class Command(BaseCommand):
             if not self.force:
                 return
 
+        # These fields will be defaulted to these values for both
+        # create and update
+        default_fields = {
+            'notifications': False
+        }
+
         # Create the allocation object if new
         if project_is_new:
             alloc_create_data = {
@@ -171,6 +177,7 @@ class Command(BaseCommand):
                 'allocation_home': alloc_local.allocation_home,
                 'use_case': alloc_local.use_case,
             }
+            alloc_create_data.update(default_fields)
             if not self.dry_run:
                 self.stdout.write("  Creating new allocation on the NeCTAR "
                     "database... ", ending='')
@@ -215,7 +222,7 @@ class Command(BaseCommand):
             self.stdout.write("  Would have updated start date ({0}) and end "
                 "date ({1}).".format(str(start_date), str(end_date)))
 
-        # Update the allocation object
+        ## Update the allocation object
         alloc_update_data = {}
         alloc_update_fields = ['approver_email', 'estimated_number_users',
             'estimated_project_duration', 'field_of_research_1',
@@ -224,6 +231,14 @@ class Command(BaseCommand):
             'start_date', 'end_date']
         for field in alloc_update_fields:
             alloc_update_data[field] = getattr(alloc_local, field)
+        alloc_update_data.update(default_fields)
+        # Include FOR percentages for NeCTAR reporting requirements
+        if alloc_update_data['field_of_research_2']:
+            alloc_update_data['for_percentage_1'] = 50
+            alloc_update_data['for_percentage_2'] = 50
+        else:
+            alloc_update_data['for_percentage_1'] = 100
+            alloc_update_data['for_percentage_2'] = 0
         if not self.dry_run:
             self.stdout.write("  Updating allocation fields on the NeCTAR "
                 "database... ", ending='')
