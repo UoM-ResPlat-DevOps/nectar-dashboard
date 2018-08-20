@@ -243,6 +243,8 @@ class Command(BaseCommand):
             self.stdout.write("  Updating allocation fields on the NeCTAR "
                 "database... ", ending='')
             try:
+                if alloc_nectar.status == 'A':
+                    alloc_nectar.amend()
                 alloc_nectar.update(**alloc_update_data)
                 self.write_ok()
             except Exception as e:
